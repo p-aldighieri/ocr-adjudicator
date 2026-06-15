@@ -7,6 +7,7 @@ const SRC_COLOR: Record<string, string> = {
   claude: '#34d399', // emerald
   codex: '#fbbf24',  // amber
   current: '#60a5fa',
+  cell: '#f1f5f9',   // grid cell box (dense years) — neutral, frames the value
 }
 
 export function ImageViewer({

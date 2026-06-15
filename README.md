@@ -99,7 +99,8 @@ Requires Python 3 with `pillow`, `opencv-python`, and `rapidocr-onnxruntime`.
 python tools/prewarm_ocr.py --of 10 --threads 2   # parallel OCR + WebP encode (~2–3 h, one-time, cached)
 python tools/build_dataset.py                     # assemble dataset.json + images (~3 min)
 python tools/add_column_bands.py                  # column-band overlays for dense ruled years (1939/47/50)
-python tools/add_fullpage_overlays.py             # map row/value/column overlays onto the wide pages; re-zips
+python tools/add_fullpage_overlays.py             # map row/value/column overlays onto the wide pages
+python tools/add_cell_boxes.py                    # per-value grid-cell boxes for the dense years; re-zips
 ```
 
 Notes:
@@ -166,6 +167,7 @@ tools/
   prewarm_ocr.py      parallel OCR + encode (fills the cache)
   add_column_bands.py column-band overlays for ruled tables
   add_fullpage_overlays.py  maps overlays onto the wide pages (template match)
+  add_cell_boxes.py   per-value grid-cell boxes for the dense ruled years
   apply_results.py   merge exported adjudications back into the source tables
 ```
 

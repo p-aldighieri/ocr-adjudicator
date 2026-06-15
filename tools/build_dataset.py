@@ -112,9 +112,9 @@ def early_mw(year):
         cx = ecx.get(k) or {}
         res[ror] = {
             "cl": {"fac_m": cl.get("faculty_men"), "fac_w": cl.get("faculty_women"),
-                   "enr_m": cl.get("enr_men"), "enr_w": cl.get("enr_women")},
+                   "enr_m": cl.get("enr_men"), "enr_w": cl.get("enr_women"), "income": cl.get("income_k")},
             "cx": {"fac_m": cx.get("faculty_men"), "fac_w": cx.get("faculty_women"),
-                   "enr_m": cx.get("enr_men"), "enr_w": cx.get("enr_women")},
+                   "enr_m": cx.get("enr_men"), "enr_w": cx.get("enr_women"), "income": cx.get("income_k")},
         }
     _mw_cache[year] = res
     return res
@@ -455,6 +455,14 @@ def build_item(out_dir, year, ror, man, cmp_, do_ocr, ocr_full):
     cx_inc = cmp_.get("cx_income"); cl_inc = cmp_.get("cl_income")
     cx_fac = cmp_.get("cx_fac");     cl_fac = cmp_.get("cl_fac")
     cx_enr = cmp_.get("cx_enr");     cl_enr = cmp_.get("cl_enr")
+    # early years: take per-method income from the extraction (state,n) join too — the panel's
+    # per-method values are occasionally mis-matched (same root cause as the cl_name/cx_name issue)
+    if year not in SNIPPET_YEARS:
+        _mw = early_mw(year).get(ror, {})
+        if _mw.get("cl", {}).get("income") is not None:
+            cl_inc = _mw["cl"]["income"]
+        if _mw.get("cx", {}).get("income") is not None:
+            cx_inc = _mw["cx"]["income"]
     final_income = man.get("final_income")
     final_fac = man.get("final_faculty")
     final_enr = man.get("final_enrollment")
