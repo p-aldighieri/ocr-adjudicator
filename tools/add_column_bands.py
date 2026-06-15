@@ -128,10 +128,14 @@ def main():
             return None
         return sum(best) / len(best)
 
-    # SCHEMA fallback for years with no usable anchors (1947/50): 0-based column index
-    # (interval between rule i and i+1) on the income/enrollment page (RES) and faculty page (GS).
-    # Filled only where verified against the page layout; leave a year out to skip it.
-    SCHEMA = {}
+    # Verified column positions (normalized x-midpoint) for the years with no usable OCR anchors.
+    # Read from the page headers by GPT-5.5 (codex, xhigh) and cross-checked by vision + the data:
+    #   1947/1950 income = 2nd RESOURCES column (after endowment); enrollment = LIVING-QUARTERS men;
+    #   faculty = the FACULTY 'M' column on the GS page. Snapped to each page's own rules at apply time.
+    MANUAL_REP = {
+        1947: {"income": 0.3971, "enrollment": 0.2297, "faculty": 0.5437},
+        1950: {"income": 0.5723, "enrollment": 0.2786, "faculty": 0.5098},
+    }
 
     rep = {}   # year -> cov -> representative column-midpoint x (or None)
     for year in NOSNIP:
@@ -147,6 +151,13 @@ def main():
         got = ", ".join(f"{k}={v:.3f}" for k, v in rep[year].items() if v is not None)
         print(f"  {year} anchored column-midpoints: {got or '(none)'}")
 
+    # fill years/covariates lacking an OCR anchor with the vision-verified positions
+    for year, covs in MANUAL_REP.items():
+        for cov, x in covs.items():
+            if rep.get(year, {}).get(cov) is None:
+                rep.setdefault(year, {})[cov] = x
+                print(f"  {year} {cov}: using vision-verified x={x}")
+
     def band_for(year, cov, cols):
         """Return (a,b) column interval for cov on a page with `cols`, via anchor or schema."""
         rx = rep[year].get(cov)
@@ -154,9 +165,6 @@ def main():
             i = min(range(len(cols)), key=lambda k: abs((cols[k][0] + cols[k][1]) / 2 - rx))
             if abs((cols[i][0] + cols[i][1]) / 2 - rx) < 0.03:
                 return cols[i]
-        idx = SCHEMA.get(year, {}).get(cov)
-        if idx is not None and 0 <= idx < len(cols):
-            return cols[idx]
         return None
 
     n_added = 0

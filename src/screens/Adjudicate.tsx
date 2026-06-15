@@ -80,8 +80,14 @@ export function Adjudicate() {
           <div className="truncate text-sm font-semibold text-white">
             {item.title} <span className="text-slate-400">— {item.year}</span>
           </div>
-          <div className="truncate text-[11px] text-slate-500">
-            {item.subtitle}{item.n != null ? ` · #${item.n}` : ''} · {decided}/{total} fields
+          <div className="flex items-center gap-1.5 truncate text-[11px] text-slate-500">
+            <span
+              className="rounded bg-amber-500/15 px-1.5 py-0.5 font-mono text-amber-300"
+              title="Printed institution number on the Blue Book page — find this row number on the scan"
+            >
+              No. {item.n != null ? item.n : 'N/A'}
+            </span>
+            <span className="truncate">{item.subtitle} · {decided}/{total} fields</span>
           </div>
         </div>
         <div className="text-right text-[11px] text-slate-400">
