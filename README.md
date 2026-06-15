@@ -97,8 +97,9 @@ Requires Python 3 with `pillow`, `opencv-python`, and `rapidocr-onnxruntime`.
 
 ```bash
 python tools/prewarm_ocr.py --of 10 --threads 2   # parallel OCR + WebP encode (~2–3 h, one-time, cached)
-python tools/build_dataset.py --zip               # assemble dataset.json + images + dataset.zip (~3 min)
-python tools/add_column_bands.py                  # column-band overlays for dense ruled years; re-zips
+python tools/build_dataset.py                     # assemble dataset.json + images (~3 min)
+python tools/add_column_bands.py                  # column-band overlays for dense ruled years (1939/47/50)
+python tools/add_fullpage_overlays.py             # map row/value/column overlays onto the wide pages; re-zips
 ```
 
 Notes:
@@ -161,9 +162,10 @@ src/
   components/        ImageViewer (zoom + SVG overlays), FieldRow
   screens/          Overview, Adjudicate, Settings
 tools/
-  build_dataset.py   manifests + scans → dataset.json + WebP (+ zip)
-  prewarm_ocr.py     parallel OCR + encode (fills the cache)
+  build_dataset.py    manifests + scans → dataset.json + WebP
+  prewarm_ocr.py      parallel OCR + encode (fills the cache)
   add_column_bands.py column-band overlays for ruled tables
+  add_fullpage_overlays.py  maps overlays onto the wide pages (template match)
   apply_results.py   merge exported adjudications back into the source tables
 ```
 

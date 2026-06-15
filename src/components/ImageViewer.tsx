@@ -108,7 +108,7 @@ export function ImageViewer({
                       className="pointer-events-none absolute inset-0 h-full w-full"
                     >
                       {showRow && cols.map((c, i) => {
-                        const on = c.field === activeSection
+                        const on = c.field === activeField || c.field === activeSection
                         return (
                           <rect
                             key={`col${i}`}

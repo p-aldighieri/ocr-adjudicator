@@ -27,6 +27,7 @@ from pathlib import Path
 
 # ----------------------------------------------------------------------------- config / paths
 PANELS = Path(r"C:\Users\dep89\Dropbox\Computers and Science\Data\Processed data\College Blue Books\covariate_panels")
+TMP = Path(r"C:\Users\dep89\Dropbox\Computers and Science\Computers-and-Science\tmp\funding_expansion")
 HERE = Path(__file__).resolve().parent
 DEFAULT_OUT = HERE.parent / "public" / "dataset"
 OCR_CACHE = HERE / ".ocr_cache.json"
@@ -78,6 +79,46 @@ def short_id(*parts):
     h = hashlib.sha1("|".join(str(p) for p in parts).encode()).hexdigest()
     return h[:12]
 
+def _norm_name(s):
+    return "".join(c for c in str(s).lower() if c.isalnum())
+
+_mw_cache = {}
+
+def _ni(v):
+    x = num_or_none(v)
+    return int(x) if x is not None else None
+
+def early_mw(year):
+    """For 1939/47/50, recover men/women faculty & enrollment from the raw extraction JSONs.
+    Joined on (state, printed institution number) — the BB's own index — which is reliable
+    (the panel's recorded cl_name/cx_name are sometimes mis-matched). Returns {ror: {cl,cx}}."""
+    if year in _mw_cache:
+        return _mw_cache[year]
+    man = load_csv(PANELS / f"manifest_{year}.csv")
+
+    def index(meth):
+        idx = {}
+        p = TMP / f"all_{year}_{meth}.json"
+        if p.exists():
+            for r in json.loads(p.read_text(encoding="utf-8")):
+                idx.setdefault((_norm_name(r.get("state")), _ni(r.get("n"))), r)
+        return idx
+
+    ecl, ecx = index("claude"), index("codex")
+    res = {}
+    for ror, row in man.items():
+        k = (_norm_name(row.get("state")), _ni(row.get("inst_number")))
+        cl = ecl.get(k) or {}
+        cx = ecx.get(k) or {}
+        res[ror] = {
+            "cl": {"fac_m": cl.get("faculty_men"), "fac_w": cl.get("faculty_women"),
+                   "enr_m": cl.get("enr_men"), "enr_w": cl.get("enr_women")},
+            "cx": {"fac_m": cx.get("faculty_men"), "fac_w": cx.get("faculty_women"),
+                   "enr_m": cx.get("enr_men"), "enr_w": cx.get("enr_women")},
+        }
+    _mw_cache[year] = res
+    return res
+
 # ----------------------------------------------------------------------------- OCR
 _engine = None
 _ocr_cache = None
@@ -100,7 +141,10 @@ def load_ocr_cache():
 
 def save_ocr_cache():
     if _ocr_cache is not None:
-        OCR_CACHE.write_text(json.dumps(_ocr_cache))
+        try:
+            OCR_CACHE.write_text(json.dumps(_ocr_cache))
+        except OSError as e:
+            print(f"  (cache write skipped: {e})")
 
 def _tokens_from_result(res):
     tokens = []
@@ -444,11 +488,18 @@ def build_item(out_dir, year, ror, man, cmp_, do_ocr, ocr_full):
         sections.append({"key": "faculty", "label": "Faculty", "total": num_or_none(final_fac),
                          "fields": [f_m, f_w]})
     else:
+        # 1939/47/50: men/women restored from the raw extraction (joined via cl_name/cx_name)
+        mw = early_mw(year).get(ror, {})
+        cl = mw.get("cl", {}); cx = mw.get("cx", {})
         enr_flags = ["unreliable"] if year in (1947, 1950) else []
-        en = field("enrollment", "Enrollment", cl_enr, cx_enr, final_enr, enr_img, flags=enr_flags)
-        sections.append({"key": "enrollment", "label": "Enrollment", "fields": [en]})
-        fa = field("faculty", "Faculty", cl_fac, cx_fac, final_fac, fac_img, flags=["weak"])
-        sections.append({"key": "faculty", "label": "Faculty", "fields": [fa]})
+        e_m = field("enr_men", "Men", cl.get("enr_m"), cx.get("enr_m"), None, enr_img, flags=enr_flags)
+        e_w = field("enr_women", "Women", cl.get("enr_w"), cx.get("enr_w"), None, enr_img, flags=enr_flags)
+        sections.append({"key": "enrollment", "label": "Enrollment", "total": num_or_none(final_enr),
+                         "fields": [e_m, e_w]})
+        f_m = field("fac_men", "Men", cl.get("fac_m"), cx.get("fac_m"), None, fac_img, flags=["weak"])
+        f_w = field("fac_women", "Women", cl.get("fac_w"), cx.get("fac_w"), None, fac_img, flags=["weak"])
+        sections.append({"key": "faculty", "label": "Faculty", "total": num_or_none(final_fac),
+                         "fields": [f_m, f_w]})
 
     # --- priority score ---
     prio = 0.0
@@ -513,10 +564,11 @@ def build_item(out_dir, year, ror, man, cmp_, do_ocr, ocr_full):
             image_list.insert(0, {kk: desc[kk] for kk in ("id", "file", "w", "h", "role", "side", "label")})
 
         if year == 1939:
-            add_row_crop(src_by_side.get("R"), ["income", "enrollment", "faculty"], "S", "Row snippet (auto-cropped)")
+            add_row_crop(src_by_side.get("R"), ["income", "enr_men", "enr_women", "fac_men", "fac_women"],
+                         "S", "Row snippet (auto-cropped)")
         elif year in (1947, 1950):
-            add_row_crop(src_by_side.get("R"), ["income", "enrollment"], "S", "Row snippet — income / enrollment")
-            add_row_crop(src_by_side.get("L"), ["faculty"], "Sf", "Row snippet — faculty")
+            add_row_crop(src_by_side.get("R"), ["income", "enr_men", "enr_women"], "S", "Row snippet — income / enrollment")
+            add_row_crop(src_by_side.get("L"), ["fac_men", "fac_women"], "Sf", "Row snippet — faculty")
 
         # group fields by the image they sit on
         by_image = {}
