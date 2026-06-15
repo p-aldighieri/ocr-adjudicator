@@ -70,8 +70,8 @@ export function FieldRow({
         {/* type my own */}
         <div className={`flex items-center rounded-lg border ${selChoice === 'custom' ? 'border-sky-400 bg-sky-500/15' : 'border-slate-700 bg-slate-800/60'}`}>
           <input
-            inputMode="numeric"
-            placeholder="mine"
+            inputMode="text"
+            placeholder="mine / N/A"
             value={customText}
             onFocus={onFocus}
             onChange={(e) => {
@@ -80,11 +80,19 @@ export function FieldRow({
               const n = t.trim() === '' ? null : Number(t.replace(/[, ]/g, ''))
               choose('custom', Number.isFinite(n as number) ? (n as number) : null, t)
             }}
-            className="w-20 bg-transparent px-2 py-2 text-sm text-white outline-none placeholder:text-slate-500"
+            className="w-24 bg-transparent px-2 py-2 text-sm text-white outline-none placeholder:text-slate-500"
           />
         </div>
 
-        {/* can't read */}
+        {/* N/A: value genuinely not printed in the source */}
+        <button
+          className={pill(selChoice === 'custom' && (customText || '').trim().toUpperCase() === 'N/A', false) + ' text-slate-200'}
+          onClick={() => { setCustomText('N/A'); choose('custom', null, 'N/A') }}
+        >
+          N/A
+        </button>
+
+        {/* can't read: value is there but illegible */}
         <button
           className={pill(selChoice === 'cant_read', false) + ' text-rose-200'}
           onClick={() => choose('cant_read', null)}

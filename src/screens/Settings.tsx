@@ -7,9 +7,20 @@ import { db } from '../db'
 
 export function Settings({ embedded = false }: { embedded?: boolean }) {
   const nav = useNavigate()
-  const { dataset, items, results, settings, setSettings, source, reload } = useStore()
+  const { dataset, items, results, settings, setSettings, source, reload, importResults } = useStore()
   const fileRef = useRef<HTMLInputElement>(null)
+  const resultsRef = useRef<HTMLInputElement>(null)
   const [busy, setBusy] = useState<string | null>(null)
+
+  const importResultsFile = async (file: File) => {
+    setBusy('Restoring adjudications…')
+    try {
+      const n = await importResults(JSON.parse(await file.text()))
+      setBusy(`Restored ${n} record${n === 1 ? '' : 's'}.`)
+    } catch (e) {
+      setBusy(`Import failed: ${String(e)}`)
+    }
+  }
 
   const importZip = async (file: File) => {
     setBusy('Importing dataset…')
@@ -50,12 +61,23 @@ export function Settings({ embedded = false }: { embedded?: boolean }) {
               <Check label="Show row highlight" checked={settings.showRow} onChange={(v) => setSettings({ showRow: v })} />
             </Section>
 
-            <Section title="Export">
-              <p className="mb-2 text-xs text-slate-500">Save your work to move back to the PC.</p>
-              <div className="flex gap-2">
+            <Section title="Export & backup">
+              <p className="mb-2 text-xs text-slate-500">
+                Export to move your work to a computer. <b>Export JSON</b> is a full backup — re-import it
+                here to restore your progress after reinstalling or on another device. CSV is one row per value.
+              </p>
+              <div className="flex flex-wrap gap-2">
                 <Btn onClick={exportJSON}>Export JSON</Btn>
                 <Btn onClick={exportCSV}>Export CSV</Btn>
+                <input ref={resultsRef} type="file" accept=".json,application/json" className="hidden"
+                  onChange={(e) => { const f = e.target.files?.[0]; if (f) void importResultsFile(f) }} />
+                <Btn onClick={() => resultsRef.current?.click()}>Import adjudications (JSON)</Btn>
               </div>
+              {busy && <p className="mt-2 text-xs text-sky-300">{busy}</p>}
+              <p className="mt-2 text-[11px] text-slate-600">
+                Importing merges by record — it restores saved answers without erasing others.
+                Done so far: {Object.keys(results).length}.
+              </p>
             </Section>
           </>
         )}

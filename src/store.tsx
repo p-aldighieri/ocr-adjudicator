@@ -25,6 +25,7 @@ interface Store {
   setFieldResult: (itemId: string, fieldKey: string, fr: FieldResult) => void
   setWrongPage: (itemId: string, v: boolean) => void
   setNotes: (itemId: string, notes: string) => void
+  importResults: (json: unknown) => Promise<number>
   reload: () => Promise<void>
 }
 
@@ -89,6 +90,18 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     mutate(itemId, (r) => { r.notes = notes })
   }, [mutate])
 
+  // Restore adjudications from an exported file (merges by itemId — survives reinstall / new device)
+  const importResults = useCallback(async (json: unknown): Promise<number> => {
+    const obj = json as { results?: Record<string, ItemResult> }
+    const map = (obj?.results ?? json) as Record<string, ItemResult>
+    const rows = Object.values(map).filter((r) => r && typeof r === 'object' && 'itemId' in r)
+    if (rows.length) {
+      await db.results.bulkPut(rows.map((r) => ({ ...r, updatedAt: r.updatedAt ?? Date.now() })))
+      await reload()
+    }
+    return rows.length
+  }, [reload])
+
   const value: Store = {
     loading,
     hasDataset: !!dataset,
@@ -101,6 +114,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setFieldResult,
     setWrongPage,
     setNotes,
+    importResults,
     reload,
   }
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
