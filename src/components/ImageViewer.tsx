@@ -45,6 +45,16 @@ export function ImageViewer({
   const url = active ? urls[active.file] : undefined
 
   const boxes = useMemo(() => ov?.boxes ?? [], [ov])
+  const cols = ov?.cols ?? []
+  const activeSection = activeField
+    ? activeField.startsWith('inc')
+      ? 'income'
+      : activeField.startsWith('enr')
+        ? 'enrollment'
+        : activeField.startsWith('fac')
+          ? 'faculty'
+          : null
+    : null
 
   if (!active) {
     return <div className="flex h-full items-center justify-center text-slate-500">No image</div>
@@ -97,6 +107,23 @@ export function ImageViewer({
                       preserveAspectRatio="none"
                       className="pointer-events-none absolute inset-0 h-full w-full"
                     >
+                      {showRow && cols.map((c, i) => {
+                        const on = c.field === activeSection
+                        return (
+                          <rect
+                            key={`col${i}`}
+                            x={c.x}
+                            y={0}
+                            width={c.w}
+                            height={1}
+                            fill="#38bdf8"
+                            fillOpacity={on ? 0.16 : 0.05}
+                            stroke="#38bdf8"
+                            strokeOpacity={on ? 0.8 : 0.25}
+                            strokeWidth={on ? 0.003 : 0.0015}
+                          />
+                        )
+                      })}
                       {showRow && ov?.row && (
                         <rect
                           x={0}

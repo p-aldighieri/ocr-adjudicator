@@ -49,13 +49,19 @@ python tools/build_dataset.py --years 1962 1939 --limit 8
 npm run dev            # open http://localhost:5173  (use a narrow / phone-sized window)
 ```
 
-Build the **full** Blue Book dataset (all 184x8, ~400 MB of WebP, OCR overlays, +zip for phone import):
+Build the **full** Blue Book dataset (all 184x8, ~300 MB of WebP, OCR overlays, +zip for phone import):
 
 ```bash
-python tools/build_dataset.py --zip
+python tools/prewarm_ocr.py --of 10 --threads 2   # parallel OCR + encode (~2-3 h, one-time; cached)
+python tools/build_dataset.py --zip               # assemble dataset.json + images + dataset.zip (~3 min)
+python tools/add_column_bands.py                  # column-band overlays for the dense years; re-zips
 ```
 
-`build_dataset.py` is incremental: already-encoded images and cached OCR are reused, so re-runs are fast.
+All steps are incremental: already-encoded images and cached OCR (`tools/.ocr_cache.json`) are reused.
+`prewarm_ocr.py` uses staggered subprocesses on purpose — `multiprocessing.Pool` + onnxruntime deadlocks
+on Windows. Overlays: snippet years (1953/56/59/62/65) get per-value boxes + a row band; the no-snippet
+years (1939/47/50) get a readable auto-cropped row strip with the row highlighted, plus column bands
+where they can be located (1939 has enough OCR anchors; 1947/50 keep the row highlight).
 
 ## Getting it on your phone
 

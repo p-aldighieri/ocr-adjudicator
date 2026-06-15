@@ -1,7 +1,8 @@
 // ---- dataset.json shape (produced by tools/build_dataset.py) ----
 export interface BBox { field: string; source: string; x: number; y: number; w: number; h: number }
 export interface RowBand { y: number; h: number }
-export interface Overlay { row: RowBand | null; boxes: BBox[] }
+export interface ColBand { field: string; x: number; w: number }
+export interface Overlay { row: RowBand | null; boxes: BBox[]; cols?: ColBand[] }
 
 export interface ImageRef {
   id: string
