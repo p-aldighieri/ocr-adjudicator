@@ -36,7 +36,7 @@ SNIPPET_YEARS = {1953, 1956, 1959, 1962, 1965}
 
 # WebP recompression targets
 SNIP_MAXW = 1800     # snippets are wide+short; keep detail
-FULL_MAXSIDE = 2200  # full pages
+FULL_MAXSIDE = 1700  # full pages (fallback view; crops are taken from the original, not this)
 SNIP_Q = 80
 FULL_Q = 78
 
@@ -262,6 +262,21 @@ def locate_row(src_path, n):
         return None
     return yc, a, W, H
 
+def row_crop_window(page_src, n, context_rows=3.3):
+    """Pixel window (y0,y1,yc,pitch,W,H) for a readable crop centred on institution `n`'s row
+    (~context_rows above & below for context), or None. Shared by build_item and the prewarm so
+    crop ids match exactly."""
+    loc = locate_row(page_src, n)
+    if not loc:
+        return None
+    yc, pitch, W, H = loc
+    half = max(40.0, pitch * context_rows)
+    y0 = max(0, int(yc - half)); y1 = min(H, int(yc + half))
+    if y1 - y0 < 24:
+        return None
+    return y0, y1, yc, pitch, W, H
+
+_img_registry = {}  # src_path -> {id, file, w, h}
 _pil_registry = {}  # crop-id -> rec
 
 def register_image(out_dir, src_path, role, side, label):
@@ -477,22 +492,20 @@ def build_item(out_dir, year, ror, man, cmp_, do_ocr, ocr_full):
         def add_row_crop(page_src, fkeys, side, label):
             if not page_src:
                 return
-            loc = locate_row(page_src, num_or_none(n))
-            if not loc:
+            win = row_crop_window(page_src, num_or_none(n))
+            if not win:
                 return
-            yc, pitch, W, H = loc
+            y0, y1, yc, pitch, W, H = win
             from PIL import Image
-            half = max(20.0, pitch * 0.62)
-            y0 = max(0, int(yc - half)); y1 = min(H, int(yc + half))
-            if y1 - y0 < 12:
-                return
             crop = Image.open(page_src).convert("RGB").crop((0, y0, W, y1))
             cid = "crop_" + short_id(page_src, num_or_none(n), y0, y1)
             desc = register_crop(out_dir, crop, cid, side, label)
+            ch = max(1, y1 - y0)
+            band = {"y": max(0.0, (yc - 0.55 * pitch - y0) / ch), "h": min(1.0, (pitch * 1.1) / ch)}
             want = {k: dict(fget(k)["_match"]) for k in fkeys if fget(k)}
             tk, (tw, th) = get_tokens_pil("crop:" + cid, crop)
-            row, boxes = boxes_from_tokens(tk, tw, th, want, anchors, force_full_row=True)
-            overlays[desc["id"]] = {"row": row, "boxes": boxes}
+            _, boxes = boxes_from_tokens(tk, tw, th, want, anchors)
+            overlays[desc["id"]] = {"row": band, "boxes": boxes}
             for k in fkeys:
                 fl = fget(k)
                 if fl:

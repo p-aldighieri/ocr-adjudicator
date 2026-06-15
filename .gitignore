@@ -16,6 +16,13 @@ dist-ssr
 public/dataset/
 dataset.zip
 tools/.ocr_cache.json
+tools/.crop_jobs.json
+tools/.shard_*.json
+
+# python artifacts
+__pycache__/
+*.pyc
+public/icon-raw.png
 
 # test / scratch artifacts
 .playwright-mcp/
