@@ -11,7 +11,7 @@ export interface Settings {
   showRow: boolean
 }
 
-const DEFAULT_SETTINGS: Settings = { queueMode: 'institution', filter: 'all', showOverlays: true, showRow: true }
+const DEFAULT_SETTINGS: Settings = { queueMode: 'year', filter: 'all', showOverlays: true, showRow: true }
 
 interface Store {
   loading: boolean

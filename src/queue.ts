@@ -1,6 +1,6 @@
 import type { Item, ItemResult, ItemStatus, Field } from './types'
 
-export type QueueMode = 'institution' | 'priority'
+export type QueueMode = 'institution' | 'year' | 'priority'
 export type QueueFilter = 'all' | 'unresolved'
 
 export function itemFields(item: Item): Field[] {
@@ -48,7 +48,11 @@ export function buildQueue(
   }
   if (mode === 'priority') {
     list.sort((a, b) => b.priority - a.priority || a.group.localeCompare(b.group) || a.year - b.year)
+  } else if (mode === 'year') {
+    // cross-section: all institutions of one year, then the next year
+    list.sort((a, b) => a.year - b.year || a.group.localeCompare(b.group))
   } else {
+    // longitudinal: one institution across all its years, then the next institution
     list.sort((a, b) => a.group.localeCompare(b.group) || a.year - b.year)
   }
   return list

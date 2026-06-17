@@ -23,14 +23,55 @@ Usage:
 """
 from __future__ import annotations
 import argparse, csv, hashlib, io, json, os, sys, statistics, zipfile
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 # ----------------------------------------------------------------------------- config / paths
-PANELS = Path(r"C:\Users\dep89\Dropbox\Computers and Science\Data\Processed data\College Blue Books\covariate_panels")
-TMP = Path(r"C:\Users\dep89\Dropbox\Computers and Science\Computers-and-Science\tmp\funding_expansion")
 HERE = Path(__file__).resolve().parent
-DEFAULT_OUT = HERE.parent / "public" / "dataset"
+DEFAULT_OUT = HERE.parent / "public" / "dataset"           # repo-relative output
 OCR_CACHE = HERE / ".ocr_cache.json"
+
+# The source data lives OUTSIDE this repo (in Dropbox), so paths can't be repo-relative. The Dropbox
+# root also differs by OS — native ~/Dropbox on Windows/Linux vs a CloudStorage mount on macOS — so
+# resolve it per-machine instead of hardcoding one user's absolute path. Everything below is
+# overridable via env vars (CS_DROPBOX / BB_PANELS / BB_TMP / BB_CROPS_HOME) or --panels/--tmp.
+HOME = Path.home()
+
+def _first_existing(cands, fallback):
+    for c in cands:
+        if c and Path(c).expanduser().exists():
+            return Path(c).expanduser()
+    return Path(fallback).expanduser()
+
+_DROPBOX = _first_existing(
+    [os.environ.get("CS_DROPBOX"),
+     HOME / "Dropbox" / "Computers and Science",                                  # Windows / Linux
+     HOME / "Library" / "CloudStorage" / "Dropbox" / "Computers and Science"],    # macOS
+    HOME / "Dropbox" / "Computers and Science",
+)
+PANELS = Path(os.environ.get("BB_PANELS") or
+              _DROPBOX / "Data" / "Processed data" / "College Blue Books" / "covariate_panels")
+TMP = Path(os.environ.get("BB_TMP") or
+           _DROPBOX / "Computers-and-Science" / "tmp" / "funding_expansion")
+# Full-page crops are NOT in Dropbox (a local per-year bb{year}_crops folder on the build machine).
+# This is the parent that holds those dirs; defaults to home. Missing crops are skipped gracefully.
+CROPS_HOME = Path(os.environ.get("BB_CROPS_HOME") or HOME).expanduser()
+
+# Manifests record absolute Windows image paths from the machine they were built on. Re-home those
+# onto this machine's resolved roots so the same manifest builds anywhere (build-time only). Snippets
+# sit under TMP; full-page crops under CROPS_HOME. Already-local/relative paths pass through.
+_WIN_TMP = r"c:\users\dep89\dropbox\computers and science\computers-and-science\tmp\funding_expansion"
+_WIN_HOME = r"c:\users\dep89"
+
+def rehome(p):
+    if not p:
+        return p
+    s = str(p).strip().strip('"')
+    low = s.lower()
+    if low.startswith(_WIN_TMP):
+        return str(TMP / PureWindowsPath(s[len(_WIN_TMP):].lstrip("\\/")).as_posix())
+    if low.startswith(_WIN_HOME):
+        return str(CROPS_HOME / PureWindowsPath(s[len(_WIN_HOME):].lstrip("\\/")).as_posix())
+    return s
 
 YEARS = [1939, 1947, 1950, 1953, 1956, 1959, 1962, 1965]
 SNIPPET_YEARS = {1953, 1956, 1959, 1962, 1965}
@@ -413,7 +454,7 @@ def build_item(out_dir, year, ror, man, cmp_, do_ocr, ocr_full):
     imgs = {}        # side -> descriptor
     src_by_side = {} # side -> source path
     def reg(col, role, side, label):
-        p = man.get(col, "")
+        p = rehome(man.get(col, ""))
         if p and p.strip() and p.strip().lower() != "nan":
             d = register_image(out_dir, p.strip(), role, side, label)
             if d:
@@ -620,7 +661,15 @@ def main():
     ap.add_argument("--no-ocr", action="store_true")
     ap.add_argument("--ocr-full", action="store_true", help="also OCR full pages (slow)")
     ap.add_argument("--zip", action="store_true")
+    ap.add_argument("--panels", type=Path, default=None, help="covariate_panels dir (overrides auto-detect/env)")
+    ap.add_argument("--tmp", type=Path, default=None, help="funding_expansion tmp dir = snippets root")
     args = ap.parse_args()
+
+    global PANELS, TMP
+    if args.panels: PANELS = args.panels
+    if args.tmp: TMP = args.tmp
+    print(f"PANELS = {PANELS}  ({'ok' if PANELS.exists() else 'MISSING'})")
+    print(f"TMP    = {TMP}  ({'ok' if TMP.exists() else 'MISSING'})")
 
     out = args.out
     (out / "images").mkdir(parents=True, exist_ok=True)

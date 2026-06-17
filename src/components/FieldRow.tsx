@@ -14,12 +14,14 @@ export function FieldRow({
   suggested,
   onChange,
   onFocus,
+  onPick,
 }: {
   field: Field
   result?: FieldResult
   suggested: boolean // true => no committed result yet, show field.default as a ghost suggestion
   onChange: (fr: FieldResult) => void
-  onFocus: () => void
+  onFocus: () => void // deliberate: bring this field's image into the viewer (label tap)
+  onPick: () => void  // highlight this field only — never moves the viewer (value tap / typing)
 }) {
   const committed = !!result
   const selChoice = result?.choice ?? (suggested ? field.default : null)
@@ -40,14 +42,21 @@ export function FieldRow({
     }`
 
   const choose = (choice: FieldResult['choice'], value: number | null, custom?: string) => {
-    onFocus()
+    onPick() // keep the viewer where it is; just highlight this field's box
     onChange({ choice, value, custom })
   }
 
   return (
-    <div className="rounded-lg" onFocusCapture={onFocus} onClick={onFocus}>
+    <div className="rounded-lg" onClick={onPick}>
       <div className="mb-1 flex items-center gap-2 text-sm text-slate-400">
-        <span>{field.label}</span>
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); onFocus() }}
+          title="Show this value on the scan"
+          className="cursor-pointer underline-offset-2 hover:underline"
+        >
+          {field.label}
+        </button>
         {field.flags?.includes('weak') && <Tag color="amber">weak col</Tag>}
         {field.flags?.includes('unreliable') && <Tag color="red">unreliable</Tag>}
         {field.agree && pickable.length >= 2 && <Tag color="emerald">agree</Tag>}
@@ -73,7 +82,7 @@ export function FieldRow({
             inputMode="text"
             placeholder="mine / N/A"
             value={customText}
-            onFocus={onFocus}
+            onFocus={onPick}
             onChange={(e) => {
               const t = e.target.value
               setCustomText(t)

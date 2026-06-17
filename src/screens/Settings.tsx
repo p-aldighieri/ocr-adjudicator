@@ -52,7 +52,7 @@ export function Settings({ embedded = false }: { embedded?: boolean }) {
         {!embedded && (
           <>
             <Section title="Queue">
-              <Toggle label="Order" value={settings.queueMode} options={[['institution', 'By institution'], ['priority', 'Priority']]} onChange={(v) => setSettings({ queueMode: v as never })} />
+              <Toggle label="Order" value={settings.queueMode} options={[['institution', 'By institution'], ['year', 'By year'], ['priority', 'Priority']]} onChange={(v) => setSettings({ queueMode: v as never })} />
               <Toggle label="Show" value={settings.filter} options={[['all', 'All'], ['unresolved', 'Unresolved only']]} onChange={(v) => setSettings({ filter: v as never })} />
             </Section>
 

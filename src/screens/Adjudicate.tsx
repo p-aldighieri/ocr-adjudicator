@@ -11,7 +11,7 @@ import type { Field, Item } from '../types'
 export function Adjudicate() {
   const { id } = useParams()
   const nav = useNavigate()
-  const { items, results, settings, setFieldResult, setWrongPage, setNotes } = useStore()
+  const { items, results, settings, setSettings, setFieldResult, setWrongPage, setNotes } = useStore()
 
   const queue = useMemo(
     () => buildQueue(items, results, settings.queueMode, settings.filter),
@@ -39,10 +39,13 @@ export function Adjudicate() {
   const { decided, total } = decidedCount(item, res)
   const status = computeStatus(item, res)
 
+  // deliberate: bring this field's image into the viewer (label tap)
   const focusField = (f: Field) => {
     setActiveField(f.key)
     if (f.imageId) setActiveImageId(f.imageId)
   }
+  // value tap / typing: only highlight the field's box — leave the viewer exactly where it is
+  const highlightField = (f: Field) => setActiveField(f.key)
 
   const goto = (idx: number) => {
     if (idx >= 0 && idx < queue.length) nav(`/item/${queue[idx].id}`)
@@ -96,6 +99,14 @@ export function Adjudicate() {
         </div>
       </header>
 
+      {/* queue sort selector */}
+      <div className="flex items-center gap-1.5 border-b border-slate-800 bg-slate-900/50 px-3 py-1 text-[11px]">
+        <span className="text-slate-500">Queue</span>
+        <SortChip active={settings.queueMode === 'institution'} onClick={() => setSettings({ queueMode: 'institution' })}>By university</SortChip>
+        <SortChip active={settings.queueMode === 'year'} onClick={() => setSettings({ queueMode: 'year' })}>By year</SortChip>
+        <SortChip active={settings.queueMode === 'priority'} onClick={() => setSettings({ queueMode: 'priority' })}>Priority</SortChip>
+      </div>
+
       {/* image viewer */}
       <div className="h-[44vh] shrink-0 border-b border-slate-800">
         <ImageViewer
@@ -139,6 +150,7 @@ export function Adjudicate() {
                   suggested={!res?.fields?.[f.key]}
                   onChange={(fr) => setFieldResult(item.id, f.key, fr)}
                   onFocus={() => focusField(f)}
+                  onPick={() => highlightField(f)}
                 />
               ))}
             </div>
@@ -172,6 +184,17 @@ function StatusDot({ status }: { status: ReturnType<typeof computeStatus> }) {
     untouched: 'new', in_progress: 'partial', done: 'done', wrong_page: 'wrong page',
   }
   return <span className={`text-[10px] ${map[status]}`}>● {label[status]}</span>
+}
+
+function SortChip({ children, active, onClick }: { children: React.ReactNode; active: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`rounded-full px-2.5 py-0.5 ${active ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-300 active:bg-slate-700'}`}
+    >
+      {children}
+    </button>
+  )
 }
 
 function QuickBtn({ children, onClick, active }: { children: React.ReactNode; onClick: () => void; active?: boolean }) {
