@@ -107,8 +107,11 @@ export function Adjudicate() {
         <SortChip active={settings.queueMode === 'priority'} onClick={() => setSettings({ queueMode: 'priority' })}>Priority</SortChip>
       </div>
 
-      {/* image viewer */}
-      <div className="h-[44vh] shrink-0 border-b border-slate-800">
+      {/* main: stacked on phone, two-pane (scan | fields) on desktop */}
+      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
+
+      {/* image viewer — fixed-height strip on phone, full-height left pane on desktop */}
+      <div className="h-[44vh] shrink-0 border-b border-slate-800 lg:h-auto lg:min-h-0 lg:flex-1 lg:border-b-0 lg:border-r">
         <ImageViewer
           images={item.images}
           overlays={item.overlays}
@@ -119,6 +122,9 @@ export function Adjudicate() {
           showRow={settings.showRow}
         />
       </div>
+
+      {/* right column: fields + nav (full-height side panel on desktop) */}
+      <div className="flex min-h-0 flex-1 flex-col lg:w-[460px] lg:flex-none">
 
       {/* fields */}
       <div className={`flex-1 overflow-y-auto px-3 py-2 ${status === 'wrong_page' ? 'opacity-40' : ''}`}>
@@ -172,6 +178,8 @@ export function Adjudicate() {
         </button>
         <NavBtn onClick={jumpUnresolved}>Next ⚑</NavBtn>
       </nav>
+      </div>{/* /right column */}
+      </div>{/* /main two-pane */}
     </div>
   )
 }

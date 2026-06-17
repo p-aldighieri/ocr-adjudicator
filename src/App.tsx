@@ -49,7 +49,8 @@ export default function App() {
   return (
     <StoreProvider>
       <HashRouter>
-        <div className="mx-auto flex h-[100dvh] max-w-[520px] flex-col bg-[#0b0f14]">
+        {/* phone: narrow centered column. desktop (lg+): use the full wide screen. */}
+        <div className="mx-auto flex h-[100dvh] max-w-[560px] flex-col bg-[#0b0f14] lg:max-w-[1600px]">
           <Shell />
         </div>
       </HashRouter>
