@@ -6,6 +6,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 // Relative base + HashRouter => works on GitHub Pages under /<repo>/ with no server config.
 export default defineConfig({
   base: './',
+  // OCR_COPY_PUBLIC=0 skips copying public/ into dist (used by the native .app build, which
+  // bundles the dataset itself — avoids vite hydrating 305MB of OneDrive placeholder images).
+  build: { copyPublicDir: process.env.OCR_COPY_PUBLIC !== '0' },
   plugins: [
     react(),
     tailwindcss(),
