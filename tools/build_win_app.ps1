@@ -72,6 +72,11 @@ $Site = Join-Path $AppDir 'site'
 if (Test-Path $Site) { Remove-Item -Recurse -Force $Site }
 New-Item -ItemType Directory -Force -Path $Site | Out-Null
 Copy-Item (Join-Path $Root 'dist\*') $Site -Recurse -Force
+# vite (copyPublicDir=0) skips public/ to avoid the 305MB dataset — but the small root assets
+# (favicon, PWA icons referenced by index.html / the manifest) must still be served.
+Get-ChildItem (Join-Path $Root 'public') -File |
+  Where-Object { $_.Name -ne 'dataset.zip' -and $_.Name -ne 'icon-raw.png' } |
+  ForEach-Object { Copy-Item $_.FullName $Site -Force }
 $DsDir = Join-Path $Site 'dataset'
 New-Item -ItemType Directory -Force -Path $DsDir | Out-Null
 Write-Host "      expanding dataset (this is the slow part)…"
