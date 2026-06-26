@@ -1,0 +1,28 @@
+OCR Adjudicator - Getting Started
+
+This app checks OCR and model readings against the original scans. You confirm the right value for each cell and it saves as you go. Setup takes about five minutes and after that it works offline.
+
+1. Install the app
+Open https://p-aldighieri.github.io/ocr-adjudicator/ in Chrome or Edge.
+Then open the browser menu and choose Install app (or Install OCR Adjudicator). This gives you a real app icon and its own window, and it keeps working offline. This is the recommended way to run it.
+On first open it says no dataset loaded. That is expected and you fix it in step 3.
+
+2. Download the dataset
+Download dataset.zip (about 320 MB) from
+https://github.com/p-aldighieri/ocr-adjudicator/releases/download/dataset-v1/dataset.zip
+It saves to your Downloads folder. You only do this once.
+
+3. Load the dataset into the app
+Open Settings with the gear icon at the top right.
+Under Dataset, click Import dataset .zip and pick the file you just downloaded.
+Wait for the Importing message to finish. The scans now live on your machine and the app runs offline from here on.
+
+4. Start working
+Click Adjudicate, or any cell in the Overview grid, to open a record.
+For each value, tap a suggested number, type your own, or mark N/A or Can't read.
+Zoom the scan with pinch or the plus and minus buttons. The highlighted row and column show where each value sits.
+Agreed values are pre-picked, so most cells are one tap on Confirm and Next.
+
+5. Send work back
+In Settings, click Export JSON and send that file to the project owner.
+Re-importing it later restores your progress, so nothing is lost across updates or a reinstall.
