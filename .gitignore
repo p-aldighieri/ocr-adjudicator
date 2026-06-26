@@ -24,6 +24,14 @@ __pycache__/
 *.pyc
 public/icon-raw.png
 
+# native Windows app build outputs (built by tools/build_win_app.ps1)
+dist-win/
+tools/win_app/bin/
+tools/win_app/obj/
+
+# native macOS app build outputs
+tools/mac_app/build/
+
 # test / scratch artifacts
 .playwright-mcp/
 shot-*.png

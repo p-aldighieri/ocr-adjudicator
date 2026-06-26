@@ -65,6 +65,53 @@ The scans now live on the phone. Turn Wi-Fi off and keep working.
 > Prefer a literal `.apk`? The same web build can be wrapped with Capacitor — but the PWA gives the
 > identical tap-the-icon, offline experience with far less friction.
 
+## Desktop app (Windows & macOS)
+
+For collaborators on a computer, the app also ships as a **self-contained desktop build** — the web app
+**and the dataset bundled inside**, so there's no Wi-Fi step and no import: install, open, adjudicate.
+
+**Windows — for collaborators**
+
+1. Get **`OCR-Adjudicator-Setup.exe`** (≈335 MB) from the project's Drive folder or the GitHub
+   [Releases](https://github.com/p-aldighieri/ocr-adjudicator/releases) page.
+2. Double-click it → **Next → Install** (no admin needed — it installs just for you). If a SmartScreen
+   *"unknown publisher"* notice appears, click **More info → Run anyway** (the app is unsigned).
+3. Launch **OCR Adjudicator** from the Start menu. It opens offline with the full dataset already inside.
+
+Export your work exactly as on the phone — **⚙ Settings → Export JSON** — and send the file back;
+`tools/apply_results.py` merges it. Saved work persists across launches and app updates.
+
+**Windows — building the installer** (on a Windows PC)
+
+Prerequisites (one time): the **.NET SDK** and **Inno Setup**.
+
+```powershell
+winget install Microsoft.DotNet.SDK.9
+winget install JRSoftware.InnoSetup
+```
+
+Then build the app folder, or the full installer:
+
+```powershell
+pwsh tools\build_win_app.ps1             # → dist-win\app\OCRAdjudicator.exe  (self-contained app folder)
+pwsh tools\build_win_app.ps1 -Installer  # → dist-win\OCR-Adjudicator-Setup.exe (the file you hand out)
+```
+
+It builds the web app, publishes a self-contained **WebView2** host (so collaborators need no .NET),
+bundles `public/dataset.zip` as the offline content, and — with `-Installer` — compiles a single
+Setup.exe that also installs the WebView2 runtime if it's missing.
+
+> The Windows host serves the bundled site from a fixed `https://app.adjudicator/` virtual-host origin
+> inside WebView2 — no local web server, no port, fully offline. The fixed origin keeps IndexedDB (your
+> saved adjudications) stable across launches.
+
+**macOS — building** (on a Mac): `tools/build_mac_app.sh [dataset.zip]` compiles a native
+Swift/WKWebView **OCR Adjudicator.app** (dataset bundled) and installs it to /Applications.
+
+> **Note:** `node_modules` holds per-platform native bundler bindings. If the repo is synced across a Mac
+> and a PC (e.g. via OneDrive), run `npm install` on whichever machine you're building on; the Windows
+> build script does this automatically when the Windows binding is missing.
+
 ## Using it
 
 - Tap **Adjudicate →**, or any cell in the **Overview** grid, to open a record.
@@ -169,6 +216,10 @@ tools/
   add_fullpage_overlays.py  maps overlays onto the wide pages (template match)
   add_cell_boxes.py   per-value grid-cell boxes for the dense ruled years
   apply_results.py   merge exported adjudications back into the source tables
+  build_win_app.ps1  build the Windows desktop app / installer (WebView2 + bundled dataset)
+  win_app/           C# WebView2 host (Program.cs), .csproj, app.ico, Inno Setup installer.iss
+  build_mac_app.sh   build the macOS .app (Swift/WKWebView + bundled dataset)
+  mac_app/           Swift host (main.swift) + Info.plist
 ```
 
 ## License

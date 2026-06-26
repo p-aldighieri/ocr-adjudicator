@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>OCRAdjudicator</RootNamespace>
+    <AssemblyName>OCRAdjudicator</AssemblyName>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <Product>OCR Adjudicator</Product>
+    <AssemblyTitle>OCR Adjudicator</AssemblyTitle>
+    <Company>p-aldighieri</Company>
+    <Version>1.0.0</Version>
+    <!-- Trim the publish output of unused localizations. -->
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- Self-contained publish so collaborators need no .NET install. -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Floating 1.0.* so the build always restores a current, compatible WebView2 SDK. -->
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.*" />
+  </ItemGroup>
+
+</Project>
