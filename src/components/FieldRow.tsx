@@ -74,7 +74,7 @@ export function FieldRow({
             </button>
           )
         })}
-        {pickable.length === 0 && <span className="text-xs italic text-slate-500">no value extracted</span>}
+        {pickable.length === 0 && <span className="text-xs italic text-slate-500">no OCR value — read from the scan or mark N/A</span>}
 
         {/* type my own */}
         <div className={`flex items-center rounded-lg border ${selChoice === 'custom' ? 'border-sky-400 bg-sky-500/15' : 'border-slate-700 bg-slate-800/60'}`}>

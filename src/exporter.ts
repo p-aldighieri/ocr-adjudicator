@@ -1,5 +1,5 @@
 import type { Dataset, Item, ItemResult } from './types'
-import { adjudicableFields, computeStatus } from './queue'
+import { computeStatus } from './queue'
 
 export function buildResultsJSON(dataset: Dataset | null, results: Record<string, ItemResult>) {
   return {
@@ -16,7 +16,10 @@ function csvCell(v: unknown): string {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
 }
 
-/** One row per adjudicable field, carrying the chosen value + provenance. */
+/**
+ * One row per field — including fields with no OCR candidates, since the user can
+ * type values the pipeline missed (dropping them here silently loses that work).
+ */
 export function buildResultsCSV(items: Item[], results: Record<string, ItemResult>): string {
   const header = [
     'item_id', 'group_key', 'institution', 'state', 'year', 'n',
@@ -27,10 +30,8 @@ export function buildResultsCSV(items: Item[], results: Record<string, ItemResul
   for (const it of items) {
     const r = results[it.id]
     const status = computeStatus(it, r)
-    const fieldKeys = new Set(adjudicableFields(it).map((f) => f.key))
     for (const sec of it.sections) {
       for (const f of sec.fields) {
-        if (!fieldKeys.has(f.key)) continue
         const fr = r?.fields?.[f.key]
         lines.push([
           it.id, it.groupKey, it.title, it.subtitle, it.year, it.n ?? '',

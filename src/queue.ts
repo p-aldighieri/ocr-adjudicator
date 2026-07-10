@@ -13,7 +13,10 @@ export function adjudicableFields(item: Item): Field[] {
 }
 
 export function decidedCount(item: Item, r?: ItemResult): { decided: number; total: number } {
-  const fields = adjudicableFields(item)
+  // Count ALL fields, not just adjudicable ones: the extraction pipeline misses values
+  // that are printed on the scan, so every field accepts manual input and needs an
+  // explicit decision (a value, N/A, or can't-read) before the item counts as done.
+  const fields = itemFields(item)
   if (!r) return { decided: 0, total: fields.length }
   let decided = 0
   for (const f of fields) {
