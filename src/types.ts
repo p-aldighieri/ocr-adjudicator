@@ -39,6 +39,7 @@ export interface Item {
   year: number
   n: number | null
   priority: number
+  alert?: string             // reviewer instruction shown as a warning banner on the card
   images: ImageRef[]
   sections: Section[]
   overlays: Record<string, Overlay>

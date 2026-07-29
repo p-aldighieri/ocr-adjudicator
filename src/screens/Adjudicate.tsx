@@ -22,6 +22,7 @@ export function Adjudicate() {
 
   const [activeImageId, setActiveImageId] = useState<string | null>(null)
   const [activeField, setActiveField] = useState<string | null>(null)
+  const [showHelp, setShowHelp] = useState(false)
 
   // when item changes, focus income + its image
   useEffect(() => {
@@ -93,19 +94,37 @@ export function Adjudicate() {
             <span className="truncate">{item.subtitle} · {decided}/{total} fields</span>
           </div>
         </div>
+        <button
+          onClick={() => setShowHelp(true)}
+          title="Reading conventions"
+          className="rounded-full border border-slate-700 px-2 py-0.5 text-sm text-slate-300 active:bg-slate-800"
+        >
+          ?
+        </button>
         <div className="text-right text-[11px] text-slate-400">
-          <div className="font-mono text-sm text-slate-200">{qIdx + 1}/{queue.length}</div>
+          <div className="font-mono text-sm text-slate-200">{qIdx >= 0 ? qIdx + 1 : '–'}/{queue.length}</div>
           <StatusDot status={status} />
         </div>
       </header>
 
-      {/* queue sort selector */}
+      {/* queue sort + backlog selector */}
       <div className="flex items-center gap-1.5 border-b border-slate-800 bg-slate-900/50 px-3 py-1 text-[11px]">
         <span className="text-slate-500">Queue</span>
         <SortChip active={settings.queueMode === 'institution'} onClick={() => setSettings({ queueMode: 'institution' })}>By university</SortChip>
         <SortChip active={settings.queueMode === 'year'} onClick={() => setSettings({ queueMode: 'year' })}>By year</SortChip>
         <SortChip active={settings.queueMode === 'priority'} onClick={() => setSettings({ queueMode: 'priority' })}>Priority</SortChip>
+        <span className="ml-auto text-slate-600">|</span>
+        <SortChip active={settings.filter === 'all'} onClick={() => setSettings({ filter: 'all' })}>All</SortChip>
+        <SortChip active={settings.filter === 'unresolved'} onClick={() => setSettings({ filter: 'unresolved' })}>Backlog</SortChip>
       </div>
+
+      {/* reviewer instruction banner */}
+      {item.alert && (
+        <div className="border-b border-amber-700/40 bg-amber-500/10 px-3 py-2 text-[12px] leading-snug text-amber-200">
+          <span className="mr-1">⚠️</span>
+          <span className="whitespace-pre-wrap">{item.alert}</span>
+        </div>
+      )}
 
       {/* main: stacked on phone, two-pane (scan | fields) on desktop */}
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
@@ -180,6 +199,52 @@ export function Adjudicate() {
       </nav>
       </div>{/* /right column */}
       </div>{/* /main two-pane */}
+
+      {showHelp && <HelpModal onClose={() => setShowHelp(false)} />}
+    </div>
+  )
+}
+
+function HelpModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={onClose}>
+      <div
+        className="max-h-[85vh] w-full max-w-md overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-4 text-sm text-slate-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mb-2 flex items-center">
+          <h2 className="flex-1 text-base font-semibold text-white">Reading conventions</h2>
+          <button onClick={onClose} className="rounded px-2 py-1 text-slate-400 active:bg-slate-800">✕</button>
+        </div>
+        <ul className="space-y-2.5 text-[13px] leading-snug">
+          <li>
+            <b className="text-amber-300">Joint totals.</b> If the book prints ONE combined number for
+            men + women (faculty or enrollment) with no split, enter the total under <b>Men</b>, mark
+            Women <b>N/A</b>, and write <i>"reported jointly"</i> in the notes.
+          </li>
+          <li>
+            <b className="text-amber-300">Transcribe exactly as printed.</b> The resources columns say
+            THOUSANDS, but some universities filed in millions — a tiny income like <span className="font-mono">12</span> can
+            be correct. Never convert units yourself; type the printed digits and add a note if the
+            magnitude looks off.
+          </li>
+          <li>
+            <b className="text-amber-300">0 vs N/A vs Can't read.</b> <span className="font-mono">0</span> = the book shows
+            zero/none (e.g. no women at a men's college). <b>N/A</b> = the cell is blank / not printed / marked
+            "<span className="font-mono">inc.</span>" or "<span className="font-mono">‡</span>" (included with the parent institution — also add a note).
+            <b> Can't read</b> = printed but illegible.
+          </li>
+          <li>
+            <b className="text-amber-300">Row number.</b> "No." is the printed row number inside the state
+            section. Sub-schools appear as lettered/dashed sub-rows of a parent — make sure you read the
+            campus/parent row asked for, not a "-School of…" sub-row.
+          </li>
+          <li>
+            <b className="text-amber-300">Wrong page.</b> Use it only when the shown page/row is not this
+            institution at all (and say what you see in the notes).
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }

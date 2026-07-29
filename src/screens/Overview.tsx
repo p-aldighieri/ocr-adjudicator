@@ -13,7 +13,7 @@ const CELL: Record<ItemStatus, string> = {
 
 export function Overview() {
   const nav = useNavigate()
-  const { items, results, dataset } = useStore()
+  const { items, results, dataset, setSettings } = useStore()
   const [q, setQ] = useState('')
 
   const years = useMemo(
@@ -40,7 +40,19 @@ export function Overview() {
         <div className="flex items-center gap-2">
           <h1 className="flex-1 text-base font-semibold text-white">Overview</h1>
           <button onClick={() => nav('/settings')} className="rounded px-2 py-1 text-slate-300 active:bg-slate-800">⚙</button>
-          <button onClick={() => nav('/item/_first')} className="rounded bg-sky-600 px-3 py-1 text-sm font-medium text-white">Adjudicate →</button>
+          <button
+            onClick={() => { setSettings({ filter: 'all' }); nav('/item/_first') }}
+            className="rounded bg-slate-700 px-3 py-1 text-sm font-medium text-slate-100"
+          >
+            Browse all
+          </button>
+          <button
+            onClick={() => { setSettings({ filter: 'unresolved' }); nav('/item/_first') }}
+            disabled={prog.inProgress + prog.untouched === 0}
+            className="rounded bg-sky-600 px-3 py-1 text-sm font-medium text-white disabled:opacity-40"
+          >
+            Continue adjudication ({prog.inProgress + prog.untouched}) →
+          </button>
         </div>
         <div className="mt-1 flex items-center gap-3 text-[11px] text-slate-400">
           <span className="text-emerald-300">done {prog.done}</span>
