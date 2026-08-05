@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1100" width="800" height="1100">
+  <!-- Placeholder for a PDF page rendered to an image by the builder (role: pdf_page). -->
+  <rect width="800" height="1100" fill="#fbf9f4"/>
+  <rect x="0" y="0" width="800" height="1100" fill="none" stroke="#e0dacd" stroke-width="4"/>
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#241f19">
+    <text x="400" y="78" font-size="15" text-anchor="middle" letter-spacing="3">GENERAL LAWS OF THE STATE OF TEXAS</text>
+    <text x="400" y="104" font-size="15" text-anchor="middle" letter-spacing="3">TWENTY-EIGHTH LEGISLATURE — CHAPTER 12</text>
+    <line x1="70" y1="126" x2="730" y2="126" stroke="#cdc6b6" stroke-width="2"/>
+    <text x="70" y="176" font-size="18" font-weight="bold">AN ACT to provide for uniform text-books in the public free schools.</text>
+    <text x="70" y="228" font-size="17">SEC. 4. That the State Text-Book Board shall, on the first Monday</text>
+    <text x="70" y="256" font-size="17">in July, 1904, adopt a uniform series of text-books for the public</text>
+    <text x="70" y="284" font-size="17">free schools of this State, which adoption shall continue in force</text>
+    <text x="70" y="312" font-size="17">for a period of five years from the first day of September following.</text>
+    <text x="70" y="366" font-size="17">SEC. 5. The books so adopted for the several branches shall be:</text>
+    <text x="110" y="404" font-size="17">Arithmetic — Milne's Standard Arithmetic, American Book Co.</text>
+    <text x="110" y="436" font-size="17">Grammar — Reed &amp; Kellogg's Graded Lessons, Maynard, Merrill &amp; Co.</text>
+    <text x="110" y="468" font-size="17">History — Barnes's Brief History of the United States, Am. Book Co.</text>
+    <text x="70" y="522" font-size="17">SEC. 6. No county, city or district board shall adopt any book for</text>
+    <text x="70" y="550" font-size="17">the branches herein named during the life of this adoption.</text>
+    <line x1="70" y1="1000" x2="730" y2="1000" stroke="#cdc6b6" stroke-width="1"/>
+    <text x="400" y="1030" font-size="15" text-anchor="middle">12</text>
+  </g>
+  <text x="70" y="1065" font-family="Georgia, serif" font-size="13" fill="#9c9484">sample facsimile — not a real page render</text>
+</svg>

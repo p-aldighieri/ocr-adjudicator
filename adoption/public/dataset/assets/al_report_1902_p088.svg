@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1100" width="800" height="1100">
+  <!-- Placeholder for a PDF page rendered to an image by the builder (role: pdf_page). -->
+  <rect width="800" height="1100" fill="#faf7f0"/>
+  <rect x="0" y="0" width="800" height="1100" fill="none" stroke="#ddd6c8" stroke-width="4"/>
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#26221b">
+    <text x="400" y="80" font-size="15" text-anchor="middle" letter-spacing="3">ANNUAL REPORT OF THE DEPARTMENT OF EDUCATION</text>
+    <text x="400" y="108" font-size="15" text-anchor="middle" letter-spacing="3">STATE OF ALABAMA — 1902</text>
+    <line x1="70" y1="130" x2="730" y2="130" stroke="#c9c0ae" stroke-width="2"/>
+    <text x="70" y="180" font-size="20" font-weight="bold">TEXT-BOOKS IN USE, BY COUNTY.</text>
+    <text x="70" y="230" font-size="17">Baldwin. — The county board, at its meeting of September, 1901,</text>
+    <text x="70" y="258" font-size="17">selected Frye's Elements of Geography (Ginn and Company) and</text>
+    <text x="70" y="286" font-size="17">Baldwin's Third Reader (American Book Company). The action is</text>
+    <text x="70" y="314" font-size="17">reported by the superintendent as a selection for the county schools;</text>
+    <text x="70" y="342" font-size="17">no formal contract had been filed with this office at the date of</text>
+    <text x="70" y="370" font-size="17">this report.</text>
+    <text x="70" y="430" font-size="17">Barbour. — No report received.</text>
+    <text x="70" y="470" font-size="17">Bibb. — Continues the books of the uniform list of 1897.</text>
+    <line x1="70" y1="1000" x2="730" y2="1000" stroke="#c9c0ae" stroke-width="1"/>
+    <text x="400" y="1030" font-size="15" text-anchor="middle">88</text>
+  </g>
+  <text x="70" y="1065" font-family="Georgia, serif" font-size="13" fill="#9a917c">sample facsimile — not a real page render</text>
+</svg>

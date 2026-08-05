@@ -1,0 +1,616 @@
+{
+  "meta": {
+    "name": "adoption-sample",
+    "schema": 1,
+    "note": "Hand-written sample bundle: three events, one per queue, exercising every evidence role. Replace wholesale with the output of the real dataset builder.",
+    "states": ["AL", "GA", "TX"],
+    "years": [1901, 1904, 1908],
+    "nItems": 3,
+    "sources": ["claude", "codex", "registry", "suggested"],
+    "sourceLabels": {
+      "claude": "Claude",
+      "codex": "Codex",
+      "registry": "Registry",
+      "suggested": "Rule"
+    }
+  },
+  "items": [
+    {
+      "id": "evt_al_baldwin_19010920",
+      "groupKey": "AL|baldwin|1901-09-20",
+      "group": "new_records",
+      "title": "Baldwin County board — 1901-09-20",
+      "subtitle": "Baldwin County, Alabama",
+      "state": "AL",
+      "year": 1901,
+      "priority": 0.35,
+      "note": "First county-level adoption we have for Baldwin. The minute book and the state annual report describe the same meeting but disagree about whether it was a binding adoption.",
+      "notesPrompt": "anything odd about this minute entry…",
+      "evidence": [
+        {
+          "id": "ev_minutes",
+          "role": "image",
+          "file": "assets/al_baldwin_1901_minutes.svg",
+          "label": "Minutes p. 214",
+          "sourceLine": "Baldwin County Board of Education, Minute Book 3, p. 214 — meeting of 1901-09-20"
+        },
+        {
+          "id": "ev_report",
+          "role": "pdf_page",
+          "file": "assets/al_report_1902_p088.svg",
+          "label": "State report p. 88",
+          "sourceLine": "Alabama Dept. of Education, Annual Report for 1902, p. 88 (PDF page 96, rendered)"
+        },
+        {
+          "id": "ev_transcript",
+          "role": "text",
+          "text": "Bay Minette, September 20th, 1901.\n\nThe Board met in regular session, all members present.\n\nOn motion of Mr. Sessions, duly seconded, it was ordered that the\nfollowing books be, and the same are hereby, adopted for use in the\npublic schools of this county for the term of five years:\n\n    1.  Frye's Elements of Geography ....... Ginn & Co.\n    2.  Baldwin's Third Reader ............. American Book Co.\n\nThe Superintendent was directed to notify the several trustees, and\nto procure the said books at the contract price.",
+          "label": "Transcript",
+          "sourceLine": "Manual transcript of Minute Book 3, p. 214 — transcribed 2026-07-14, unverified against a second reader"
+        },
+        {
+          "id": "ev_catalog",
+          "role": "url",
+          "href": "https://catalog.hathitrust.org/Record/000493123",
+          "text": "Catalogue record for the 1902 Alabama annual report; the adoption paragraph is on p. 88 of the printed volume.",
+          "label": "HathiTrust record",
+          "sourceLine": "HathiTrust catalogue record 000493123 — stable link, full view"
+        }
+      ],
+      "eventFields": [
+        {
+          "key": "adoption_date",
+          "label": "Adoption date",
+          "valueType": "text",
+          "candidates": [
+            { "source": "claude", "value": "1901-09-20" },
+            { "source": "codex", "value": "1901-09-20" }
+          ],
+          "default": "claude",
+          "agree": true,
+          "evidenceIds": ["ev_minutes", "ev_transcript"],
+          "flags": [],
+          "hint": "The date of the board action, not the date the books took effect."
+        },
+        {
+          "key": "unit_level",
+          "label": "Unit level",
+          "valueType": "choice",
+          "options": ["state", "county", "city", "district", "school"],
+          "candidates": [
+            { "source": "claude", "value": "county" },
+            { "source": "codex", "value": "county" },
+            { "source": "registry", "value": "county", "note": "Baldwin ran a single county board from 1899; no independent city system until 1907." }
+          ],
+          "default": "claude",
+          "agree": true,
+          "evidenceIds": ["ev_minutes"],
+          "flags": []
+        },
+        {
+          "key": "formal_adoption",
+          "label": "Formal adoption?",
+          "valueType": "choice",
+          "options": ["yes", "no", "unclear"],
+          "candidates": [
+            { "source": "claude", "value": "yes", "note": "\"are hereby adopted\" — operative language, plus a term of years." },
+            { "source": "codex", "value": "unclear", "note": "The state report calls it a \"selection\" and notes no contract was filed." }
+          ],
+          "default": "claude",
+          "agree": false,
+          "evidenceIds": ["ev_transcript", "ev_report"],
+          "flags": ["conflict"],
+          "hint": "Decide from the board's own words, not the state's summary of them."
+        },
+        {
+          "key": "term_years",
+          "label": "Term (years)",
+          "valueType": "text",
+          "candidates": [
+            { "source": "claude", "value": "5" },
+            { "source": "codex", "value": "5" }
+          ],
+          "default": "claude",
+          "agree": true,
+          "evidenceIds": ["ev_transcript"],
+          "flags": []
+        }
+      ],
+      "books": [
+        {
+          "key": "b_geog",
+          "title_as_stated": "Frye's Elements of Geography",
+          "fields": [
+            {
+              "key": "title",
+              "label": "Title as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Frye's Elements of Geography" },
+                { "source": "codex", "value": "Frye's Elements of Geography" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_minutes", "ev_transcript"],
+              "flags": []
+            },
+            {
+              "key": "publisher",
+              "label": "Publisher as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Ginn & Co." },
+                { "source": "codex", "value": "Ginn and Company", "note": "Taken from the state report, which spells the firm out." }
+              ],
+              "default": "claude",
+              "agree": false,
+              "evidenceIds": ["ev_minutes", "ev_report"],
+              "flags": [],
+              "hint": "Transcribe the spelling used in the primary source (the minutes), not the normalised one."
+            },
+            {
+              "key": "subject",
+              "label": "Subject",
+              "valueType": "choice",
+              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "candidates": [
+                { "source": "claude", "value": "geography" },
+                { "source": "codex", "value": "geography" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_minutes"],
+              "flags": []
+            },
+            {
+              "key": "grade_span",
+              "label": "Grade span",
+              "valueType": "text",
+              "candidates": [
+                { "source": "suggested", "value": "grades 5-8", "note": "Inferred from the series, not stated in the minutes." }
+              ],
+              "default": null,
+              "agree": false,
+              "evidenceIds": ["ev_minutes"],
+              "flags": ["inferred"],
+              "hint": "If the source does not say, mark Not stated — do not accept the inferred value."
+            }
+          ]
+        },
+        {
+          "key": "b_reader",
+          "title_as_stated": "Baldwin's Third Reader",
+          "note": "Listed second in the same motion — same event, same term.",
+          "fields": [
+            {
+              "key": "title",
+              "label": "Title as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Baldwin's Third Reader" },
+                { "source": "codex", "value": "Baldwin's Third Reader" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_minutes", "ev_transcript"],
+              "flags": []
+            },
+            {
+              "key": "publisher",
+              "label": "Publisher as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "American Book Co." },
+                { "source": "codex", "value": "American Book Co." },
+                { "source": "registry", "value": "American Book Company", "note": "Registry's canonical firm name — do not copy it into the as-stated field." }
+              ],
+              "default": "claude",
+              "agree": false,
+              "evidenceIds": ["ev_minutes", "ev_report"],
+              "flags": []
+            },
+            {
+              "key": "subject",
+              "label": "Subject",
+              "valueType": "choice",
+              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "candidates": [
+                { "source": "claude", "value": "reading" },
+                { "source": "codex", "value": "reading" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_transcript"],
+              "flags": []
+            },
+            {
+              "key": "grade_span",
+              "label": "Grade span",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "third reader" }
+              ],
+              "default": "claude",
+              "agree": false,
+              "evidenceIds": ["ev_transcript"],
+              "flags": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "evt_ga_warren_19080406",
+      "groupKey": "GA|warren|1908-04-06",
+      "group": "conflicts",
+      "title": "Warren County board — 1908-04-06",
+      "subtitle": "Warren County, Georgia",
+      "state": "GA",
+      "year": 1908,
+      "priority": 0.85,
+      "alert": "The minute book is water-damaged exactly where the title sits. The newspaper notice names a book; the marginal note names a different contract date. Decide from the evidence, and if neither settles it, flag the bundle.",
+      "note": "Extractors disagree on both the book and the date. This is the canonical shape of a 'conflicts' bundle: one book, several irreconcilable readings.",
+      "notesPrompt": "which reading did you take, and why…",
+      "evidence": [
+        {
+          "id": "ev_minute_page",
+          "role": "image",
+          "file": "assets/ga_warren_1908_minutes.svg",
+          "label": "Minutes p. 41",
+          "sourceLine": "Warren County Board of Education, Minutes Book B, p. 41 — 1908-04-06 (water damage, lower third)"
+        },
+        {
+          "id": "ev_press",
+          "role": "text",
+          "text": "THE WARRENTON CLIPPER, April 9, 1908, p. 3.\n\n  SCHOOL BOOKS CHANGED. — At its meeting Monday the county board\n  put out the readers now in use and took on the Holmes Fourth\n  Reader, the change to take effect with the fall term. The\n  adoption is said to run four years. Mr. Sanders represented the\n  publishers.",
+          "label": "Newspaper notice",
+          "sourceLine": "The Warrenton Clipper, 1908-04-09, p. 3, col. 2 — Chronicling America OCR, lightly corrected"
+        },
+        {
+          "id": "ev_ca_link",
+          "role": "url",
+          "href": "https://chroniclingamerica.loc.gov/lccn/sn89053316/1908-04-09/ed-1/seq-3/",
+          "text": "Page image behind the newspaper notice. Open it if the transcript above looks garbled — the OCR for column 2 is poor.",
+          "label": "Chronicling America page",
+          "sourceLine": "Library of Congress, Chronicling America — sn89053316, 1908-04-09, ed. 1, seq. 3"
+        }
+      ],
+      "eventFields": [
+        {
+          "key": "adoption_date",
+          "label": "Adoption date",
+          "valueType": "text",
+          "candidates": [
+            { "source": "claude", "value": "1908-04-06", "note": "Date of the board meeting itself." },
+            { "source": "codex", "value": "1908-04-16", "note": "Date on the marginal note about the filed contract." }
+          ],
+          "default": "claude",
+          "agree": false,
+          "evidenceIds": ["ev_minute_page", "ev_press"],
+          "flags": ["conflict"],
+          "hint": "We date the board action, not the contract filing."
+        },
+        {
+          "key": "term_years",
+          "label": "Term (years)",
+          "valueType": "text",
+          "candidates": [
+            { "source": "claude", "value": "4" },
+            { "source": "codex", "value": "4" },
+            { "source": "suggested", "value": "5", "note": "State default term under the 1897 act — only a fallback." }
+          ],
+          "default": "claude",
+          "agree": false,
+          "evidenceIds": ["ev_minute_page", "ev_press"],
+          "flags": []
+        }
+      ],
+      "books": [
+        {
+          "key": "b_reader4",
+          "title_as_stated": "▨▨▨▨▨ Fourth Reader",
+          "note": "The publisher's name is illegible in the minutes; the newspaper supplies a title the minutes cannot confirm.",
+          "fields": [
+            {
+              "key": "title",
+              "label": "Title as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Holmes Fourth Reader", "note": "From the newspaper notice; the minutes are illegible at this word." },
+                { "source": "codex", "value": "Swinton's Fourth Reader", "note": "Guessed from the county's 1904 list — no direct support here." }
+              ],
+              "default": null,
+              "agree": false,
+              "evidenceIds": ["ev_minute_page", "ev_press", "ev_ca_link"],
+              "flags": ["conflict", "ocr_low"],
+              "hint": "The minutes are the primary source. If they cannot be read, say so rather than promoting the newspaper's version silently."
+            },
+            {
+              "key": "publisher",
+              "label": "Publisher as stated",
+              "valueType": "text",
+              "candidates": [],
+              "default": null,
+              "agree": false,
+              "evidenceIds": ["ev_minute_page"],
+              "flags": ["unreliable"],
+              "hint": "No candidate was extracted. Read it off the scan or mark Not stated."
+            },
+            {
+              "key": "subject",
+              "label": "Subject",
+              "valueType": "choice",
+              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "candidates": [
+                { "source": "claude", "value": "reading" },
+                { "source": "codex", "value": "reading" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_minute_page"],
+              "flags": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "evt_tx_state_19040704",
+      "groupKey": "TX|state|1904-07-04",
+      "group": "state_laws",
+      "title": "Texas State Text-Book Board — 1904 uniform adoption",
+      "subtitle": "Statewide, Texas",
+      "state": "TX",
+      "year": 1904,
+      "priority": 0.6,
+      "note": "Statute-driven adoption: one act, one board action, a whole series of books. Every book below is part of the same event and inherits the same date and term.",
+      "notesPrompt": "note any book listed in the act but missing here…",
+      "evidence": [
+        {
+          "id": "ev_statute",
+          "role": "pdf_page",
+          "file": "assets/tx_1904_statute_p012.svg",
+          "label": "Session laws p. 12",
+          "sourceLine": "General Laws of Texas, 28th Legislature, ch. 12, p. 12 (PDF page 34, rendered)"
+        },
+        {
+          "id": "ev_statute_text",
+          "role": "text",
+          "text": "SEC. 4. That the State Text-Book Board shall, on the first Monday\nin July, 1904, adopt a uniform series of text-books for the public\nfree schools of this State, which adoption shall continue in force\nfor a period of five years from the first day of September following.\n\nSEC. 5. The books so adopted for the several branches shall be:\n\n    Arithmetic — Milne's Standard Arithmetic, American Book Co.\n    Grammar   — Reed & Kellogg's Graded Lessons, Maynard, Merrill & Co.\n    History   — Barnes's Brief History of the United States, Am. Book Co.\n\nSEC. 6. No county, city or district board shall adopt any book for\nthe branches herein named during the life of this adoption.",
+          "label": "Statute text",
+          "sourceLine": "General Laws of Texas, 28th Leg., ch. 12, secs. 4–6 — clean text from the state's digitised session laws"
+        },
+        {
+          "id": "ev_session_url",
+          "role": "url",
+          "href": "https://lrl.texas.gov/legis/billsearch/",
+          "text": "Legislative Reference Library session-law finder. Use it to confirm the chapter number and effective date if the rendered page is ambiguous.",
+          "label": "Session laws finder",
+          "sourceLine": "Texas Legislative Reference Library — session law search (chapter 12, 28th Legislature)"
+        }
+      ],
+      "eventFields": [
+        {
+          "key": "adoption_date",
+          "label": "Adoption date",
+          "valueType": "text",
+          "candidates": [
+            { "source": "claude", "value": "1904-07-04", "note": "First Monday in July 1904, as the act directs." },
+            { "source": "codex", "value": "1904-07-04" },
+            { "source": "registry", "value": "1904-09-01", "note": "Registry stores the effective date, not the adoption date." }
+          ],
+          "default": "claude",
+          "agree": false,
+          "evidenceIds": ["ev_statute", "ev_statute_text"],
+          "flags": [],
+          "hint": "Adoption date, not the date the books took effect."
+        },
+        {
+          "key": "unit_level",
+          "label": "Unit level",
+          "valueType": "choice",
+          "options": ["state", "county", "city", "district", "school"],
+          "candidates": [
+            { "source": "claude", "value": "state" },
+            { "source": "codex", "value": "state" }
+          ],
+          "default": "claude",
+          "agree": true,
+          "evidenceIds": ["ev_statute_text"],
+          "flags": []
+        },
+        {
+          "key": "statute_citation",
+          "label": "Statute citation",
+          "valueType": "text",
+          "candidates": [
+            { "source": "claude", "value": "Gen. Laws Tex. 28th Leg., ch. 12, secs. 4-6 (1903)" },
+            { "source": "codex", "value": "Tex. Gen. Laws ch. 12 (1903)" }
+          ],
+          "default": "claude",
+          "agree": false,
+          "evidenceIds": ["ev_statute", "ev_session_url"],
+          "flags": []
+        },
+        {
+          "key": "term_years",
+          "label": "Term (years)",
+          "valueType": "text",
+          "candidates": [
+            { "source": "claude", "value": "5" },
+            { "source": "codex", "value": "5" }
+          ],
+          "default": "claude",
+          "agree": true,
+          "evidenceIds": ["ev_statute_text"],
+          "flags": []
+        },
+        {
+          "key": "preempts_local",
+          "label": "Pre-empts local adoption?",
+          "valueType": "choice",
+          "options": ["yes", "no", "unclear"],
+          "candidates": [
+            { "source": "claude", "value": "yes", "note": "Sec. 6 bars county, city and district boards for the named branches." }
+          ],
+          "default": "claude",
+          "agree": false,
+          "evidenceIds": ["ev_statute_text"],
+          "flags": []
+        }
+      ],
+      "books": [
+        {
+          "key": "b_arith",
+          "title_as_stated": "Milne's Standard Arithmetic",
+          "fields": [
+            {
+              "key": "title",
+              "label": "Title as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Milne's Standard Arithmetic" },
+                { "source": "codex", "value": "Milne's Standard Arithmetic" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": []
+            },
+            {
+              "key": "publisher",
+              "label": "Publisher as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "American Book Co." },
+                { "source": "codex", "value": "American Book Co." }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": []
+            },
+            {
+              "key": "subject",
+              "label": "Subject",
+              "valueType": "choice",
+              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "candidates": [
+                { "source": "claude", "value": "arithmetic" },
+                { "source": "codex", "value": "arithmetic" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": []
+            }
+          ]
+        },
+        {
+          "key": "b_gram",
+          "title_as_stated": "Reed & Kellogg's Graded Lessons in English",
+          "note": "The act prints only \"Graded Lessons\"; the fuller title comes from the publisher's list.",
+          "fields": [
+            {
+              "key": "title",
+              "label": "Title as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Reed & Kellogg's Graded Lessons" },
+                { "source": "registry", "value": "Graded Lessons in English", "note": "Registry title — the act does not print the words \"in English\"." }
+              ],
+              "default": "claude",
+              "agree": false,
+              "evidenceIds": ["ev_statute_text", "ev_statute"],
+              "flags": []
+            },
+            {
+              "key": "publisher",
+              "label": "Publisher as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Maynard, Merrill & Co." },
+                { "source": "codex", "value": "Maynard Merrill & Co" }
+              ],
+              "default": "claude",
+              "agree": false,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": ["weak"]
+            },
+            {
+              "key": "subject",
+              "label": "Subject",
+              "valueType": "choice",
+              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "candidates": [
+                { "source": "claude", "value": "grammar" },
+                { "source": "codex", "value": "grammar" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": []
+            }
+          ]
+        },
+        {
+          "key": "b_hist",
+          "title_as_stated": "Barnes's Brief History of the United States",
+          "fields": [
+            {
+              "key": "title",
+              "label": "Title as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Barnes's Brief History of the United States" },
+                { "source": "codex", "value": "Barnes's Brief History of the United States" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": []
+            },
+            {
+              "key": "publisher",
+              "label": "Publisher as stated",
+              "valueType": "text",
+              "candidates": [
+                { "source": "claude", "value": "Am. Book Co." },
+                { "source": "codex", "value": "American Book Co.", "note": "Expanded the abbreviation — the act prints \"Am. Book Co.\"" }
+              ],
+              "default": "claude",
+              "agree": false,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": []
+            },
+            {
+              "key": "subject",
+              "label": "Subject",
+              "valueType": "choice",
+              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "candidates": [
+                { "source": "claude", "value": "history" },
+                { "source": "codex", "value": "history" }
+              ],
+              "default": "claude",
+              "agree": true,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": []
+            },
+            {
+              "key": "edition_year",
+              "label": "Edition / year stated",
+              "valueType": "text",
+              "candidates": [],
+              "default": null,
+              "agree": false,
+              "evidenceIds": ["ev_statute_text"],
+              "flags": [],
+              "hint": "The act names no edition. Expect Not stated."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

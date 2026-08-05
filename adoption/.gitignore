@@ -1,0 +1,13 @@
+# The repo root .gitignore excludes public/dataset/ (the OCR app's dataset is 300MB+ of
+# generated images). This app's sample dataset is hand-written SOURCE and must be tracked,
+# so re-include it here. Real generated datasets go in dataset-build/, which stays ignored.
+!public/dataset/
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# generated dataset bundles (built by the dataset builder — data, not code)
+dataset-build/
+dataset.zip

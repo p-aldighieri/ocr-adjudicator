@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1100" width="800" height="1100">
+  <!-- Placeholder facsimile shipped with the SAMPLE dataset only.
+       The real builder emits .webp crops of the actual scans. -->
+  <rect width="800" height="1100" fill="#f3ecdc"/>
+  <rect x="0" y="0" width="800" height="1100" fill="none" stroke="#d8ceb6" stroke-width="6"/>
+  <g stroke="#e2d9c2" stroke-width="1">
+    <line x1="60" y1="150" x2="740" y2="150"/>
+    <line x1="60" y1="1040" x2="740" y2="1040"/>
+  </g>
+  <g font-family="Georgia, 'Times New Roman', serif" fill="#2f2a20">
+    <text x="400" y="90" font-size="26" text-anchor="middle" letter-spacing="2">BOARD OF EDUCATION</text>
+    <text x="400" y="124" font-size="20" text-anchor="middle">Baldwin County, Alabama — Minute Book 3, p. 214</text>
+    <text x="60" y="200" font-size="19">Bay Minette, September 20th, 1901.</text>
+    <text x="60" y="240" font-size="19">The Board met in regular session, all members present.</text>
+    <text x="60" y="290" font-size="19">On motion of Mr. Sessions, duly seconded, it was ordered that the</text>
+    <text x="60" y="320" font-size="19">following books be, and the same are hereby, adopted for use in the</text>
+    <text x="60" y="350" font-size="19">public schools of this county for the term of five years:</text>
+    <text x="100" y="410" font-size="19">1.  Frye's Elements of Geography ....... Ginn &amp; Co.</text>
+    <text x="100" y="450" font-size="19">2.  Baldwin's Third Reader ............. American Book Co.</text>
+    <text x="60" y="510" font-size="19">The Superintendent was directed to notify the several trustees, and</text>
+    <text x="60" y="540" font-size="19">to procure the said books at the contract price.</text>
+    <text x="60" y="600" font-size="19">There being no further business the Board adjourned.</text>
+    <text x="440" y="680" font-size="19" font-style="italic">J. D. Hastie, President</text>
+    <text x="440" y="716" font-size="19" font-style="italic">W. A. Cooper, Secretary</text>
+  </g>
+  <g font-family="Georgia, serif" fill="#8a8069" font-size="14">
+    <text x="60" y="1070">sample facsimile — not a real scan</text>
+    <text x="740" y="1070" text-anchor="end">214</text>
+  </g>
+</svg>
