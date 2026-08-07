@@ -25,10 +25,16 @@ const GROUP_BLURB: Record<QueueGroup, string> = {
   state_laws: 'Statute-level adoptions: one law, often many books.',
 }
 
+const DATASET_URL =
+  'https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v2/adoption-dataset.zip'
+
 export function Overview() {
   const nav = useNavigate()
-  const { items, results, setSettings } = useStore()
+  const { items, results, setSettings, dataset } = useStore()
   const [q, setQ] = useState('')
+  // The hand-written demo ships as meta.name "adoption-sample"; real builds
+  // are "adoptions-YYYYMMDD". Show onboarding until a real dataset is loaded.
+  const isSample = (dataset?.meta.name ?? 'adoption-sample') === 'adoption-sample'
 
   const filtered = useMemo(() => {
     const t = q.trim().toLowerCase()
@@ -92,6 +98,37 @@ export function Overview() {
       </header>
 
       <div className="flex-1 overflow-auto px-3 py-3">
+        {isSample && (
+          <section className="mb-5 rounded-xl border border-sky-500/40 bg-sky-500/5 px-4 py-3">
+            <h2 className="text-sm font-semibold text-sky-200">Start here — you're viewing the 3-item demo</h2>
+            <ol className="mt-2 list-decimal space-y-1 pl-5 text-xs leading-snug text-slate-300">
+              <li>
+                <a href={DATASET_URL} className="font-medium text-sky-300 underline">
+                  Download the real dataset (~224&nbsp;MB zip)
+                </a>{' '}
+                — on this device, wherever your downloads go.
+              </li>
+              <li>
+                Tap <button onClick={() => nav('/settings')} className="font-medium text-sky-300 underline">⚙ Settings</button>{' '}
+                → <span className="font-medium">Import dataset .zip</span> and pick the file. One-time; afterwards the
+                app works fully offline, and this notice disappears.
+              </li>
+              <li>
+                Work through the queues below in any order, in as many sittings as you like — every decision
+                saves to this device instantly.
+              </li>
+              <li>
+                Pausing or partly done? Nothing to do — it's saved. To send decisions back, use{' '}
+                <span className="font-medium">⚙ Settings → Export CSV</span>. To move to another device,{' '}
+                <span className="font-medium">Export JSON</span> there and{' '}
+                <span className="font-medium">Import adjudications (JSON)</span> on the new one.
+              </li>
+            </ol>
+            <p className="mt-2 text-[11px] text-slate-500">
+              Tip: your browser may offer to “install” this page as an app — optional, it just adds a home-screen icon.
+            </p>
+          </section>
+        )}
         {QUEUE_GROUPS.map((g) => (
           <section key={g} className="mb-5">
             <div className="mb-1 flex items-baseline gap-2">
