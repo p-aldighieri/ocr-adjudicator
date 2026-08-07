@@ -104,7 +104,7 @@ export function Overview() {
             <ol className="mt-2 list-decimal space-y-1 pl-5 text-xs leading-snug text-slate-300">
               <li>
                 <a href={DATASET_URL} className="font-medium text-sky-300 underline">
-                  Download the real dataset (~224&nbsp;MB zip)
+                  Download the real dataset (~328&nbsp;MB zip)
                 </a>{' '}
                 — on this device, wherever your downloads go.
               </li>
