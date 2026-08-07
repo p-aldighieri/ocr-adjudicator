@@ -8,6 +8,12 @@ Static React + TS + Tailwind SPA · HashRouter · Dexie/IndexedDB autosave · re
 PWA (offline after first load). No backend, no tracking. It lives in `adoption/` and is a **separate
 npm project** from the app at the repo root — nothing here imports from `../src`.
 
+**Live app:** <https://p-aldighieri.github.io/ocr-adjudicator/adoption/> (boots with the 3-item
+sample). **Real dataset** (424 items from the 2026-08-06 adoption master, 223 MB):
+[`adoption-dataset.zip`](https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v1/adoption-dataset.zip)
+— download it on any device, then **⚙ Settings → Import dataset .zip**. Everything stays in the
+browser's local storage; works on Mac/Windows/Linux browsers, Android Chrome, and iOS 16.4+ Safari.
+
 ---
 
 ## Run it
