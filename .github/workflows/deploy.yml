@@ -23,8 +23,19 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            adoption/package-lock.json
       - run: npm ci
       - run: npm run build
+      # Second app: adoption adjudicator, served under ./adoption/ (relative
+      # base + HashRouter + own service-worker scope — no URL collisions;
+      # the root app's SW denylists /adoption/ navigations).
+      - run: npm ci
+        working-directory: adoption
+      - run: npm run build
+        working-directory: adoption
+      - run: mv adoption/dist dist/adoption
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

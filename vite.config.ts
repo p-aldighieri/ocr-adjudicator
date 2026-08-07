@@ -34,6 +34,10 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,woff2}'],
         globIgnores: ['**/dataset/**'],
         navigateFallback: 'index.html',
+        // The adoption app is served under ./adoption/ with its own service
+        // worker — this SW's scope covers it, so without a denylist a first
+        // visit to /adoption/ would be answered with the OCR index.html.
+        navigateFallbackDenylist: [/\/adoption\//],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       },
       devOptions: { enabled: false },
