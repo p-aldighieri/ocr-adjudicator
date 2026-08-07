@@ -26,7 +26,7 @@ const GROUP_BLURB: Record<QueueGroup, string> = {
 }
 
 const DATASET_URL =
-  'https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v2/adoption-dataset.zip'
+  'https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v3/adoption-dataset.zip'
 
 export function Overview() {
   const nav = useNavigate()
