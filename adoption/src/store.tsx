@@ -1,17 +1,20 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
-import type { Dataset, Item, ItemResult, FieldResult } from './types'
+import type { AddedTitleResult, Dataset, Item, ItemResult, FieldResult } from './types'
 import { loadDataset } from './dataset'
 import { db, getAllResults, getMeta, saveResult, setMeta } from './db'
-import { computeStatus, type QueueFilter, type QueueMode } from './queue'
+import { computeStatus, isLegacyTitleField, type QueueFilter, type QueueMode } from './queue'
 
 export interface Settings {
   queueMode: QueueMode
   filter: QueueFilter
   /** soft-wrap long lines in text evidence (off = preserve the source's line breaks) */
   wrapText: boolean
+  /** draw normalized passage/table regions supplied by the dataset builder */
+  showHighlights: boolean
 }
 
-const DEFAULT_SETTINGS: Settings = { queueMode: 'group', filter: 'all', wrapText: true }
+const DEFAULT_SETTINGS: Settings = { queueMode: 'group', filter: 'all', wrapText: true, showHighlights: true }
 
 interface Store {
   loading: boolean
@@ -26,6 +29,9 @@ interface Store {
   settings: Settings
   setSettings: (p: Partial<Settings>) => void
   setFieldResult: (itemId: string, fieldKey: string, fr: FieldResult) => void
+  addTitle: (itemId: string, title: AddedTitleResult) => void
+  updateAddedTitle: (itemId: string, titleId: string, value: string) => void
+  removeAddedTitle: (itemId: string, titleId: string) => void
   setInsufficient: (itemId: string, v: boolean) => void
   setNotes: (itemId: string, notes: string) => void
   importResults: (json: unknown) => Promise<number>
@@ -57,7 +63,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setLoading(false)
   }, [])
 
-  useEffect(() => { void reload() }, [reload])
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void reload() }, 0)
+    return () => window.clearTimeout(timer)
+  }, [reload])
 
   const items = useMemo(() => dataset?.items ?? [], [dataset])
   const sources = useMemo(() => dataset?.meta.sources ?? [], [dataset])
@@ -87,6 +96,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     mutate(itemId, (r) => { r.fields[fieldKey] = fr })
   }, [mutate])
 
+  const addTitle = useCallback((itemId: string, title: AddedTitleResult) => {
+    mutate(itemId, (r) => { r.addedTitles = [...(r.addedTitles ?? []), title] })
+  }, [mutate])
+
+  const updateAddedTitle = useCallback((itemId: string, titleId: string, value: string) => {
+    mutate(itemId, (r) => {
+      r.addedTitles = (r.addedTitles ?? []).map((title) => title.id === titleId ? { ...title, value } : title)
+    })
+  }, [mutate])
+
+  const removeAddedTitle = useCallback((itemId: string, titleId: string) => {
+    mutate(itemId, (r) => { r.addedTitles = (r.addedTitles ?? []).filter((title) => title.id !== titleId) })
+  }, [mutate])
+
   const setInsufficient = useCallback((itemId: string, v: boolean) => {
     mutate(itemId, (r) => { r.insufficient = v })
   }, [mutate])
@@ -99,7 +122,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const importResults = useCallback(async (json: unknown): Promise<number> => {
     const obj = json as { results?: Record<string, ItemResult> }
     const map = (obj?.results ?? json) as Record<string, ItemResult>
-    const rows = Object.values(map).filter((r) => r && typeof r === 'object' && 'itemId' in r)
+    const rows = Object.values(map)
+      .filter((r) => r && typeof r === 'object' && 'itemId' in r)
+      .map((r) => ({
+        ...r,
+        fields: Object.fromEntries(Object.entries(r.fields ?? {}).filter(([key]) => {
+          const fieldKey = key.slice(key.lastIndexOf(':') + 1)
+          return !isLegacyTitleField(fieldKey)
+        })),
+      }))
     if (rows.length) {
       await db.results.bulkPut(rows.map((r) => ({ ...r, updatedAt: r.updatedAt ?? Date.now() })))
       await reload()
@@ -119,6 +150,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     settings,
     setSettings,
     setFieldResult,
+    addTitle,
+    updateAddedTitle,
+    removeAddedTitle,
     setInsufficient,
     setNotes,
     importResults,

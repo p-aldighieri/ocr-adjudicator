@@ -1,9 +1,13 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store'
 import { computeStatus, overallProgress, progressByGroup } from '../queue'
 import type { Item, ItemStatus, QueueGroup } from '../types'
 import { GROUP_LABEL, QUEUE_GROUPS } from '../types'
+import {
+  effectivePriority, matchesResearchFocus, type ResearchFocus,
+} from '../classifications'
+import { ItemResearchTags } from '../components/ItemResearchTags'
 
 const DOT: Record<ItemStatus, string> = {
   untouched: 'bg-slate-700',
@@ -26,25 +30,25 @@ const GROUP_BLURB: Record<QueueGroup, string> = {
 }
 
 const DATASET_URL =
-  'https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v3/adoption-dataset.zip'
+  'https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v4/adoption-dataset.zip'
 
 export function Overview() {
   const nav = useNavigate()
   const { items, results, setSettings, dataset } = useStore()
   const [q, setQ] = useState('')
+  const [focus, setFocus] = useState<ResearchFocus>('all')
   // The hand-written demo ships as meta.name "adoption-sample"; real builds
   // are "adoptions-YYYYMMDD". Show onboarding until a real dataset is loaded.
   const isSample = (dataset?.meta.name ?? 'adoption-sample') === 'adoption-sample'
 
   const filtered = useMemo(() => {
     const t = q.trim().toLowerCase()
-    if (!t) return items
-    return items.filter((i) =>
+    return items.filter((i) => matchesResearchFocus(i, focus) && (!t || (
       i.title.toLowerCase().includes(t) ||
       i.subtitle.toLowerCase().includes(t) ||
       i.state.toLowerCase().includes(t) ||
-      String(i.year).includes(t))
-  }, [items, q])
+      String(i.year).includes(t))))
+  }, [items, q, focus])
 
   const byGroup = useMemo(() => {
     const m = {} as Record<QueueGroup, Item[]>
@@ -54,13 +58,14 @@ export function Overview() {
       if (bucket) bucket.push(it) // tolerate a group the UI does not know about
     }
     for (const g of QUEUE_GROUPS) {
-      m[g].sort((a, b) => b.priority - a.priority || a.state.localeCompare(b.state) || a.year - b.year)
+      m[g].sort((a, b) => effectivePriority(b) - effectivePriority(a) || a.state.localeCompare(b.state) || a.year - b.year)
     }
     return m
   }, [filtered])
 
   const prog = overallProgress(items, results)
-  const gprog = progressByGroup(items, results)
+  const visibleProg = overallProgress(filtered, results)
+  const gprog = progressByGroup(filtered, results)
 
   return (
     <div className="flex h-full flex-col">
@@ -83,10 +88,10 @@ export function Overview() {
           </button>
         </div>
         <div className="mt-1 flex items-center gap-3 text-[11px] text-slate-400">
-          <span className="text-emerald-300">done {prog.done}</span>
-          <span className="text-amber-300">partial {prog.inProgress}</span>
-          <span className="text-rose-300">insufficient {prog.insufficient}</span>
-          <span className="text-slate-500">left {prog.untouched}</span>
+          <span className="text-emerald-300">complete {prog.done}</span>
+          <span className="text-amber-300">in review {prog.inProgress}</span>
+          <span className="text-rose-300">evidence blocked {prog.insufficient}</span>
+          <span className="text-slate-500">new {prog.untouched}</span>
           <span className="ml-auto font-mono">{prog.done + prog.insufficient}/{prog.total}</span>
         </div>
         <input
@@ -95,6 +100,15 @@ export function Overview() {
           placeholder="filter by board, county, state, year…"
           className="mt-2 w-full rounded-lg border border-slate-800 bg-slate-900/60 px-3 py-1.5 text-sm text-white outline-none placeholder:text-slate-600"
         />
+        <div className="no-scrollbar mt-2 flex items-center gap-1.5 overflow-x-auto text-[11px]">
+          <span className="shrink-0 text-slate-500">Focus</span>
+          <FocusChip active={focus === 'all'} onClick={() => setFocus('all')}>All</FocusChip>
+          <FocusChip active={focus === 'newspapers'} onClick={() => setFocus('newspapers')}>Newspapers</FocusChip>
+          <FocusChip active={focus === 'tables'} onClick={() => setFocus('tables')}>Tables</FocusChip>
+          <FocusChip active={focus === 'ever_adoption_states'} onClick={() => setFocus('ever_adoption_states')}>Ever-adoption states</FocusChip>
+          <FocusChip active={focus === 'southern_states'} onClick={() => setFocus('southern_states')}>Project South</FocusChip>
+          <span className="ml-auto shrink-0 font-mono text-slate-500">visible {visibleProg.total}/{prog.total}</span>
+        </div>
       </header>
 
       <div className="flex-1 overflow-auto px-3 py-3">
@@ -104,7 +118,7 @@ export function Overview() {
             <ol className="mt-2 list-decimal space-y-1 pl-5 text-xs leading-snug text-slate-300">
               <li>
                 <a href={DATASET_URL} className="font-medium text-sky-300 underline">
-                  Download the real dataset (~328&nbsp;MB zip)
+                  Download the real dataset (~204&nbsp;MB zip)
                 </a>{' '}
                 — on this device, wherever your downloads go.
               </li>
@@ -154,21 +168,22 @@ export function Overview() {
             <div className="space-y-1.5">
               {byGroup[g].map((it) => {
                 const st = computeStatus(it, results[it.id])
-                const nBooks = it.books.length
+                const nTitles = it.books.length
                 return (
                   <button
                     key={it.id}
                     onClick={() => nav(`/item/${it.id}`)}
                     className={`flex w-full items-center gap-2 rounded-xl border px-3 py-2 text-left ${ROW[st]} ${
-                      it.priority >= 0.7 ? 'ring-1 ring-rose-400/40' : ''
+                      effectivePriority(it) >= 0.7 ? 'ring-1 ring-rose-400/40' : ''
                     }`}
                   >
                     <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${DOT[st]}`} />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm text-slate-100">{it.title}</span>
                       <span className="block truncate text-[11px] text-slate-500">
-                        {it.subtitle} · {nBooks} book{nBooks === 1 ? '' : 's'} · {it.evidence.length} evidence
+                        {it.subtitle} · {nTitles} extracted title{nTitles === 1 ? '' : 's'} · {it.evidence.length} evidence
                       </span>
+                      <span className="mt-1 flex flex-wrap gap-1"><ItemResearchTags item={it} /></span>
                     </span>
                     <span className="shrink-0 font-mono text-[11px] text-slate-500">{it.state} {it.year}</span>
                   </button>
@@ -178,9 +193,26 @@ export function Overview() {
           </section>
         ))}
         <div className="pb-6 text-[11px] text-slate-600">
-          Red ring = high priority. Tap a bundle to adjudicate every book adopted in that event.
+          Red ring = high priority. Tap a bundle to verify literal titles against its source evidence.
         </div>
       </div>
     </div>
+  )
+}
+
+function FocusChip({
+  active, onClick, children,
+}: {
+  active: boolean
+  onClick: () => void
+  children: ReactNode
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`shrink-0 rounded-full px-2.5 py-1 ${active ? 'bg-sky-600 text-white' : 'bg-slate-800 text-slate-300'}`}
+    >
+      {children}
+    </button>
   )
 }

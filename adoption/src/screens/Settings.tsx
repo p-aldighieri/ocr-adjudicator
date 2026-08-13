@@ -58,12 +58,14 @@ export function Settings({ embedded = false }: { embedded?: boolean }) {
 
             <Section title="Evidence">
               <Check label="Wrap long lines in text evidence" checked={settings.wrapText} onChange={(v) => setSettings({ wrapText: v })} />
+              <Check label="Show relevant-page highlights" checked={settings.showHighlights} onChange={(v) => setSettings({ showHighlights: v })} />
             </Section>
 
             <Section title="Export & backup">
               <p className="mb-2 text-xs text-slate-500">
                 Export to move your work to a computer. <b>Export JSON</b> is a full backup — re-import it
-                here to restore your progress after reinstalling or on another device. CSV is one row per claim.
+                here to restore your progress after reinstalling or on another device. CSV contains the corrected
+                literal title records plus the other source claims; canonical-book matching is intentionally absent.
               </p>
               <div className="flex flex-wrap gap-2">
                 <Btn onClick={exportJSON}>Export JSON</Btn>

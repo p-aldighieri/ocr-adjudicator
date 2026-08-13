@@ -1,0 +1,4205 @@
+{
+  "schema": 1,
+  "note": "Versioned, source-grounded corrections for the literal-title review artifact. No canonical-book identity belongs here.",
+  "remove_book_matches": true,
+  "drop_matching_alerts": true,
+  "items": {
+    "evt_476e478da4b5": {
+      "replace_books": [],
+      "note": "The article says most subjects' books remained unchanged but prints no exact history title. Review as context-only, not as title evidence.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/df025bd6c0_p0005_fort_smith_news_record_1898_09_21_p5.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "label": "Fort Smith News Record p. 5",
+          "sourceLine": "Fort Smith News Record, “A HOWL.” — printed p. 5 [20260713_arkansas_prelaw/originals/newspapers/fort_smith_news_record_1898-09-21_p5.pdf]",
+          "text": "Fort Smith News Record, “A HOWL.”, p. 5. The article prints no exact history-book title.",
+          "regions": [
+            {
+              "x": 0.4737,
+              "y": 0.1200,
+              "w": 0.1427,
+              "h": 0.6594,
+              "kind": "passage",
+              "label": "A HOWL. — context only; no exact title printed"
+            }
+          ]
+        },
+        "ev2": {
+          "role": "url",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "label": "newspapers.com",
+          "sourceLine": "Fort Smith News Record, “A HOWL.” — p. 5 — newspapers.com",
+          "text": "Fort Smith News Record, “A HOWL.”, p. 5."
+        }
+      }
+    },
+    "evt_dca21c681459": {
+      "replace_books": [],
+      "note": "History of the United States is a subject/curriculum branch here, not an exact printed book title.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/35cbbf327b_p0002_oregon_argus_1863_01_24_p2.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.756737,
+              "y": 0.593201,
+              "w": 0.239941,
+              "h": 0.365047,
+              "kind": "passage",
+              "label": "Curriculum passage; subject only"
+            }
+          ]
+        }
+      }
+    },
+    "evt_c1b4a89ac083": {
+      "replace_books": [],
+      "note": "History of United States is a subject/curriculum branch here, not an exact printed book title.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/9de61aeddf_p0004_weekly_enterprise_1869_05_01_p4.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_25e5f3e339ad": {
+      "replace_books": [],
+      "note": "U.S. history and primary history are course labels; the specific title comes from a separate source.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/0c362ffaa1_green_forest_tribune_1896_10_01_p2_iiif40.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.414621,
+              "y": 0.253165,
+              "w": 0.283688,
+              "h": 0.668073,
+              "kind": "passage",
+              "label": "Course-list article; no exact title"
+            }
+          ]
+        }
+      }
+    },
+    "evt_c190af7983b9": {
+      "replace_title_values": [
+        "Barnes’ Elementary History",
+        "Trainer’s U. S. Histories"
+      ],
+      "note": "The biographical passage prints two separate titles, not the synthetic merged phrase Barnes’ and Trainer’s U. S. Histories.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/ec2347e201_green_forest_tribune_1894_03_29_p1_iiif40.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.492,
+              "y": 0.142,
+              "w": 0.212,
+              "h": 0.424,
+              "kind": "passage",
+              "label": "Maggie Sue Burney schooling passage"
+            },
+            {
+              "x": 0.508,
+              "y": 0.194,
+              "w": 0.166,
+              "h": 0.030,
+              "kind": "passage",
+              "label": "Barnes’ Elementary History; Trainer’s U. S. Histories"
+            }
+          ]
+        }
+      }
+    },
+    "evt_012fe0ff4081": {
+      "replace_title_values": [
+        "Lee’s Brief and Primary"
+      ],
+      "replace_evidence": {
+        "ev2": {
+          "role": "image",
+          "file": "assets/d8ea9a4332_winfield_enterprise_1899_05_18_p5_image32085.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.594697,
+              "y": 0.322331,
+              "w": 0.257576,
+              "h": 0.373904,
+              "kind": "passage",
+              "label": "Textbook-board article"
+            },
+            {
+              "x": 0.638258,
+              "y": 0.512378,
+              "w": 0.098864,
+              "h": 0.005931,
+              "kind": "passage",
+              "label": "Lee’s Brief and Primary"
+            }
+          ]
+        }
+      }
+    },
+    "evt_200d3fe9935a": {
+      "replace_title_values": [
+        "Montgomery’s Beginners, and Advanced Histories"
+      ],
+      "note": "The current title transcription is literal. The passage records a formal vote.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/cf2dd9525c_p0005_sn98069055_1907_06_21_ed_1_p5.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.112,
+              "y": 0.171,
+              "w": 0.248,
+              "h": 0.654,
+              "kind": "passage",
+              "label": "Brown County Board of Education proceedings"
+            },
+            {
+              "x": 0.114,
+              "y": 0.520,
+              "w": 0.213,
+              "h": 0.039,
+              "kind": "passage",
+              "label": "Montgomery’s Beginners, and Advanced Histories"
+            }
+          ]
+        }
+      }
+    },
+    "evt_313c25986c01": {
+      "replace_title_values": [
+        "History, U. S. Primary",
+        "Lee’s New S. Hist’y"
+      ],
+      "replace_evidence": {
+        "ev2": {
+          "role": "image",
+          "file": "assets/4a12536faa_abbeville_times_1901_07_25_p4_image308041703.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.179775,
+              "y": 0.018262,
+              "w": 0.318352,
+              "h": 0.782677,
+              "kind": "passage",
+              "label": "Schoolbook article"
+            },
+            {
+              "x": 0.237079,
+              "y": 0.426559,
+              "w": 0.089139,
+              "h": 0.006261,
+              "kind": "passage",
+              "label": "History, U. S. Primary"
+            },
+            {
+              "x": 0.236704,
+              "y": 0.443517,
+              "w": 0.120974,
+              "h": 0.006001,
+              "kind": "passage",
+              "label": "Lee’s New S. Hist’y"
+            }
+          ]
+        }
+      }
+    },
+    "evt_390c7c585219": {
+      "replace_evidence": {
+        "ev2": {
+          "role": "image",
+          "file": "assets/2312c6304c_monroe_journal_1901_07_11_p3_image251818416.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.184298,
+              "y": 0.058294,
+              "w": 0.258017,
+              "h": 0.635930,
+              "kind": "passage",
+              "label": "Adoption-list article"
+            },
+            {
+              "x": 0.301511,
+              "y": 0.365395,
+              "w": 0.068190,
+              "h": 0.004769,
+              "kind": "passage",
+              "label": "Lee’s History of U. S."
+            }
+          ]
+        }
+      }
+    },
+    "evt_b14e9fc3b528": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/32ad49a1b9_ravalli_republican_1895_02_13_p1_montgomery_.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.660308,
+              "y": 0.159787,
+              "w": 0.190756,
+              "h": 0.505992,
+              "kind": "passage",
+              "label": "Schoolbook article"
+            },
+            {
+              "x": 0.692590,
+              "y": 0.505459,
+              "w": 0.107483,
+              "h": 0.004261,
+              "kind": "passage",
+              "label": "Montgomery title phrase"
+            }
+          ]
+        }
+      }
+    },
+    "evt_90f4ebda3878": {
+      "replace_evidence": {
+        "ev3": {
+          "role": "image",
+          "file": "assets/b92a95a88e_dac18630325_manual_target.png",
+          "sourceKind": "newspaper",
+          "layout": "prose"
+        },
+        "ev4": {
+          "role": "image",
+          "file": "assets/b92a95a88e_dac18630325_manual_target.png",
+          "sourceKind": "newspaper",
+          "layout": "prose"
+        }
+      },
+      "replace_books": [],
+      "note": "The newspaper evidence prints only that final amendments to the manual were adopted and printing authorized. It does not print Anderson's U. S. History, Lossing's Primary, or Lossing's Smaller; those titles come from separate manual pages, so the current record is a synthetic cross-source composite."
+    },
+    "evt_769186d2fddd": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/4f55925b8d_1881_01_27_helena_weekly_herald_p4.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose"
+        }
+      },
+      "replace_books": [],
+      "note": "The source supplies only the generic subject phrase 'the United States history' in a reported proposal/endorsement; it is not a printed book title. Remove it from title ground truth."
+    },
+    "evt_b5f4b759f366": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/33c3c9897e_p0026_lane_county_history_museum_ms97_pleasant_hil.jpg",
+          "sourceKind": "minutes",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_669f071ea906": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/33c3c9897e_p0032_lane_county_history_museum_ms97_pleasant_hil.jpg",
+          "sourceKind": "minutes",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_58078b10450f": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/33c3c9897e_p0038_lane_county_history_museum_ms97_pleasant_hil.jpg",
+          "sourceKind": "minutes",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_dfd5fac4e151": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/3650af9f13_p0083_1875_annual_report_rhode_island_board_educat.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_466888a1c08b": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/e8440c508f_nmaahc_007492002_00790_full.jpg",
+          "sourceKind": "other",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_c02faaab0ca9": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/9ddb217b69_03615_0336_scan0142_29001.jpg",
+          "sourceKind": "other",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_1a356201243e": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/98da0dcea6_nmaahc_007492002_00645_full.jpg",
+          "sourceKind": "other",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_fa8722f517ba": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/5a440b650d_p0372_departmentofpubl1916depa.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_6ae843fb3deb": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/ada4d47709_p0308_report00mary_31.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_bbad8a167577": {
+      "note": "County tables are now visible. Several proposed title rows still combine multiple printed table cells with semicolons; reject or overwrite those composites and add each literal printed title separately.",
+      "replace_evidence": {
+        "ev6": {
+          "role": "pdf_page",
+          "file": "assets/verified_ga_report_1898_pdf-723.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "PDF 723: Charlton table",
+          "page": {
+            "pdfIndex": 723
+          },
+          "regions": [
+            {
+              "x": 0.10,
+              "y": 0.18,
+              "w": 0.76,
+              "h": 0.66,
+              "kind": "passage",
+              "label": "Charlton textbook-use table"
+            }
+          ]
+        },
+        "ev7": {
+          "role": "pdf_page",
+          "file": "assets/verified_ga_report_1898_pdf-724.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "PDF 724: Chatham table",
+          "page": {
+            "pdfIndex": 724
+          },
+          "regions": [
+            {
+              "x": 0.10,
+              "y": 0.18,
+              "w": 0.76,
+              "h": 0.66,
+              "kind": "passage",
+              "label": "Chatham textbook-use table"
+            }
+          ]
+        },
+        "ev8": {
+          "role": "pdf_page",
+          "file": "assets/verified_ga_report_1898_pdf-728.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "PDF 728: Colquitt table",
+          "page": {
+            "pdfIndex": 728
+          },
+          "regions": [
+            {
+              "x": 0.10,
+              "y": 0.18,
+              "w": 0.76,
+              "h": 0.66,
+              "kind": "passage",
+              "label": "Colquitt textbook-use table"
+            }
+          ]
+        },
+        "ev9": {
+          "role": "pdf_page",
+          "file": "assets/verified_ga_report_1898_pdf-729.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "PDF 729: Columbia table",
+          "page": {
+            "pdfIndex": 729
+          },
+          "regions": [
+            {
+              "x": 0.10,
+              "y": 0.18,
+              "w": 0.76,
+              "h": 0.66,
+              "kind": "passage",
+              "label": "Columbia textbook-use table"
+            }
+          ]
+        },
+        "ev10": {
+          "role": "pdf_page",
+          "file": "assets/verified_ga_report_1898_pdf-730.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "PDF 730: Coweta table",
+          "page": {
+            "pdfIndex": 730
+          },
+          "regions": [
+            {
+              "x": 0.10,
+              "y": 0.18,
+              "w": 0.76,
+              "h": 0.66,
+              "kind": "passage",
+              "label": "Coweta textbook-use table"
+            }
+          ]
+        },
+        "ev11": {
+          "role": "pdf_page",
+          "file": "assets/verified_ga_report_1898_pdf-731.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "PDF 731: Dodge table",
+          "page": {
+            "pdfIndex": 731
+          },
+          "regions": [
+            {
+              "x": 0.10,
+              "y": 0.18,
+              "w": 0.76,
+              "h": 0.66,
+              "kind": "passage",
+              "label": "Dodge textbook-use table"
+            }
+          ]
+        },
+        "ev12": {
+          "role": "pdf_page",
+          "file": "assets/verified_ga_report_1898_pdf-732.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "PDF 732: Dooly table",
+          "page": {
+            "pdfIndex": 732
+          },
+          "regions": [
+            {
+              "x": 0.10,
+              "y": 0.18,
+              "w": 0.76,
+              "h": 0.66,
+              "kind": "passage",
+              "label": "Dooly textbook-use table"
+            }
+          ]
+        }
+      }
+    },
+    "evt_7c3b4374375c": {
+      "note": "Printed page numbers are verified independently of PDF sequence numbers. The list pages carry literal titles; printed p. 409 carries the adoption vote.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_detroit_1913_printed404_pdfseq477.jpg",
+          "sourceKind": "minutes",
+          "layout": "mixed",
+          "label": "Printed p. 404 (PDF sequence 477)",
+          "page": {
+            "pdfIndex": 477,
+            "printedLabel": "404"
+          }
+        },
+        "ev3": {
+          "role": "pdf_page",
+          "file": "assets/verified_detroit_1913_printed405_pdfseq478.jpg",
+          "sourceKind": "minutes",
+          "layout": "mixed",
+          "label": "Printed p. 405 (PDF sequence 478)",
+          "page": {
+            "pdfIndex": 478,
+            "printedLabel": "405"
+          }
+        },
+        "ev5": {
+          "role": "pdf_page",
+          "file": "assets/verified_detroit_1913_printed403_pdfseq476.jpg",
+          "sourceKind": "minutes",
+          "layout": "mixed",
+          "label": "Printed p. 403 (PDF sequence 476)",
+          "page": {
+            "pdfIndex": 476,
+            "printedLabel": "403"
+          },
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.11,
+              "w": 0.78,
+              "h": 0.82,
+              "kind": "passage",
+              "label": "Textbook list begins"
+            }
+          ]
+        },
+        "ev7": {
+          "role": "pdf_page",
+          "file": "assets/verified_detroit_1913_printed406_pdfseq479.jpg",
+          "sourceKind": "minutes",
+          "layout": "mixed",
+          "label": "Printed p. 406 (PDF sequence 479)",
+          "page": {
+            "pdfIndex": 479,
+            "printedLabel": "406"
+          }
+        },
+        "ev_vote_409": {
+          "role": "pdf_page",
+          "file": "assets/verified_detroit_1913_printed409_pdfseq482.jpg",
+          "sourceKind": "minutes",
+          "layout": "mixed",
+          "label": "Adoption vote: printed p. 409",
+          "sourceLine": "Detroit Board of Education proceedings, May 22, 1913 — PDF sequence 482; printed p. 409",
+          "page": {
+            "pdfIndex": 482,
+            "printedLabel": "409"
+          },
+          "regions": [
+            {
+              "x": 0.07,
+              "y": 0.085,
+              "w": 0.78,
+              "h": 0.46,
+              "kind": "passage",
+              "label": "End of list and ‘Unanimously carried’"
+            }
+          ]
+        }
+      }
+    },
+    "evt_295319931dd5": {
+      "replace_title_values": [
+        "Barnes’ United States Histories"
+      ],
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_pa_asbj_1895-09_pdfseq004.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "label": "September 1895, printed p. 4",
+          "page": {
+            "pdfIndex": 4,
+            "printedLabel": "4"
+          },
+          "regions": [
+            {
+              "x": 0.60,
+              "y": 0.108,
+              "w": 0.25,
+              "h": 0.022,
+              "kind": "passage",
+              "label": "Catchellville — Barnes’ United States Histories"
+            }
+          ]
+        }
+      }
+    },
+    "evt_44c869a5c46b": {
+      "replace_title_values": [
+        "Barnes’ and Montgomery’s histories"
+      ],
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_pa_asbj_1895-09_pdfseq004.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "label": "September 1895, printed p. 4",
+          "page": {
+            "pdfIndex": 4,
+            "printedLabel": "4"
+          },
+          "regions": [
+            {
+              "x": 0.09,
+              "y": 0.724,
+              "w": 0.25,
+              "h": 0.036,
+              "kind": "passage",
+              "label": "Juniata — Barnes’ and Montgomery’s histories"
+            }
+          ]
+        }
+      }
+    },
+    "evt_78d294b538e1": {
+      "replace_title_values": [
+        "Barnes’ Histories of United States"
+      ],
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_pa_asbj_1895-09_pdfseq005.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "label": "September 1895, printed p. 5",
+          "page": {
+            "pdfIndex": 5,
+            "printedLabel": "5"
+          },
+          "regions": [
+            {
+              "x": 0.15,
+              "y": 0.185,
+              "w": 0.25,
+              "h": 0.032,
+              "kind": "passage",
+              "label": "New London — Barnes’ Histories of United States"
+            }
+          ]
+        }
+      }
+    },
+    "evt_e80b6b87a104": {
+      "replace_title_values": [
+        "Barnes’ history"
+      ],
+      "note": "The printed line groups Fairchance with several other places; the exact title phrase is preserved, while assignment to Fairchance remains ambiguous.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_pa_asbj_1895-10_pdfseq005.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "sourcePath": "20260728_pennsylvania_prelaw/sources_used/originals/american_school_board_journal/sim_american-school-board-journal_1895-10_11_4.pdf",
+          "label": "October 1895, printed p. 5",
+          "sourceLine": "American School Board Journal, October 1895 — printed p. 5",
+          "page": {
+            "pdfIndex": 5,
+            "printedLabel": "5"
+          },
+          "regions": [
+            {
+              "x": 0.635,
+              "y": 0.162,
+              "w": 0.25,
+              "h": 0.022,
+              "kind": "passage",
+              "label": "Grouped Fairchance notice — Barnes’ history"
+            }
+          ]
+        },
+        "ev2": {
+          "role": "url",
+          "href": "https://archive.org/details/sim_american-school-board-journal_1895-10_11_4",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "label": "archive.org — October issue",
+          "sourceLine": "American School Board Journal, October 1895 — archive.org"
+        }
+      }
+    },
+    "evt_181f762c72e1": {
+      "replace_title_values": [
+        "American History",
+        "Beginner’s American History",
+        "Channing’s Students’ History of the United States",
+        "First Steps in the History of Our Country",
+        "Hart’s Source Book of American History",
+        "History of the United States",
+        "History of the United States",
+        "History of the United States",
+        "McLaughlin’s History of the American Nation",
+        "Montgomery’s Students’ History of the United States",
+        "Primary History of the United States",
+        "School History of the United States",
+        "Stories of Great Americans for Little Americans"
+      ],
+      "note": "Printed p. 247 was a bad citation and has been replaced by the verified title list on printed p. 219. Author names that followed generic titles after commas are not folded into the title transcription.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_nj_newark1901_printed213_pdfseq223.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Printed p. 213 (PDF sequence 223)",
+          "page": {
+            "pdfIndex": 223,
+            "printedLabel": "213"
+          },
+          "regions": [
+            {
+              "x": 0.12,
+              "y": 0.265,
+              "w": 0.76,
+              "h": 0.40,
+              "kind": "passage",
+              "label": "History titles, printed p. 213"
+            }
+          ]
+        },
+        "ev1_continuation": {
+          "role": "pdf_page",
+          "file": "assets/verified_nj_newark1901_printed214_pdfseq224.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Printed p. 214 (continuation)",
+          "sourceLine": "Newark Board of Education annual report — PDF sequence 224; printed p. 214",
+          "page": {
+            "pdfIndex": 224,
+            "printedLabel": "214"
+          },
+          "regions": [
+            {
+              "x": 0.12,
+              "y": 0.17,
+              "w": 0.76,
+              "h": 0.29,
+              "kind": "passage",
+              "label": "History titles, printed p. 214"
+            }
+          ]
+        },
+        "ev4": {
+          "role": "pdf_page",
+          "file": "assets/verified_nj_newark1901_printed219_pdfseq229.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Corrected citation: printed p. 219",
+          "sourceLine": "Newark Board of Education annual report — PDF sequence 229; printed p. 219 (not p. 247)",
+          "page": {
+            "pdfIndex": 229,
+            "printedLabel": "219"
+          },
+          "regions": [
+            {
+              "x": 0.12,
+              "y": 0.175,
+              "w": 0.76,
+              "h": 0.22,
+              "kind": "passage",
+              "label": "High-school history title list"
+            }
+          ]
+        },
+        "ev6": {
+          "role": "pdf_page",
+          "file": "assets/verified_nj_newark1901_printed213_pdfseq223.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Corrected range: printed pp. 213–214",
+          "page": {
+            "pdfIndex": 223,
+            "printedLabel": "213"
+          },
+          "regions": [
+            {
+              "x": 0.12,
+              "y": 0.265,
+              "w": 0.76,
+              "h": 0.40,
+              "kind": "passage",
+              "label": "History titles; p. 247 removed as erroneous"
+            }
+          ]
+        }
+      }
+    },
+    "evt_6370621cee7d": {
+      "replace_title_values": [
+        "Montgomery’s primary history",
+        "Barnes’ history"
+      ],
+      "note": "The source prints two separate title mentions; the former merged title has been split into literal occurrences.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_pa_asbj_1895-10_pdfseq004.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "sourcePath": "20260728_pennsylvania_prelaw/sources_used/originals/american_school_board_journal/sim_american-school-board-journal_1895-10_11_4.pdf",
+          "label": "October 1895, printed p. 4",
+          "sourceLine": "American School Board Journal, October 1895 — printed p. 4",
+          "page": {
+            "pdfIndex": 4,
+            "printedLabel": "4"
+          },
+          "regions": [
+            {
+              "x": 0.12,
+              "y": 0.352,
+              "w": 0.25,
+              "h": 0.032,
+              "kind": "passage",
+              "label": "Foster — Montgomery’s primary history; Barnes’ history"
+            }
+          ]
+        },
+        "ev2": {
+          "role": "url",
+          "href": "https://archive.org/details/sim_american-school-board-journal_1895-10_11_4",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "label": "archive.org — October issue",
+          "sourceLine": "American School Board Journal, October 1895 — archive.org"
+        }
+      }
+    },
+    "evt_cedcd59ad995": {
+      "block_visual_relinks": [
+        "ev1"
+      ],
+      "note": "The shipped p0001 image is a Google Books splash page, not the cited report page. Evidence remains blocked pending the correct render.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "text",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Correct report page not yet rendered",
+          "sourceLine": "Virginia School Report, 1904 primary/grammar selection cycle — cited printed p. 1",
+          "text": "The available p0001 image is a Google Books splash page and is intentionally not shown as claim evidence."
+        }
+      }
+    },
+    "evt_a8292cd1b26b": {
+      "replace_books": [],
+      "note": "United States History is printed as a course/subject in the Junior Class curriculum, not as an exact book title.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_a8292cd1b26b_printed_328_pdfseq_621.png",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Printed p. 328 (PDF sequence 621)",
+          "page": {
+            "pdfIndex": 621,
+            "printedLabel": "328"
+          },
+          "regions": [
+            {
+              "x": 0.13,
+              "y": 0.515,
+              "w": 0.80,
+              "h": 0.095,
+              "kind": "passage",
+              "label": "Junior Class curriculum; subject only"
+            }
+          ]
+        }
+      }
+    },
+    "evt_2765eb705172": {
+      "replace_books": [],
+      "note": "United States History is printed as a curriculum subject, not as an exact book title. Printed p. 76 is the claim-bearing page; pp. 75 and 77 are retained as range context.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_2765eb705172_printed_76_pdfseq_249.png",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Printed p. 76 (PDF sequence 249)",
+          "page": {
+            "pdfIndex": 249,
+            "printedLabel": "76"
+          },
+          "regions": [
+            {
+              "x": 0.13,
+              "y": 0.085,
+              "w": 0.80,
+              "h": 0.27,
+              "kind": "passage",
+              "label": "Course-of-study passage; subject only"
+            }
+          ]
+        },
+        "ev1_context_75": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_2765eb705172_printed_75_pdfseq_248.png",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Range context: printed p. 75",
+          "sourceLine": "Virginia School Report, 1889, Nineteenth Annual Report — PDF sequence 248; printed p. 75 (folio cropped)"
+        },
+        "ev1_context_77": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_2765eb705172_printed_77_pdfseq_250.png",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Range context: printed p. 77",
+          "sourceLine": "Virginia School Report, 1889, Nineteenth Annual Report — PDF sequence 250; printed p. 77"
+        }
+      }
+    },
+    "evt_7370280da74a": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_7370280da74a_printed_xlix_pdfseq_54.png",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Printed p. xlix: literal title list",
+          "page": {
+            "pdfIndex": 54,
+            "printedLabel": "xlix"
+          },
+          "regions": [
+            {
+              "x": 0.07,
+              "y": 0.535,
+              "w": 0.82,
+              "h": 0.265,
+              "kind": "passage",
+              "label": "Six history titles as printed"
+            }
+          ]
+        },
+        "ev1_context_xlviii": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_7370280da74a_printed_xlviii_pdfseq_53.png",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Adoption context: printed p. xlviii",
+          "sourceLine": "Virginia School Report, 1894–1895 — PDF sequence 53; printed p. xlviii"
+        }
+      }
+    },
+    "evt_22cb21b52e01": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_22cb21b52e01_printed_lxv_pdfseq_70.png",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Printed p. lxv: Histories and Civics",
+          "page": {
+            "pdfIndex": 70,
+            "printedLabel": "lxv"
+          },
+          "regions": [
+            {
+              "x": 0.075,
+              "y": 0.37,
+              "w": 0.81,
+              "h": 0.47,
+              "kind": "passage",
+              "label": "Histories and Civics titles as printed"
+            }
+          ]
+        },
+        "ev3": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_22cb21b52e01_printed_lxxiii_pdfseq_78.png",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Printed p. lxxiii: American History",
+          "page": {
+            "pdfIndex": 78,
+            "printedLabel": "lxxiii"
+          },
+          "regions": [
+            {
+              "x": 0.075,
+              "y": 0.345,
+              "w": 0.81,
+              "h": 0.57,
+              "kind": "passage",
+              "label": "American-history and teacher-history titles as printed"
+            }
+          ]
+        }
+      }
+    },
+    "evt_613024dbe74c": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_613024dbe74c_printed_lxi_pdfseq_66.png",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Printed p. lxi: American History",
+          "page": {
+            "pdfIndex": 66,
+            "printedLabel": "lxi"
+          },
+          "regions": [
+            {
+              "x": 0.075,
+              "y": 0.40,
+              "w": 0.82,
+              "h": 0.31,
+              "kind": "passage",
+              "label": "Five American History titles as printed"
+            }
+          ]
+        },
+        "ev1_context_xxxviii": {
+          "role": "pdf_page",
+          "file": "assets/verified_evt_613024dbe74c_printed_xxxviii_pdfseq_43.png",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Selection context: printed p. xxxviii",
+          "sourceLine": "Virginia School Report, 1904–1905 — PDF sequence 43; printed p. xxxviii"
+        }
+      }
+    },
+    "evt_18b0f01012d3": {
+      "replace_books": [],
+      "note": "Transform notation mixed old and new titles and is not a literal printed span; quarantined pending source-level transcription.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_scott_scan349.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Scott County textbook list continuation: printed p. 347",
+          "page": {
+            "pdfIndex": 349,
+            "printedLabel": "347"
+          },
+          "regions": [
+            {
+              "x": 0.06,
+              "y": 0.04,
+              "w": 0.88,
+              "h": 0.91,
+              "kind": "passage",
+              "label": "Continuation of textbook-use table"
+            }
+          ]
+        },
+        "ev3": {
+          "role": "pdf_page",
+          "file": "assets/verified_scott_scan348.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Scott County textbook list: printed p. 346",
+          "page": {
+            "pdfIndex": 348,
+            "printedLabel": "346"
+          },
+          "regions": [
+            {
+              "x": 0.06,
+              "y": 0.04,
+              "w": 0.88,
+              "h": 0.91,
+              "kind": "passage",
+              "label": "Textbook-use table"
+            }
+          ]
+        },
+        "ev5": {
+          "role": "image",
+          "file": "assets/599a2021a3_weekly_clarion_ledger_1900_10_04_page1_scott.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_895d3dcc255f": {
+      "replace_books": [],
+      "note": "The form prints History of United States as a course or subject, not as a book title.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_oregon_teacher_report-1.jpg",
+          "sourceKind": "official_report",
+          "layout": "mixed",
+          "label": "Certified teacher report, page 1",
+          "page": {
+            "pdfIndex": 1,
+            "printedLabel": "1"
+          }
+        },
+        "ev1_page_2": {
+          "role": "pdf_page",
+          "file": "assets/verified_oregon_teacher_report-2.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "General Statistics, page 2",
+          "page": {
+            "pdfIndex": 2,
+            "printedLabel": "2"
+          },
+          "regions": [
+            {
+              "x": 0.05,
+              "y": 0.08,
+              "w": 0.90,
+              "h": 0.84,
+              "kind": "passage",
+              "label": "Course statistics; History of United States is a subject label"
+            }
+          ]
+        }
+      }
+    },
+    "evt_e38da3ddfa76": {
+      "replace_books": [],
+      "note": "The report prints History as a branch of instruction, not as a book title.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_sc_report-117.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "South Carolina report: printed p. 118",
+          "page": {
+            "pdfIndex": 117,
+            "printedLabel": "118"
+          },
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.09,
+              "w": 0.84,
+              "h": 0.83,
+              "kind": "passage",
+              "label": "Commissioners’ report"
+            }
+          ]
+        },
+        "ev1_page_119": {
+          "role": "pdf_page",
+          "file": "assets/verified_sc_report-118.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "South Carolina report: printed p. 119",
+          "page": {
+            "pdfIndex": 118,
+            "printedLabel": "119"
+          },
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.09,
+              "w": 0.84,
+              "h": 0.83,
+              "kind": "passage",
+              "label": "History is printed as a branch of instruction"
+            }
+          ]
+        }
+      }
+    },
+    "evt_1c4f379d4eb7": {
+      "replace_title_values": [
+        "Eggleston’s U. S. history",
+        "Hansell’s short U. S. history"
+      ],
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_ms_1890_printed277_pdfseq279.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Mississippi report: printed p. 277",
+          "page": {
+            "pdfIndex": 279,
+            "printedLabel": "277"
+          },
+          "regions": [
+            {
+              "x": 0.07,
+              "y": 0.39,
+              "w": 0.86,
+              "h": 0.25,
+              "kind": "passage",
+              "label": "Scott County titles as printed"
+            }
+          ]
+        }
+      }
+    },
+    "evt_dff074bf01a3": {
+      "replace_title_values": [
+        "History—Swinton’s"
+      ],
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/verified_ms_1888_printed231_pdfseq237.jpg",
+          "sourceKind": "official_report",
+          "layout": "prose",
+          "label": "Mississippi report: printed p. 231",
+          "page": {
+            "pdfIndex": 237,
+            "printedLabel": "231"
+          },
+          "regions": [
+            {
+              "x": 0.07,
+              "y": 0.36,
+              "w": 0.86,
+              "h": 0.31,
+              "kind": "passage",
+              "label": "Quitman County textbook list as printed"
+            }
+          ]
+        }
+      }
+    },
+    "evt_a4d589877aa4": {
+      "replace_title_values": [
+        "Fisk’s History of the United States, a first book of American History",
+        "Gordy’s History of the United States",
+        "Montgomery’s Beginner’s American History",
+        "Montgomery’s Leading Facts",
+        "Stories of Great Americans for Little Americans",
+        "Makers of Our Country"
+      ],
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/verified_smyrna_times_1898_07_20_p2.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "label": "Smyrna Times, New Text Books, p. 2",
+          "regions": [
+            {
+              "x": 0.842,
+              "y": 0.344,
+              "w": 0.151,
+              "h": 0.151,
+              "kind": "passage",
+              "label": "History titles in the State Board list"
+            }
+          ]
+        }
+      }
+    },
+    "evt_df0a1fef04f2": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/21f809e16b_natchez_democrat_1900_10_02_page3_reconstruc.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "id": "ev1",
+          "label": "Citation p. 3",
+          "sourceLine": "source document not named — p. 3",
+          "sourcePath": "20260712_parallel_mississippi_prelaw/sources_used/pass8_1900_renewal_cycle_20260712/derived/renders/Natchez_Democrat_1900-10-02_page3_reconstructed_from_server_tiles.jpg",
+          "regions": [
+            {
+              "x": 0.303611,
+              "y": 0.320178,
+              "w": 0.040531,
+              "h": 0.008338,
+              "kind": "passage",
+              "label": "Lee's histories"
+            }
+          ]
+        }
+      },
+      "replace_title_values": [
+        "Lee's histories"
+      ],
+      "note": "County section of the shared Natchez Democrat article; title is printed literally."
+    },
+    "evt_3259be5a7143": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/21f809e16b_natchez_democrat_1900_10_02_page3_reconstruc.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "id": "ev1",
+          "label": "Citation p. 3",
+          "sourceLine": "source document not named — p. 3",
+          "sourcePath": "20260712_parallel_mississippi_prelaw/sources_used/pass8_1900_renewal_cycle_20260712/derived/renders/Natchez_Democrat_1900-10-02_page3_reconstructed_from_server_tiles.jpg",
+          "regions": [
+            {
+              "x": 0.177598,
+              "y": 0.146748,
+              "w": 0.040162,
+              "h": 0.003891,
+              "kind": "passage",
+              "label": "Lee's histories"
+            }
+          ]
+        }
+      },
+      "replace_title_values": [
+        "Lee's histories"
+      ],
+      "note": "City section of the shared Natchez Democrat article; title is printed literally."
+    },
+    "evt_94cd375a2a40": {
+      "replace_books": [],
+      "note": "Transform notation is a synthesized change record, not a literal printed title span; quarantined pending source-level transcription.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/21f809e16b_natchez_democrat_1900_10_02_page3_reconstruc.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_ab914fe0d3fb": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/4b27d86133_newspaperscom_1189184840_mountain_echo_1874_.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "id": "ev1",
+          "label": "Citation p. 3",
+          "sourceLine": "The Mountain Echo — p. 3 (1874-06-26)",
+          "sourcePath": "Data/Adoptions/deep_dives/20260712_parallel_kentucky_prelaw/originals/newspaperscom_1189184840_mountain_echo_1874-06-26_p3_wolfe_adoption_viewport.png",
+          "regions": [
+            {
+              "x": 0.554233,
+              "y": 0.300000,
+              "w": 0.080908,
+              "h": 0.014706,
+              "kind": "passage",
+              "label": "Goodrich's Histories"
+            }
+          ]
+        }
+      },
+      "replace_title_values": [
+        "Goodrich's Histories"
+      ],
+      "note": "Exact plural title is visible in the Wolfe County textbook list."
+    },
+    "evt_3dc3b22ef9fc": {
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/ea3fa2008c_the_donaldsonville_chief_1875_07_24_2.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose"
+        }
+      }
+    },
+    "evt_e4f61f2cce6b": {
+      "replace_books": [],
+      "note": "Transform notation mixed old and new titles and is not a literal printed span; quarantined pending source-level transcription."
+    },
+    "evt_6bc29ca4bacd": {
+      "replace_title_values": [
+        "Ridpath's History",
+        "Venable's History"
+      ],
+      "note": "Both shorthand titles are literal newspaper text. The Venable region includes the adjacent printed adoption verb; apostrophes are normalized to ASCII only for JSON consistency.",
+      "replace_evidence": {
+        "ev2": {
+          "id": "ev2",
+          "role": "image",
+          "label": "monticello_herald_1877-12-06_p3.jpg",
+          "sourceLine": "Monticello Herald — p. 3 [20260715_indiana_prelaw/originals/newspapers/monticello_herald_1877-12-06_p3.jpg]",
+          "file": "assets/c94390bb26_monticello_herald_1877_12_06_p3.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.313655,
+              "y": 0.795895,
+              "w": 0.043232,
+              "h": 0.004899,
+              "kind": "passage",
+              "label": "Ridpath's History"
+            },
+            {
+              "x": 0.279368,
+              "y": 0.909261,
+              "w": 0.075134,
+              "h": 0.007464,
+              "kind": "passage",
+              "label": "Venable's History was adopted"
+            }
+          ]
+        }
+      }
+    },
+    "evt_6cb388273a23": {
+      "replace_books": [],
+      "note": "Search-query series phrase; source page was not inspected."
+    },
+    "evt_9a87fd147834": {
+      "replace_books": [],
+      "note": "Search-query series phrase; source page was not inspected."
+    },
+    "evt_56c7e63a0af7": {
+      "replace_books": [],
+      "note": "The source reports uniform textbooks but prints no titles."
+    },
+    "evt_85a26dbb91dc": {
+      "drop_evidence_paths_containing": [
+        "virginia_school_report_1884_fourteenth_annual_report.pdf"
+      ],
+      "stateAdoptionRegimeAtEvent": "postlaw",
+      "stateAdoptionCutoff": "1870-07-11",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/3b905eb6f4_virginia_school_report_1885_table12_seq080_v.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Table No. 12, p. 74",
+          "regions": [
+            {
+              "x": 0.0,
+              "y": 0.4294,
+              "w": 1.0,
+              "h": 0.0147,
+              "kind": "row",
+              "label": "Fredericksburg row"
+            },
+            {
+              "x": 0.4788,
+              "y": 0.0,
+              "w": 0.0146,
+              "h": 1.0,
+              "kind": "column",
+              "label": "Eclectic (column 14)"
+            },
+            {
+              "x": 0.4788,
+              "y": 0.4294,
+              "w": 0.0146,
+              "h": 0.0147,
+              "kind": "cell",
+              "label": "Fredericksburg × Eclectic"
+            }
+          ]
+        },
+        "ev_table_header": {
+          "role": "image",
+          "file": "assets/d55685956d_virginia_school_report_1885_table12_seq079_v.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Table header context: printed p. 73",
+          "sourceLine": "Virginia School Report, 1885, Fifteenth Annual Report, Table No. 12 — HathiTrust sequence 79; printed p. 73"
+        }
+      }
+    },
+    "evt_0d8d918da594": {
+      "drop_evidence_paths_containing": [
+        "virginia_school_report_1884_fourteenth_annual_report.pdf"
+      ],
+      "stateAdoptionRegimeAtEvent": "postlaw",
+      "stateAdoptionCutoff": "1870-07-11",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/3b905eb6f4_virginia_school_report_1885_table12_seq080_v.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Table No. 12, p. 74",
+          "regions": [
+            {
+              "x": 0.0,
+              "y": 0.7540,
+              "w": 1.0,
+              "h": 0.0107,
+              "kind": "row",
+              "label": "Manchester row"
+            },
+            {
+              "x": 0.4788,
+              "y": 0.0,
+              "w": 0.0146,
+              "h": 1.0,
+              "kind": "column",
+              "label": "Eclectic (column 14)"
+            },
+            {
+              "x": 0.4788,
+              "y": 0.7540,
+              "w": 0.0146,
+              "h": 0.0107,
+              "kind": "cell",
+              "label": "Manchester × Eclectic"
+            }
+          ]
+        },
+        "ev_table_header": {
+          "role": "image",
+          "file": "assets/d55685956d_virginia_school_report_1885_table12_seq079_v.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Table header context: printed p. 73",
+          "sourceLine": "Virginia School Report, 1885, Fifteenth Annual Report, Table No. 12 — HathiTrust sequence 79; printed p. 73"
+        }
+      }
+    },
+    "evt_1b4e20af93e9": {
+      "drop_evidence_paths_containing": [
+        "virginia_school_report_1884_fourteenth_annual_report.pdf"
+      ],
+      "stateAdoptionRegimeAtEvent": "postlaw",
+      "stateAdoptionCutoff": "1870-07-11",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/7b5213587f_virginia_school_report_1885_table12_seq081_v.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Table No. 12, p. 75",
+          "regions": [
+            {
+              "x": 0.0,
+              "y": 0.2368,
+              "w": 1.0,
+              "h": 0.0147,
+              "kind": "row",
+              "label": "Petersburg row"
+            },
+            {
+              "x": 0.4788,
+              "y": 0.0,
+              "w": 0.0146,
+              "h": 1.0,
+              "kind": "column",
+              "label": "Eclectic (column 14)"
+            },
+            {
+              "x": 0.4788,
+              "y": 0.2368,
+              "w": 0.0146,
+              "h": 0.0147,
+              "kind": "cell",
+              "label": "Petersburg × Eclectic"
+            }
+          ]
+        },
+        "ev_table_header": {
+          "role": "image",
+          "file": "assets/d55685956d_virginia_school_report_1885_table12_seq079_v.jpg",
+          "sourceKind": "official_report",
+          "layout": "table",
+          "label": "Table header context: printed p. 73",
+          "sourceLine": "Virginia School Report, 1885, Fifteenth Annual Report, Table No. 12 — HathiTrust sequence 79; printed p. 73"
+        }
+      }
+    },
+    "evt_a007df8a4a04": {
+      "replace_title_values": [
+        "Lee's histories"
+      ],
+      "note": "Exact title passage in the Chicot County adoption notice.",
+      "replace_evidence": {
+        "ev1": {
+          "id": "ev1",
+          "role": "image",
+          "label": "daily_arkansas_gazette_1909-01-11_p2_im…",
+          "sourceLine": "Daily Arkansas Gazette — p. page 2 [20260713_arkansas_prelaw/originals/newspapers/daily_arkansas_gazette_1909-01-11_p2_image_138379832.jpg]",
+          "file": "assets/8255735d9d_daily_arkansas_gazette_1909_01_11_p2_image_1.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.107802,
+              "y": 0.458787,
+              "w": 0.047493,
+              "h": 0.008294,
+              "kind": "passage",
+              "label": "Lee's histories"
+            }
+          ]
+        }
+      }
+    },
+    "evt_8cd3802b591b": {
+      "replace_title_values": [
+        "Lee's histories"
+      ],
+      "note": "Exact title passage in the Craighead County selection notice.",
+      "replace_evidence": {
+        "ev1": {
+          "id": "ev1",
+          "role": "image",
+          "label": "jonesboro_times_1903-12-24_p21_image_11…",
+          "sourceLine": "Jonesboro Times — p. page 21 [20260713_arkansas_prelaw/originals/newspapers/jonesboro_times_1903-12-24_p21_image_1105396378.jpg]",
+          "file": "assets/63492d1748_jonesboro_times_1903_12_24_p21_image_1105396.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.476522,
+              "y": 0.731025,
+              "w": 0.050257,
+              "h": 0.004261,
+              "kind": "passage",
+              "label": "Lee's histories"
+            }
+          ]
+        }
+      }
+    },
+    "evt_0050e6ba1929": {
+      "replace_title_values": [
+        "Lee's Histories of the United States"
+      ],
+      "note": "Exact title is printed on one line in the Monette Weekly Sun adoption list.",
+      "replace_evidence": {
+        "ev1": {
+          "id": "ev1",
+          "role": "image",
+          "label": "monette_weekly_sun_1899-12-21_p4_image_…",
+          "sourceLine": "Monette Weekly Sun — p. page 4 [20260713_arkansas_prelaw/originals/newspapers/monette_weekly_sun_1899-12-21_p4_image_1104109605.jpg]",
+          "file": "assets/d0abb3aa3d_monette_weekly_sun_1899_12_21_p4_image_11041.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.239708,
+              "y": 0.744097,
+              "w": 0.140823,
+              "h": 0.004316,
+              "kind": "passage",
+              "label": "Lee's Histories of the United States"
+            }
+          ]
+        }
+      }
+    },
+    "evt_fb05933ca4c6": {
+      "replace_books": [],
+      "note": "The newspaper prints only that the Board adopted a complete course of study and system of classification. Goodrich's History of the U. S. and Paley's Child's History are printed only in a separate directory schedule; remove this synthetic cross-source title composite."
+    },
+    "evt_9cdd2473cee3": {
+      "replace_title_values": [
+        "THE MACE HISTORIES"
+      ],
+      "note": "School Board Journal advertisement, not a newspaper. The exact all-caps series title is printed; the adoption claim is publisher advertising.",
+      "replace_evidence": {
+        "ev1": {
+          "id": "ev1",
+          "role": "pdf_page",
+          "label": "sim_american-school-board-j… p. 12 (PDF…",
+          "sourceLine": "School Board Journal, Vol. 44 No. 2 — printed p. 12 (PDF page 14) () [20260730_maryland_prelaw/originals/journals/asbj/sim_american-school-board-journal_1912-02_44_2.pdf]",
+          "file": "assets/3d4a6e2033_p0012_sim_american_school_board_journal_1912_02_44.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.241546,
+              "y": 0.235402,
+              "w": 0.150362,
+              "h": 0.009195,
+              "kind": "passage",
+              "label": "THE MACE HISTORIES"
+            }
+          ]
+        }
+      }
+    },
+    "evt_74e7f4b37fda": {
+      "replace_title_values": [
+        "Montgomery's beginners' and American histories"
+      ],
+      "note": "School Board Journal periodical, not a newspaper. The literal title wraps at the bottom/start of adjacent text line and requires two passage regions; dehyphenated title value preserves the printed wording.",
+      "replace_evidence": {
+        "ev1": {
+          "id": "ev1",
+          "role": "pdf_page",
+          "label": "sim_american-school-board-j… p. 4 (PDF…",
+          "sourceLine": "School Board Journal, Vol. 13 No. 3 — printed p. 4 (PDF page 16) () [20260730_maryland_prelaw/originals/journals/asbj/sim_american-school-board-journal_1896-09_13_3.pdf]",
+          "file": "assets/bde0d37d9a_p0004_sim_american_school_board_journal_1896_09_13.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.442118,
+              "y": 0.258596,
+              "w": 0.177429,
+              "h": 0.008008,
+              "kind": "passage",
+              "label": "Montgomery's beginners' and American his-"
+            },
+            {
+              "x": 0.388016,
+              "y": 0.266133,
+              "w": 0.023269,
+              "h": 0.012718,
+              "kind": "passage",
+              "label": "tories."
+            }
+          ]
+        }
+      }
+    },
+    "evt_0af4eeb4643a": {
+      "replace_title_values": [
+        "Barnes, History and geographies"
+      ],
+      "note": "The printed school-meeting list joins History and geographies in one literal line; Barnes History alone is a normalized truncation.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/8bddb9a2eb_hominy_news_1905_08_04_p6.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.061,
+              "y": 0.424,
+              "w": 0.191,
+              "h": 0.283,
+              "kind": "passage",
+              "label": "SCHOOL MEETING — adopted-book list"
+            },
+            {
+              "x": 0.096,
+              "y": 0.591,
+              "w": 0.159,
+              "h": 0.018,
+              "kind": "passage",
+              "label": "Barnes, History and geographies"
+            }
+          ]
+        }
+      }
+    },
+    "evt_62210bfbed19": {
+      "note": "The literal target is on PDF sequence 29: Plankinton, S. D. Aurora county adoption: ... Montgomery’s Beginners and Advanced Histories. The shipped ev1 file is PDF sequence 28 and contains no Aurora passage, so no region is assigned. Render sequence 29 and replace ev1 before enabling highlighting.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "text",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "label": "American School Board Journal — correct passage unavailable in shipped asset",
+          "text": "Blocked asset: the current file is PDF sequence 28; the Aurora County adoption passage is on PDF sequence 29."
+        }
+      }
+    },
+    "evt_223fd3f6c0ee": {
+      "replace_title_values": [
+        "History of the United States—Burns’"
+      ],
+      "note": "The newspaper prints the subject followed by the title/author form; the current value reverses it.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/81869fd88d_alvarado_1884_10_17_p3.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.617,
+              "y": 0.451,
+              "w": 0.105,
+              "h": 0.190,
+              "kind": "passage",
+              "label": "Greenbrier schoolhouse textbook adoption notice"
+            },
+            {
+              "x": 0.620,
+              "y": 0.559,
+              "w": 0.100,
+              "h": 0.021,
+              "kind": "passage",
+              "label": "History of the United States—Burns’"
+            }
+          ]
+        }
+      }
+    },
+    "evt_c2ea88cdd0e1": {
+      "replace_title_values": [
+        "Barnes’ history"
+      ],
+      "note": "The screenshot prints Barnes’ history. Apostrophe glyph normalized only; no canonical expansion.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/c05f2243bf_san_antonio_express_1896_06_15_p4_image12753.png",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.343,
+              "y": 0.432,
+              "w": 0.184,
+              "h": 0.476,
+              "kind": "passage",
+              "label": "YOAKUM CONFEDERATES article"
+            },
+            {
+              "x": 0.425,
+              "y": 0.544,
+              "w": 0.071,
+              "h": 0.033,
+              "kind": "passage",
+              "label": "Barnes’ history"
+            }
+          ]
+        }
+      }
+    },
+    "evt_1f9825777349": {
+      "replace_title_values": [
+        "Montgomery and Ellis’ History"
+      ],
+      "note": "Remove the synthetic leading quote; this is the literal phrase printed in the Landgrove town report.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/b6846feede_sn90000523_1895_10_04_ed_1_0371_pct100.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.264,
+              "y": 0.553,
+              "w": 0.126,
+              "h": 0.200,
+              "kind": "passage",
+              "label": "LANDGROVE adopted-textbook paragraph"
+            },
+            {
+              "x": 0.269,
+              "y": 0.693,
+              "w": 0.115,
+              "h": 0.025,
+              "kind": "passage",
+              "label": "Montgomery and Ellis’ History"
+            }
+          ]
+        }
+      }
+    },
+    "evt_3598462278a4": {
+      "replace_title_values": [
+        "Myers’ General History",
+        "Shinn’s History of American People",
+        "Field’s Grammar School History of United States"
+      ],
+      "note": "The preserved crop prints three relevant history entries. The current extraction omitted Myers’ General History; wording is preserved without canonical expansion.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/1cff5ad4cd_st_johns_19050928_p2_history_titles.jpg",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.218,
+              "y": 0.457,
+              "w": 0.662,
+              "h": 0.347,
+              "kind": "passage",
+              "label": "Book-sale list with three history titles"
+            },
+            {
+              "x": 0.356,
+              "y": 0.474,
+              "w": 0.289,
+              "h": 0.066,
+              "kind": "passage",
+              "label": "Myers’ General History"
+            },
+            {
+              "x": 0.351,
+              "y": 0.544,
+              "w": 0.457,
+              "h": 0.063,
+              "kind": "passage",
+              "label": "Shinn’s History of American People"
+            },
+            {
+              "x": 0.350,
+              "y": 0.614,
+              "w": 0.530,
+              "h": 0.069,
+              "kind": "passage",
+              "label": "Field’s Grammar School History of United States"
+            }
+          ]
+        }
+      }
+    },
+    "evt_6c1dd7bc9640": {
+      "replace_title_values": [
+        "Eclectic",
+        "Mrs. Snyder’s history"
+      ],
+      "note": "Eclectic is printed as a shorthand book reference in contrast with Mrs. Snyder’s history. The latter current value truncates the printed word history.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/a9ead5caf4_p0012_sim_american_school_board_journal_1892_10_4_.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.370,
+              "y": 0.482,
+              "w": 0.239,
+              "h": 0.405,
+              "kind": "passage",
+              "label": "WANT AN IMPARTIAL HISTORY article"
+            },
+            {
+              "x": 0.372,
+              "y": 0.750,
+              "w": 0.208,
+              "h": 0.078,
+              "kind": "passage",
+              "label": "keep the Eclectic ... Mrs. Snyder’s history"
+            }
+          ]
+        }
+      }
+    },
+    "evt_9899bf6a7ec3": {
+      "replace_title_values": [
+        "Schouler’s and Bancroft’s history of the United States",
+        "Madison’s Journal of the Constitutional Convention"
+      ],
+      "note": "The first printed phrase coordinates Schouler’s and Bancroft’s under one singular history phrase; splitting it into two inferred titles is not literal. ev1 and ev3 duplicate the same correct target image; both are pointed to the verified file because the override schema has no drop-evidence operation.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "pdf_page",
+          "file": "assets/fa61f4da84_p0033_sim_american_school_board_journal_1898_02_16.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.128,
+              "y": 0.104,
+              "w": 0.262,
+              "h": 0.186,
+              "kind": "passage",
+              "label": "Colorado Springs high-school library notice"
+            },
+            {
+              "x": 0.130,
+              "y": 0.199,
+              "w": 0.258,
+              "h": 0.066,
+              "kind": "passage",
+              "label": "Schouler’s and Bancroft’s history ... Madison’s Journal ..."
+            }
+          ]
+        },
+        "ev3": {
+          "role": "pdf_page",
+          "file": "assets/fa61f4da84_p0033_sim_american_school_board_journal_1898_02_16.jpg",
+          "sourceKind": "periodical",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.128,
+              "y": 0.104,
+              "w": 0.262,
+              "h": 0.186,
+              "kind": "passage",
+              "label": "Colorado Springs high-school library notice"
+            },
+            {
+              "x": 0.130,
+              "y": 0.199,
+              "w": 0.258,
+              "h": 0.066,
+              "kind": "passage",
+              "label": "Schouler’s and Bancroft’s history ... Madison’s Journal ..."
+            }
+          ]
+        }
+      }
+    },
+    "evt_859847600b39": {
+      "note": "All three current title values are literal to the retail list. Highlight the newspaper crop; the official course-of-study evidence uses shorter labels and should not replace the newspaper wording.",
+      "replace_evidence": {
+        "ev1": {
+          "role": "image",
+          "file": "assets/8d583b9b23_miami_news_19060804_p5_dade_county_textbooks.png",
+          "sourceKind": "newspaper",
+          "layout": "prose",
+          "regions": [
+            {
+              "x": 0.151,
+              "y": 0.075,
+              "w": 0.386,
+              "h": 0.819,
+              "kind": "passage",
+              "label": "Dade County Text Books retail list"
+            },
+            {
+              "x": 0.154,
+              "y": 0.710,
+              "w": 0.351,
+              "h": 0.126,
+              "kind": "passage",
+              "label": "Morris’ Primary U. S. History; Morris’ Elementary History; Field’s Grammar School History"
+            }
+          ]
+        }
+      }
+    },
+    "schema": 1,
+    "note": "Versioned, source-grounded corrections for the literal-title review artifact. No canonical-book identity belongs here.",
+    "remove_book_matches": true,
+    "drop_matching_alerts": true,
+    "items": {
+      "evt_476e478da4b5": {
+        "replace_books": [],
+        "note": "The article says most subjects' books remained unchanged but prints no exact history title. Review as context-only, not as title evidence.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/df025bd6c0_p0005_fort_smith_news_record_1898_09_21_p5.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "label": "Fort Smith News Record p. 5",
+            "sourceLine": "Fort Smith News Record, “A HOWL.” — printed p. 5 [20260713_arkansas_prelaw/originals/newspapers/fort_smith_news_record_1898-09-21_p5.pdf]",
+            "text": "Fort Smith News Record, “A HOWL.”, p. 5. The article prints no exact history-book title.",
+            "regions": [
+              {
+                "x": 0.4737,
+                "y": 0.1200,
+                "w": 0.1427,
+                "h": 0.6594,
+                "kind": "passage",
+                "label": "A HOWL. — context only; no exact title printed"
+              }
+            ]
+          },
+          "ev2": {
+            "role": "url",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "label": "newspapers.com",
+            "sourceLine": "Fort Smith News Record, “A HOWL.” — p. 5 — newspapers.com",
+            "text": "Fort Smith News Record, “A HOWL.”, p. 5."
+          }
+        }
+      },
+      "evt_dca21c681459": {
+        "replace_books": [],
+        "note": "History of the United States is a subject/curriculum branch here, not an exact printed book title.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/35cbbf327b_p0002_oregon_argus_1863_01_24_p2.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.756737,
+                "y": 0.593201,
+                "w": 0.239941,
+                "h": 0.365047,
+                "kind": "passage",
+                "label": "Curriculum passage; subject only"
+              }
+            ]
+          }
+        }
+      },
+      "evt_c1b4a89ac083": {
+        "replace_books": [],
+        "note": "History of United States is a subject/curriculum branch here, not an exact printed book title.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/9de61aeddf_p0004_weekly_enterprise_1869_05_01_p4.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_25e5f3e339ad": {
+        "replace_books": [],
+        "note": "U.S. history and primary history are course labels; the specific title comes from a separate source.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/0c362ffaa1_green_forest_tribune_1896_10_01_p2_iiif40.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.414621,
+                "y": 0.253165,
+                "w": 0.283688,
+                "h": 0.668073,
+                "kind": "passage",
+                "label": "Course-list article; no exact title"
+              }
+            ]
+          }
+        }
+      },
+      "evt_c190af7983b9": {
+        "replace_title_values": [
+          "Barnes’ Elementary History",
+          "Trainer’s U. S. Histories"
+        ],
+        "note": "The biographical passage prints two separate titles, not the synthetic merged phrase Barnes’ and Trainer’s U. S. Histories.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/ec2347e201_green_forest_tribune_1894_03_29_p1_iiif40.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.492,
+                "y": 0.142,
+                "w": 0.212,
+                "h": 0.424,
+                "kind": "passage",
+                "label": "Maggie Sue Burney schooling passage"
+              },
+              {
+                "x": 0.508,
+                "y": 0.194,
+                "w": 0.166,
+                "h": 0.030,
+                "kind": "passage",
+                "label": "Barnes’ Elementary History; Trainer’s U. S. Histories"
+              }
+            ]
+          }
+        }
+      },
+      "evt_012fe0ff4081": {
+        "replace_title_values": [
+          "Lee’s Brief and Primary"
+        ],
+        "replace_evidence": {
+          "ev2": {
+            "role": "image",
+            "file": "assets/d8ea9a4332_winfield_enterprise_1899_05_18_p5_image32085.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.594697,
+                "y": 0.322331,
+                "w": 0.257576,
+                "h": 0.373904,
+                "kind": "passage",
+                "label": "Textbook-board article"
+              },
+              {
+                "x": 0.638258,
+                "y": 0.512378,
+                "w": 0.098864,
+                "h": 0.005931,
+                "kind": "passage",
+                "label": "Lee’s Brief and Primary"
+              }
+            ]
+          }
+        }
+      },
+      "evt_200d3fe9935a": {
+        "replace_title_values": [
+          "Montgomery’s Beginners, and Advanced Histories"
+        ],
+        "note": "The current title transcription is literal. The passage records a formal vote.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/cf2dd9525c_p0005_sn98069055_1907_06_21_ed_1_p5.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.112,
+                "y": 0.171,
+                "w": 0.248,
+                "h": 0.654,
+                "kind": "passage",
+                "label": "Brown County Board of Education proceedings"
+              },
+              {
+                "x": 0.114,
+                "y": 0.520,
+                "w": 0.213,
+                "h": 0.039,
+                "kind": "passage",
+                "label": "Montgomery’s Beginners, and Advanced Histories"
+              }
+            ]
+          }
+        }
+      },
+      "evt_313c25986c01": {
+        "replace_title_values": [
+          "History, U. S. Primary",
+          "Lee’s New S. Hist’y"
+        ],
+        "replace_evidence": {
+          "ev2": {
+            "role": "image",
+            "file": "assets/4a12536faa_abbeville_times_1901_07_25_p4_image308041703.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.179775,
+                "y": 0.018262,
+                "w": 0.318352,
+                "h": 0.782677,
+                "kind": "passage",
+                "label": "Schoolbook article"
+              },
+              {
+                "x": 0.237079,
+                "y": 0.426559,
+                "w": 0.089139,
+                "h": 0.006261,
+                "kind": "passage",
+                "label": "History, U. S. Primary"
+              },
+              {
+                "x": 0.236704,
+                "y": 0.443517,
+                "w": 0.120974,
+                "h": 0.006001,
+                "kind": "passage",
+                "label": "Lee’s New S. Hist’y"
+              }
+            ]
+          }
+        }
+      },
+      "evt_390c7c585219": {
+        "replace_evidence": {
+          "ev2": {
+            "role": "image",
+            "file": "assets/2312c6304c_monroe_journal_1901_07_11_p3_image251818416.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.184298,
+                "y": 0.058294,
+                "w": 0.258017,
+                "h": 0.635930,
+                "kind": "passage",
+                "label": "Adoption-list article"
+              },
+              {
+                "x": 0.301511,
+                "y": 0.365395,
+                "w": 0.068190,
+                "h": 0.004769,
+                "kind": "passage",
+                "label": "Lee’s History of U. S."
+              }
+            ]
+          }
+        }
+      },
+      "evt_b14e9fc3b528": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/32ad49a1b9_ravalli_republican_1895_02_13_p1_montgomery_.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.660308,
+                "y": 0.159787,
+                "w": 0.190756,
+                "h": 0.505992,
+                "kind": "passage",
+                "label": "Schoolbook article"
+              },
+              {
+                "x": 0.692590,
+                "y": 0.505459,
+                "w": 0.107483,
+                "h": 0.004261,
+                "kind": "passage",
+                "label": "Montgomery title phrase"
+              }
+            ]
+          }
+        }
+      },
+      "evt_90f4ebda3878": {
+        "replace_evidence": {
+          "ev3": {
+            "role": "image",
+            "file": "assets/b92a95a88e_dac18630325_manual_target.png",
+            "sourceKind": "newspaper",
+            "layout": "prose"
+          },
+          "ev4": {
+            "role": "image",
+            "file": "assets/b92a95a88e_dac18630325_manual_target.png",
+            "sourceKind": "newspaper",
+            "layout": "prose"
+          }
+        },
+        "replace_books": [],
+        "note": "The newspaper evidence prints only that final amendments to the manual were adopted and printing authorized. It does not print Anderson's U. S. History, Lossing's Primary, or Lossing's Smaller; those titles come from separate manual pages, so the current record is a synthetic cross-source composite."
+      },
+      "evt_769186d2fddd": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/4f55925b8d_1881_01_27_helena_weekly_herald_p4.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose"
+          }
+        },
+        "replace_books": [],
+        "note": "The source supplies only the generic subject phrase 'the United States history' in a reported proposal/endorsement; it is not a printed book title. Remove it from title ground truth."
+      },
+      "evt_b5f4b759f366": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/33c3c9897e_p0026_lane_county_history_museum_ms97_pleasant_hil.jpg",
+            "sourceKind": "minutes",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_669f071ea906": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/33c3c9897e_p0032_lane_county_history_museum_ms97_pleasant_hil.jpg",
+            "sourceKind": "minutes",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_58078b10450f": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/33c3c9897e_p0038_lane_county_history_museum_ms97_pleasant_hil.jpg",
+            "sourceKind": "minutes",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_dfd5fac4e151": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/3650af9f13_p0083_1875_annual_report_rhode_island_board_educat.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_466888a1c08b": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/e8440c508f_nmaahc_007492002_00790_full.jpg",
+            "sourceKind": "other",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_c02faaab0ca9": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/9ddb217b69_03615_0336_scan0142_29001.jpg",
+            "sourceKind": "other",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_1a356201243e": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/98da0dcea6_nmaahc_007492002_00645_full.jpg",
+            "sourceKind": "other",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_fa8722f517ba": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/5a440b650d_p0372_departmentofpubl1916depa.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_6ae843fb3deb": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/ada4d47709_p0308_report00mary_31.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_bbad8a167577": {
+        "note": "County tables are now visible. Several proposed title rows still combine multiple printed table cells with semicolons; reject or overwrite those composites and add each literal printed title separately.",
+        "replace_evidence": {
+          "ev6": {
+            "role": "pdf_page",
+            "file": "assets/verified_ga_report_1898_pdf-723.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "PDF 723: Charlton table",
+            "page": {
+              "pdfIndex": 723
+            },
+            "regions": [
+              {
+                "x": 0.10,
+                "y": 0.18,
+                "w": 0.76,
+                "h": 0.66,
+                "kind": "passage",
+                "label": "Charlton textbook-use table"
+              }
+            ]
+          },
+          "ev7": {
+            "role": "pdf_page",
+            "file": "assets/verified_ga_report_1898_pdf-724.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "PDF 724: Chatham table",
+            "page": {
+              "pdfIndex": 724
+            },
+            "regions": [
+              {
+                "x": 0.10,
+                "y": 0.18,
+                "w": 0.76,
+                "h": 0.66,
+                "kind": "passage",
+                "label": "Chatham textbook-use table"
+              }
+            ]
+          },
+          "ev8": {
+            "role": "pdf_page",
+            "file": "assets/verified_ga_report_1898_pdf-728.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "PDF 728: Colquitt table",
+            "page": {
+              "pdfIndex": 728
+            },
+            "regions": [
+              {
+                "x": 0.10,
+                "y": 0.18,
+                "w": 0.76,
+                "h": 0.66,
+                "kind": "passage",
+                "label": "Colquitt textbook-use table"
+              }
+            ]
+          },
+          "ev9": {
+            "role": "pdf_page",
+            "file": "assets/verified_ga_report_1898_pdf-729.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "PDF 729: Columbia table",
+            "page": {
+              "pdfIndex": 729
+            },
+            "regions": [
+              {
+                "x": 0.10,
+                "y": 0.18,
+                "w": 0.76,
+                "h": 0.66,
+                "kind": "passage",
+                "label": "Columbia textbook-use table"
+              }
+            ]
+          },
+          "ev10": {
+            "role": "pdf_page",
+            "file": "assets/verified_ga_report_1898_pdf-730.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "PDF 730: Coweta table",
+            "page": {
+              "pdfIndex": 730
+            },
+            "regions": [
+              {
+                "x": 0.10,
+                "y": 0.18,
+                "w": 0.76,
+                "h": 0.66,
+                "kind": "passage",
+                "label": "Coweta textbook-use table"
+              }
+            ]
+          },
+          "ev11": {
+            "role": "pdf_page",
+            "file": "assets/verified_ga_report_1898_pdf-731.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "PDF 731: Dodge table",
+            "page": {
+              "pdfIndex": 731
+            },
+            "regions": [
+              {
+                "x": 0.10,
+                "y": 0.18,
+                "w": 0.76,
+                "h": 0.66,
+                "kind": "passage",
+                "label": "Dodge textbook-use table"
+              }
+            ]
+          },
+          "ev12": {
+            "role": "pdf_page",
+            "file": "assets/verified_ga_report_1898_pdf-732.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "PDF 732: Dooly table",
+            "page": {
+              "pdfIndex": 732
+            },
+            "regions": [
+              {
+                "x": 0.10,
+                "y": 0.18,
+                "w": 0.76,
+                "h": 0.66,
+                "kind": "passage",
+                "label": "Dooly textbook-use table"
+              }
+            ]
+          }
+        }
+      },
+      "evt_7c3b4374375c": {
+        "note": "Printed page numbers are verified independently of PDF sequence numbers. The list pages carry literal titles; printed p. 409 carries the adoption vote.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_detroit_1913_printed404_pdfseq477.jpg",
+            "sourceKind": "minutes",
+            "layout": "mixed",
+            "label": "Printed p. 404 (PDF sequence 477)",
+            "page": {
+              "pdfIndex": 477,
+              "printedLabel": "404"
+            }
+          },
+          "ev3": {
+            "role": "pdf_page",
+            "file": "assets/verified_detroit_1913_printed405_pdfseq478.jpg",
+            "sourceKind": "minutes",
+            "layout": "mixed",
+            "label": "Printed p. 405 (PDF sequence 478)",
+            "page": {
+              "pdfIndex": 478,
+              "printedLabel": "405"
+            }
+          },
+          "ev5": {
+            "role": "pdf_page",
+            "file": "assets/verified_detroit_1913_printed403_pdfseq476.jpg",
+            "sourceKind": "minutes",
+            "layout": "mixed",
+            "label": "Printed p. 403 (PDF sequence 476)",
+            "page": {
+              "pdfIndex": 476,
+              "printedLabel": "403"
+            },
+            "regions": [
+              {
+                "x": 0.08,
+                "y": 0.11,
+                "w": 0.78,
+                "h": 0.82,
+                "kind": "passage",
+                "label": "Textbook list begins"
+              }
+            ]
+          },
+          "ev7": {
+            "role": "pdf_page",
+            "file": "assets/verified_detroit_1913_printed406_pdfseq479.jpg",
+            "sourceKind": "minutes",
+            "layout": "mixed",
+            "label": "Printed p. 406 (PDF sequence 479)",
+            "page": {
+              "pdfIndex": 479,
+              "printedLabel": "406"
+            }
+          },
+          "ev_vote_409": {
+            "role": "pdf_page",
+            "file": "assets/verified_detroit_1913_printed409_pdfseq482.jpg",
+            "sourceKind": "minutes",
+            "layout": "mixed",
+            "label": "Adoption vote: printed p. 409",
+            "sourceLine": "Detroit Board of Education proceedings, May 22, 1913 — PDF sequence 482; printed p. 409",
+            "page": {
+              "pdfIndex": 482,
+              "printedLabel": "409"
+            },
+            "regions": [
+              {
+                "x": 0.07,
+                "y": 0.085,
+                "w": 0.78,
+                "h": 0.46,
+                "kind": "passage",
+                "label": "End of list and ‘Unanimously carried’"
+              }
+            ]
+          }
+        }
+      },
+      "evt_295319931dd5": {
+        "replace_title_values": [
+          "Barnes’ United States Histories"
+        ],
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_pa_asbj_1895-09_pdfseq004.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "label": "September 1895, printed p. 4",
+            "page": {
+              "pdfIndex": 4,
+              "printedLabel": "4"
+            },
+            "regions": [
+              {
+                "x": 0.60,
+                "y": 0.108,
+                "w": 0.25,
+                "h": 0.022,
+                "kind": "passage",
+                "label": "Catchellville — Barnes’ United States Histories"
+              }
+            ]
+          }
+        }
+      },
+      "evt_44c869a5c46b": {
+        "replace_title_values": [
+          "Barnes’ and Montgomery’s histories"
+        ],
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_pa_asbj_1895-09_pdfseq004.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "label": "September 1895, printed p. 4",
+            "page": {
+              "pdfIndex": 4,
+              "printedLabel": "4"
+            },
+            "regions": [
+              {
+                "x": 0.09,
+                "y": 0.724,
+                "w": 0.25,
+                "h": 0.036,
+                "kind": "passage",
+                "label": "Juniata — Barnes’ and Montgomery’s histories"
+              }
+            ]
+          }
+        }
+      },
+      "evt_78d294b538e1": {
+        "replace_title_values": [
+          "Barnes’ Histories of United States"
+        ],
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_pa_asbj_1895-09_pdfseq005.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "label": "September 1895, printed p. 5",
+            "page": {
+              "pdfIndex": 5,
+              "printedLabel": "5"
+            },
+            "regions": [
+              {
+                "x": 0.15,
+                "y": 0.185,
+                "w": 0.25,
+                "h": 0.032,
+                "kind": "passage",
+                "label": "New London — Barnes’ Histories of United States"
+              }
+            ]
+          }
+        }
+      },
+      "evt_e80b6b87a104": {
+        "replace_title_values": [
+          "Barnes’ history"
+        ],
+        "note": "The printed line groups Fairchance with several other places; the exact title phrase is preserved, while assignment to Fairchance remains ambiguous.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_pa_asbj_1895-10_pdfseq005.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "sourcePath": "20260728_pennsylvania_prelaw/sources_used/originals/american_school_board_journal/sim_american-school-board-journal_1895-10_11_4.pdf",
+            "label": "October 1895, printed p. 5",
+            "sourceLine": "American School Board Journal, October 1895 — printed p. 5",
+            "page": {
+              "pdfIndex": 5,
+              "printedLabel": "5"
+            },
+            "regions": [
+              {
+                "x": 0.635,
+                "y": 0.162,
+                "w": 0.25,
+                "h": 0.022,
+                "kind": "passage",
+                "label": "Grouped Fairchance notice — Barnes’ history"
+              }
+            ]
+          },
+          "ev2": {
+            "role": "url",
+            "href": "https://archive.org/details/sim_american-school-board-journal_1895-10_11_4",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "label": "archive.org — October issue",
+            "sourceLine": "American School Board Journal, October 1895 — archive.org"
+          }
+        }
+      },
+      "evt_181f762c72e1": {
+        "replace_title_values": [
+          "American History",
+          "Beginner’s American History",
+          "Channing’s Students’ History of the United States",
+          "First Steps in the History of Our Country",
+          "Hart’s Source Book of American History",
+          "History of the United States",
+          "History of the United States",
+          "History of the United States",
+          "McLaughlin’s History of the American Nation",
+          "Montgomery’s Students’ History of the United States",
+          "Primary History of the United States",
+          "School History of the United States",
+          "Stories of Great Americans for Little Americans"
+        ],
+        "note": "Printed p. 247 was a bad citation and has been replaced by the verified title list on printed p. 219. Author names that followed generic titles after commas are not folded into the title transcription.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_nj_newark1901_printed213_pdfseq223.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Printed p. 213 (PDF sequence 223)",
+            "page": {
+              "pdfIndex": 223,
+              "printedLabel": "213"
+            },
+            "regions": [
+              {
+                "x": 0.12,
+                "y": 0.265,
+                "w": 0.76,
+                "h": 0.40,
+                "kind": "passage",
+                "label": "History titles, printed p. 213"
+              }
+            ]
+          },
+          "ev1_continuation": {
+            "role": "pdf_page",
+            "file": "assets/verified_nj_newark1901_printed214_pdfseq224.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Printed p. 214 (continuation)",
+            "sourceLine": "Newark Board of Education annual report — PDF sequence 224; printed p. 214",
+            "page": {
+              "pdfIndex": 224,
+              "printedLabel": "214"
+            },
+            "regions": [
+              {
+                "x": 0.12,
+                "y": 0.17,
+                "w": 0.76,
+                "h": 0.29,
+                "kind": "passage",
+                "label": "History titles, printed p. 214"
+              }
+            ]
+          },
+          "ev4": {
+            "role": "pdf_page",
+            "file": "assets/verified_nj_newark1901_printed219_pdfseq229.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Corrected citation: printed p. 219",
+            "sourceLine": "Newark Board of Education annual report — PDF sequence 229; printed p. 219 (not p. 247)",
+            "page": {
+              "pdfIndex": 229,
+              "printedLabel": "219"
+            },
+            "regions": [
+              {
+                "x": 0.12,
+                "y": 0.175,
+                "w": 0.76,
+                "h": 0.22,
+                "kind": "passage",
+                "label": "High-school history title list"
+              }
+            ]
+          },
+          "ev6": {
+            "role": "pdf_page",
+            "file": "assets/verified_nj_newark1901_printed213_pdfseq223.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Corrected range: printed pp. 213–214",
+            "page": {
+              "pdfIndex": 223,
+              "printedLabel": "213"
+            },
+            "regions": [
+              {
+                "x": 0.12,
+                "y": 0.265,
+                "w": 0.76,
+                "h": 0.40,
+                "kind": "passage",
+                "label": "History titles; p. 247 removed as erroneous"
+              }
+            ]
+          }
+        }
+      },
+      "evt_6370621cee7d": {
+        "replace_title_values": [
+          "Montgomery’s primary history",
+          "Barnes’ history"
+        ],
+        "note": "The source prints two separate title mentions; the former merged title has been split into literal occurrences.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_pa_asbj_1895-10_pdfseq004.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "sourcePath": "20260728_pennsylvania_prelaw/sources_used/originals/american_school_board_journal/sim_american-school-board-journal_1895-10_11_4.pdf",
+            "label": "October 1895, printed p. 4",
+            "sourceLine": "American School Board Journal, October 1895 — printed p. 4",
+            "page": {
+              "pdfIndex": 4,
+              "printedLabel": "4"
+            },
+            "regions": [
+              {
+                "x": 0.12,
+                "y": 0.352,
+                "w": 0.25,
+                "h": 0.032,
+                "kind": "passage",
+                "label": "Foster — Montgomery’s primary history; Barnes’ history"
+              }
+            ]
+          },
+          "ev2": {
+            "role": "url",
+            "href": "https://archive.org/details/sim_american-school-board-journal_1895-10_11_4",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "label": "archive.org — October issue",
+            "sourceLine": "American School Board Journal, October 1895 — archive.org"
+          }
+        }
+      },
+      "evt_cedcd59ad995": {
+        "block_visual_relinks": [
+          "ev1"
+        ],
+        "note": "The shipped p0001 image is a Google Books splash page, not the cited report page. Evidence remains blocked pending the correct render.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "text",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Correct report page not yet rendered",
+            "sourceLine": "Virginia School Report, 1904 primary/grammar selection cycle — cited printed p. 1",
+            "text": "The available p0001 image is a Google Books splash page and is intentionally not shown as claim evidence."
+          }
+        }
+      },
+      "evt_a8292cd1b26b": {
+        "replace_books": [],
+        "note": "United States History is printed as a course/subject in the Junior Class curriculum, not as an exact book title.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_a8292cd1b26b_printed_328_pdfseq_621.png",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Printed p. 328 (PDF sequence 621)",
+            "page": {
+              "pdfIndex": 621,
+              "printedLabel": "328"
+            },
+            "regions": [
+              {
+                "x": 0.13,
+                "y": 0.515,
+                "w": 0.80,
+                "h": 0.095,
+                "kind": "passage",
+                "label": "Junior Class curriculum; subject only"
+              }
+            ]
+          }
+        }
+      },
+      "evt_2765eb705172": {
+        "replace_books": [],
+        "note": "United States History is printed as a curriculum subject, not as an exact book title. Printed p. 76 is the claim-bearing page; pp. 75 and 77 are retained as range context.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_2765eb705172_printed_76_pdfseq_249.png",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Printed p. 76 (PDF sequence 249)",
+            "page": {
+              "pdfIndex": 249,
+              "printedLabel": "76"
+            },
+            "regions": [
+              {
+                "x": 0.13,
+                "y": 0.085,
+                "w": 0.80,
+                "h": 0.27,
+                "kind": "passage",
+                "label": "Course-of-study passage; subject only"
+              }
+            ]
+          },
+          "ev1_context_75": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_2765eb705172_printed_75_pdfseq_248.png",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Range context: printed p. 75",
+            "sourceLine": "Virginia School Report, 1889, Nineteenth Annual Report — PDF sequence 248; printed p. 75 (folio cropped)"
+          },
+          "ev1_context_77": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_2765eb705172_printed_77_pdfseq_250.png",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Range context: printed p. 77",
+            "sourceLine": "Virginia School Report, 1889, Nineteenth Annual Report — PDF sequence 250; printed p. 77"
+          }
+        }
+      },
+      "evt_7370280da74a": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_7370280da74a_printed_xlix_pdfseq_54.png",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Printed p. xlix: literal title list",
+            "page": {
+              "pdfIndex": 54,
+              "printedLabel": "xlix"
+            },
+            "regions": [
+              {
+                "x": 0.07,
+                "y": 0.535,
+                "w": 0.82,
+                "h": 0.265,
+                "kind": "passage",
+                "label": "Six history titles as printed"
+              }
+            ]
+          },
+          "ev1_context_xlviii": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_7370280da74a_printed_xlviii_pdfseq_53.png",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Adoption context: printed p. xlviii",
+            "sourceLine": "Virginia School Report, 1894–1895 — PDF sequence 53; printed p. xlviii"
+          }
+        }
+      },
+      "evt_22cb21b52e01": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_22cb21b52e01_printed_lxv_pdfseq_70.png",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Printed p. lxv: Histories and Civics",
+            "page": {
+              "pdfIndex": 70,
+              "printedLabel": "lxv"
+            },
+            "regions": [
+              {
+                "x": 0.075,
+                "y": 0.37,
+                "w": 0.81,
+                "h": 0.47,
+                "kind": "passage",
+                "label": "Histories and Civics titles as printed"
+              }
+            ]
+          },
+          "ev3": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_22cb21b52e01_printed_lxxiii_pdfseq_78.png",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Printed p. lxxiii: American History",
+            "page": {
+              "pdfIndex": 78,
+              "printedLabel": "lxxiii"
+            },
+            "regions": [
+              {
+                "x": 0.075,
+                "y": 0.345,
+                "w": 0.81,
+                "h": 0.57,
+                "kind": "passage",
+                "label": "American-history and teacher-history titles as printed"
+              }
+            ]
+          }
+        }
+      },
+      "evt_613024dbe74c": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_613024dbe74c_printed_lxi_pdfseq_66.png",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Printed p. lxi: American History",
+            "page": {
+              "pdfIndex": 66,
+              "printedLabel": "lxi"
+            },
+            "regions": [
+              {
+                "x": 0.075,
+                "y": 0.40,
+                "w": 0.82,
+                "h": 0.31,
+                "kind": "passage",
+                "label": "Five American History titles as printed"
+              }
+            ]
+          },
+          "ev1_context_xxxviii": {
+            "role": "pdf_page",
+            "file": "assets/verified_evt_613024dbe74c_printed_xxxviii_pdfseq_43.png",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Selection context: printed p. xxxviii",
+            "sourceLine": "Virginia School Report, 1904–1905 — PDF sequence 43; printed p. xxxviii"
+          }
+        }
+      },
+      "evt_18b0f01012d3": {
+        "replace_books": [],
+        "note": "Transform notation mixed old and new titles and is not a literal printed span; quarantined pending source-level transcription.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_scott_scan349.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Scott County textbook list continuation: printed p. 347",
+            "page": {
+              "pdfIndex": 349,
+              "printedLabel": "347"
+            },
+            "regions": [
+              {
+                "x": 0.06,
+                "y": 0.04,
+                "w": 0.88,
+                "h": 0.91,
+                "kind": "passage",
+                "label": "Continuation of textbook-use table"
+              }
+            ]
+          },
+          "ev3": {
+            "role": "pdf_page",
+            "file": "assets/verified_scott_scan348.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Scott County textbook list: printed p. 346",
+            "page": {
+              "pdfIndex": 348,
+              "printedLabel": "346"
+            },
+            "regions": [
+              {
+                "x": 0.06,
+                "y": 0.04,
+                "w": 0.88,
+                "h": 0.91,
+                "kind": "passage",
+                "label": "Textbook-use table"
+              }
+            ]
+          },
+          "ev5": {
+            "role": "image",
+            "file": "assets/599a2021a3_weekly_clarion_ledger_1900_10_04_page1_scott.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_895d3dcc255f": {
+        "replace_books": [],
+        "note": "The form prints History of United States as a course or subject, not as a book title.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_oregon_teacher_report-1.jpg",
+            "sourceKind": "official_report",
+            "layout": "mixed",
+            "label": "Certified teacher report, page 1",
+            "page": {
+              "pdfIndex": 1,
+              "printedLabel": "1"
+            }
+          },
+          "ev1_page_2": {
+            "role": "pdf_page",
+            "file": "assets/verified_oregon_teacher_report-2.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "General Statistics, page 2",
+            "page": {
+              "pdfIndex": 2,
+              "printedLabel": "2"
+            },
+            "regions": [
+              {
+                "x": 0.05,
+                "y": 0.08,
+                "w": 0.90,
+                "h": 0.84,
+                "kind": "passage",
+                "label": "Course statistics; History of United States is a subject label"
+              }
+            ]
+          }
+        }
+      },
+      "evt_e38da3ddfa76": {
+        "replace_books": [],
+        "note": "The report prints History as a branch of instruction, not as a book title.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_sc_report-117.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "South Carolina report: printed p. 118",
+            "page": {
+              "pdfIndex": 117,
+              "printedLabel": "118"
+            },
+            "regions": [
+              {
+                "x": 0.08,
+                "y": 0.09,
+                "w": 0.84,
+                "h": 0.83,
+                "kind": "passage",
+                "label": "Commissioners’ report"
+              }
+            ]
+          },
+          "ev1_page_119": {
+            "role": "pdf_page",
+            "file": "assets/verified_sc_report-118.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "South Carolina report: printed p. 119",
+            "page": {
+              "pdfIndex": 118,
+              "printedLabel": "119"
+            },
+            "regions": [
+              {
+                "x": 0.08,
+                "y": 0.09,
+                "w": 0.84,
+                "h": 0.83,
+                "kind": "passage",
+                "label": "History is printed as a branch of instruction"
+              }
+            ]
+          }
+        }
+      },
+      "evt_1c4f379d4eb7": {
+        "replace_title_values": [
+          "Eggleston’s U. S. history",
+          "Hansell’s short U. S. history"
+        ],
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_ms_1890_printed277_pdfseq279.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Mississippi report: printed p. 277",
+            "page": {
+              "pdfIndex": 279,
+              "printedLabel": "277"
+            },
+            "regions": [
+              {
+                "x": 0.07,
+                "y": 0.39,
+                "w": 0.86,
+                "h": 0.25,
+                "kind": "passage",
+                "label": "Scott County titles as printed"
+              }
+            ]
+          }
+        }
+      },
+      "evt_dff074bf01a3": {
+        "replace_title_values": [
+          "History—Swinton’s"
+        ],
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/verified_ms_1888_printed231_pdfseq237.jpg",
+            "sourceKind": "official_report",
+            "layout": "prose",
+            "label": "Mississippi report: printed p. 231",
+            "page": {
+              "pdfIndex": 237,
+              "printedLabel": "231"
+            },
+            "regions": [
+              {
+                "x": 0.07,
+                "y": 0.36,
+                "w": 0.86,
+                "h": 0.31,
+                "kind": "passage",
+                "label": "Quitman County textbook list as printed"
+              }
+            ]
+          }
+        }
+      },
+      "evt_a4d589877aa4": {
+        "replace_title_values": [
+          "Fisk’s History of the United States, a first book of American History",
+          "Gordy’s History of the United States",
+          "Montgomery’s Beginner’s American History",
+          "Montgomery’s Leading Facts",
+          "Stories of Great Americans for Little Americans",
+          "Makers of Our Country"
+        ],
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/verified_smyrna_times_1898_07_20_p2.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "label": "Smyrna Times, New Text Books, p. 2",
+            "regions": [
+              {
+                "x": 0.842,
+                "y": 0.344,
+                "w": 0.151,
+                "h": 0.151,
+                "kind": "passage",
+                "label": "History titles in the State Board list"
+              }
+            ]
+          }
+        }
+      },
+      "evt_df0a1fef04f2": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/21f809e16b_natchez_democrat_1900_10_02_page3_reconstruc.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "id": "ev1",
+            "label": "Citation p. 3",
+            "sourceLine": "source document not named — p. 3",
+            "sourcePath": "20260712_parallel_mississippi_prelaw/sources_used/pass8_1900_renewal_cycle_20260712/derived/renders/Natchez_Democrat_1900-10-02_page3_reconstructed_from_server_tiles.jpg",
+            "regions": [
+              {
+                "x": 0.303611,
+                "y": 0.320178,
+                "w": 0.040531,
+                "h": 0.008338,
+                "kind": "passage",
+                "label": "Lee's histories"
+              }
+            ]
+          }
+        },
+        "replace_title_values": [
+          "Lee's histories"
+        ],
+        "note": "County section of the shared Natchez Democrat article; title is printed literally."
+      },
+      "evt_3259be5a7143": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/21f809e16b_natchez_democrat_1900_10_02_page3_reconstruc.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "id": "ev1",
+            "label": "Citation p. 3",
+            "sourceLine": "source document not named — p. 3",
+            "sourcePath": "20260712_parallel_mississippi_prelaw/sources_used/pass8_1900_renewal_cycle_20260712/derived/renders/Natchez_Democrat_1900-10-02_page3_reconstructed_from_server_tiles.jpg",
+            "regions": [
+              {
+                "x": 0.177598,
+                "y": 0.146748,
+                "w": 0.040162,
+                "h": 0.003891,
+                "kind": "passage",
+                "label": "Lee's histories"
+              }
+            ]
+          }
+        },
+        "replace_title_values": [
+          "Lee's histories"
+        ],
+        "note": "City section of the shared Natchez Democrat article; title is printed literally."
+      },
+      "evt_94cd375a2a40": {
+        "replace_books": [],
+        "note": "Transform notation is a synthesized change record, not a literal printed title span; quarantined pending source-level transcription.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/21f809e16b_natchez_democrat_1900_10_02_page3_reconstruc.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_ab914fe0d3fb": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/4b27d86133_newspaperscom_1189184840_mountain_echo_1874_.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "id": "ev1",
+            "label": "Citation p. 3",
+            "sourceLine": "The Mountain Echo — p. 3 (1874-06-26)",
+            "sourcePath": "Data/Adoptions/deep_dives/20260712_parallel_kentucky_prelaw/originals/newspaperscom_1189184840_mountain_echo_1874-06-26_p3_wolfe_adoption_viewport.png",
+            "regions": [
+              {
+                "x": 0.554233,
+                "y": 0.300000,
+                "w": 0.080908,
+                "h": 0.014706,
+                "kind": "passage",
+                "label": "Goodrich's Histories"
+              }
+            ]
+          }
+        },
+        "replace_title_values": [
+          "Goodrich's Histories"
+        ],
+        "note": "Exact plural title is visible in the Wolfe County textbook list."
+      },
+      "evt_3dc3b22ef9fc": {
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/ea3fa2008c_the_donaldsonville_chief_1875_07_24_2.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose"
+          }
+        }
+      },
+      "evt_e4f61f2cce6b": {
+        "replace_books": [],
+        "note": "Transform notation mixed old and new titles and is not a literal printed span; quarantined pending source-level transcription."
+      },
+      "evt_6bc29ca4bacd": {
+        "replace_title_values": [
+          "Ridpath's History",
+          "Venable's History"
+        ],
+        "note": "Both shorthand titles are literal newspaper text. The Venable region includes the adjacent printed adoption verb; apostrophes are normalized to ASCII only for JSON consistency.",
+        "replace_evidence": {
+          "ev2": {
+            "id": "ev2",
+            "role": "image",
+            "label": "monticello_herald_1877-12-06_p3.jpg",
+            "sourceLine": "Monticello Herald — p. 3 [20260715_indiana_prelaw/originals/newspapers/monticello_herald_1877-12-06_p3.jpg]",
+            "file": "assets/c94390bb26_monticello_herald_1877_12_06_p3.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.313655,
+                "y": 0.795895,
+                "w": 0.043232,
+                "h": 0.004899,
+                "kind": "passage",
+                "label": "Ridpath's History"
+              },
+              {
+                "x": 0.279368,
+                "y": 0.909261,
+                "w": 0.075134,
+                "h": 0.007464,
+                "kind": "passage",
+                "label": "Venable's History was adopted"
+              }
+            ]
+          }
+        }
+      },
+      "evt_6cb388273a23": {
+        "replace_books": [],
+        "note": "Search-query series phrase; source page was not inspected."
+      },
+      "evt_9a87fd147834": {
+        "replace_books": [],
+        "note": "Search-query series phrase; source page was not inspected."
+      },
+      "evt_56c7e63a0af7": {
+        "replace_books": [],
+        "note": "The source reports uniform textbooks but prints no titles."
+      },
+      "evt_85a26dbb91dc": {
+        "drop_evidence_paths_containing": [
+          "virginia_school_report_1884_fourteenth_annual_report.pdf"
+        ],
+        "stateAdoptionRegimeAtEvent": "postlaw",
+        "stateAdoptionCutoff": "1870-07-11",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/3b905eb6f4_virginia_school_report_1885_table12_seq080_v.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Table No. 12, p. 74",
+            "regions": [
+              {
+                "x": 0.0,
+                "y": 0.4294,
+                "w": 1.0,
+                "h": 0.0147,
+                "kind": "row",
+                "label": "Fredericksburg row"
+              },
+              {
+                "x": 0.4788,
+                "y": 0.0,
+                "w": 0.0146,
+                "h": 1.0,
+                "kind": "column",
+                "label": "Eclectic (column 14)"
+              },
+              {
+                "x": 0.4788,
+                "y": 0.4294,
+                "w": 0.0146,
+                "h": 0.0147,
+                "kind": "cell",
+                "label": "Fredericksburg × Eclectic"
+              }
+            ]
+          },
+          "ev_table_header": {
+            "role": "image",
+            "file": "assets/d55685956d_virginia_school_report_1885_table12_seq079_v.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Table header context: printed p. 73",
+            "sourceLine": "Virginia School Report, 1885, Fifteenth Annual Report, Table No. 12 — HathiTrust sequence 79; printed p. 73"
+          }
+        }
+      },
+      "evt_0d8d918da594": {
+        "drop_evidence_paths_containing": [
+          "virginia_school_report_1884_fourteenth_annual_report.pdf"
+        ],
+        "stateAdoptionRegimeAtEvent": "postlaw",
+        "stateAdoptionCutoff": "1870-07-11",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/3b905eb6f4_virginia_school_report_1885_table12_seq080_v.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Table No. 12, p. 74",
+            "regions": [
+              {
+                "x": 0.0,
+                "y": 0.7540,
+                "w": 1.0,
+                "h": 0.0107,
+                "kind": "row",
+                "label": "Manchester row"
+              },
+              {
+                "x": 0.4788,
+                "y": 0.0,
+                "w": 0.0146,
+                "h": 1.0,
+                "kind": "column",
+                "label": "Eclectic (column 14)"
+              },
+              {
+                "x": 0.4788,
+                "y": 0.7540,
+                "w": 0.0146,
+                "h": 0.0107,
+                "kind": "cell",
+                "label": "Manchester × Eclectic"
+              }
+            ]
+          },
+          "ev_table_header": {
+            "role": "image",
+            "file": "assets/d55685956d_virginia_school_report_1885_table12_seq079_v.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Table header context: printed p. 73",
+            "sourceLine": "Virginia School Report, 1885, Fifteenth Annual Report, Table No. 12 — HathiTrust sequence 79; printed p. 73"
+          }
+        }
+      },
+      "evt_1b4e20af93e9": {
+        "drop_evidence_paths_containing": [
+          "virginia_school_report_1884_fourteenth_annual_report.pdf"
+        ],
+        "stateAdoptionRegimeAtEvent": "postlaw",
+        "stateAdoptionCutoff": "1870-07-11",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/7b5213587f_virginia_school_report_1885_table12_seq081_v.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Table No. 12, p. 75",
+            "regions": [
+              {
+                "x": 0.0,
+                "y": 0.2368,
+                "w": 1.0,
+                "h": 0.0147,
+                "kind": "row",
+                "label": "Petersburg row"
+              },
+              {
+                "x": 0.4788,
+                "y": 0.0,
+                "w": 0.0146,
+                "h": 1.0,
+                "kind": "column",
+                "label": "Eclectic (column 14)"
+              },
+              {
+                "x": 0.4788,
+                "y": 0.2368,
+                "w": 0.0146,
+                "h": 0.0147,
+                "kind": "cell",
+                "label": "Petersburg × Eclectic"
+              }
+            ]
+          },
+          "ev_table_header": {
+            "role": "image",
+            "file": "assets/d55685956d_virginia_school_report_1885_table12_seq079_v.jpg",
+            "sourceKind": "official_report",
+            "layout": "table",
+            "label": "Table header context: printed p. 73",
+            "sourceLine": "Virginia School Report, 1885, Fifteenth Annual Report, Table No. 12 — HathiTrust sequence 79; printed p. 73"
+          }
+        }
+      },
+      "evt_a007df8a4a04": {
+        "replace_title_values": [
+          "Lee's histories"
+        ],
+        "note": "Exact title passage in the Chicot County adoption notice.",
+        "replace_evidence": {
+          "ev1": {
+            "id": "ev1",
+            "role": "image",
+            "label": "daily_arkansas_gazette_1909-01-11_p2_im…",
+            "sourceLine": "Daily Arkansas Gazette — p. page 2 [20260713_arkansas_prelaw/originals/newspapers/daily_arkansas_gazette_1909-01-11_p2_image_138379832.jpg]",
+            "file": "assets/8255735d9d_daily_arkansas_gazette_1909_01_11_p2_image_1.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.107802,
+                "y": 0.458787,
+                "w": 0.047493,
+                "h": 0.008294,
+                "kind": "passage",
+                "label": "Lee's histories"
+              }
+            ]
+          }
+        }
+      },
+      "evt_8cd3802b591b": {
+        "replace_title_values": [
+          "Lee's histories"
+        ],
+        "note": "Exact title passage in the Craighead County selection notice.",
+        "replace_evidence": {
+          "ev1": {
+            "id": "ev1",
+            "role": "image",
+            "label": "jonesboro_times_1903-12-24_p21_image_11…",
+            "sourceLine": "Jonesboro Times — p. page 21 [20260713_arkansas_prelaw/originals/newspapers/jonesboro_times_1903-12-24_p21_image_1105396378.jpg]",
+            "file": "assets/63492d1748_jonesboro_times_1903_12_24_p21_image_1105396.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.476522,
+                "y": 0.731025,
+                "w": 0.050257,
+                "h": 0.004261,
+                "kind": "passage",
+                "label": "Lee's histories"
+              }
+            ]
+          }
+        }
+      },
+      "evt_0050e6ba1929": {
+        "replace_title_values": [
+          "Lee's Histories of the United States"
+        ],
+        "note": "Exact title is printed on one line in the Monette Weekly Sun adoption list.",
+        "replace_evidence": {
+          "ev1": {
+            "id": "ev1",
+            "role": "image",
+            "label": "monette_weekly_sun_1899-12-21_p4_image_…",
+            "sourceLine": "Monette Weekly Sun — p. page 4 [20260713_arkansas_prelaw/originals/newspapers/monette_weekly_sun_1899-12-21_p4_image_1104109605.jpg]",
+            "file": "assets/d0abb3aa3d_monette_weekly_sun_1899_12_21_p4_image_11041.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.239708,
+                "y": 0.744097,
+                "w": 0.140823,
+                "h": 0.004316,
+                "kind": "passage",
+                "label": "Lee's Histories of the United States"
+              }
+            ]
+          }
+        }
+      },
+      "evt_fb05933ca4c6": {
+        "replace_books": [],
+        "note": "The newspaper prints only that the Board adopted a complete course of study and system of classification. Goodrich's History of the U. S. and Paley's Child's History are printed only in a separate directory schedule; remove this synthetic cross-source title composite."
+      },
+      "evt_9cdd2473cee3": {
+        "replace_title_values": [
+          "THE MACE HISTORIES"
+        ],
+        "note": "School Board Journal advertisement, not a newspaper. The exact all-caps series title is printed; the adoption claim is publisher advertising.",
+        "replace_evidence": {
+          "ev1": {
+            "id": "ev1",
+            "role": "pdf_page",
+            "label": "sim_american-school-board-j… p. 12 (PDF…",
+            "sourceLine": "School Board Journal, Vol. 44 No. 2 — printed p. 12 (PDF page 14) () [20260730_maryland_prelaw/originals/journals/asbj/sim_american-school-board-journal_1912-02_44_2.pdf]",
+            "file": "assets/3d4a6e2033_p0012_sim_american_school_board_journal_1912_02_44.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.241546,
+                "y": 0.235402,
+                "w": 0.150362,
+                "h": 0.009195,
+                "kind": "passage",
+                "label": "THE MACE HISTORIES"
+              }
+            ]
+          }
+        }
+      },
+      "evt_74e7f4b37fda": {
+        "replace_title_values": [
+          "Montgomery's beginners' and American histories"
+        ],
+        "note": "School Board Journal periodical, not a newspaper. The literal title wraps at the bottom/start of adjacent text line and requires two passage regions; dehyphenated title value preserves the printed wording.",
+        "replace_evidence": {
+          "ev1": {
+            "id": "ev1",
+            "role": "pdf_page",
+            "label": "sim_american-school-board-j… p. 4 (PDF…",
+            "sourceLine": "School Board Journal, Vol. 13 No. 3 — printed p. 4 (PDF page 16) () [20260730_maryland_prelaw/originals/journals/asbj/sim_american-school-board-journal_1896-09_13_3.pdf]",
+            "file": "assets/bde0d37d9a_p0004_sim_american_school_board_journal_1896_09_13.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.442118,
+                "y": 0.258596,
+                "w": 0.177429,
+                "h": 0.008008,
+                "kind": "passage",
+                "label": "Montgomery's beginners' and American his-"
+              },
+              {
+                "x": 0.388016,
+                "y": 0.266133,
+                "w": 0.023269,
+                "h": 0.012718,
+                "kind": "passage",
+                "label": "tories."
+              }
+            ]
+          }
+        }
+      },
+      "evt_0af4eeb4643a": {
+        "replace_title_values": [
+          "Barnes, History and geographies"
+        ],
+        "note": "The printed school-meeting list joins History and geographies in one literal line; Barnes History alone is a normalized truncation.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/8bddb9a2eb_hominy_news_1905_08_04_p6.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.061,
+                "y": 0.424,
+                "w": 0.191,
+                "h": 0.283,
+                "kind": "passage",
+                "label": "SCHOOL MEETING — adopted-book list"
+              },
+              {
+                "x": 0.096,
+                "y": 0.591,
+                "w": 0.159,
+                "h": 0.018,
+                "kind": "passage",
+                "label": "Barnes, History and geographies"
+              }
+            ]
+          }
+        }
+      },
+      "evt_62210bfbed19": {
+        "note": "The literal target is on PDF sequence 29: Plankinton, S. D. Aurora county adoption: ... Montgomery’s Beginners and Advanced Histories. The shipped ev1 file is PDF sequence 28 and contains no Aurora passage, so no region is assigned. Render sequence 29 and replace ev1 before enabling highlighting.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "text",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "label": "American School Board Journal — correct passage unavailable in shipped asset",
+            "text": "Blocked asset: the current file is PDF sequence 28; the Aurora County adoption passage is on PDF sequence 29."
+          }
+        }
+      },
+      "evt_223fd3f6c0ee": {
+        "replace_title_values": [
+          "History of the United States—Burns’"
+        ],
+        "note": "The newspaper prints the subject followed by the title/author form; the current value reverses it.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/81869fd88d_alvarado_1884_10_17_p3.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.617,
+                "y": 0.451,
+                "w": 0.105,
+                "h": 0.190,
+                "kind": "passage",
+                "label": "Greenbrier schoolhouse textbook adoption notice"
+              },
+              {
+                "x": 0.620,
+                "y": 0.559,
+                "w": 0.100,
+                "h": 0.021,
+                "kind": "passage",
+                "label": "History of the United States—Burns’"
+              }
+            ]
+          }
+        }
+      },
+      "evt_c2ea88cdd0e1": {
+        "replace_title_values": [
+          "Barnes’ history"
+        ],
+        "note": "The screenshot prints Barnes’ history. Apostrophe glyph normalized only; no canonical expansion.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/c05f2243bf_san_antonio_express_1896_06_15_p4_image12753.png",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.343,
+                "y": 0.432,
+                "w": 0.184,
+                "h": 0.476,
+                "kind": "passage",
+                "label": "YOAKUM CONFEDERATES article"
+              },
+              {
+                "x": 0.425,
+                "y": 0.544,
+                "w": 0.071,
+                "h": 0.033,
+                "kind": "passage",
+                "label": "Barnes’ history"
+              }
+            ]
+          }
+        }
+      },
+      "evt_1f9825777349": {
+        "replace_title_values": [
+          "Montgomery and Ellis’ History"
+        ],
+        "note": "Remove the synthetic leading quote; this is the literal phrase printed in the Landgrove town report.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/b6846feede_sn90000523_1895_10_04_ed_1_0371_pct100.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.264,
+                "y": 0.553,
+                "w": 0.126,
+                "h": 0.200,
+                "kind": "passage",
+                "label": "LANDGROVE adopted-textbook paragraph"
+              },
+              {
+                "x": 0.269,
+                "y": 0.693,
+                "w": 0.115,
+                "h": 0.025,
+                "kind": "passage",
+                "label": "Montgomery and Ellis’ History"
+              }
+            ]
+          }
+        }
+      },
+      "evt_3598462278a4": {
+        "replace_title_values": [
+          "Myers’ General History",
+          "Shinn’s History of American People",
+          "Field’s Grammar School History of United States"
+        ],
+        "note": "The preserved crop prints three relevant history entries. The current extraction omitted Myers’ General History; wording is preserved without canonical expansion.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/1cff5ad4cd_st_johns_19050928_p2_history_titles.jpg",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.218,
+                "y": 0.457,
+                "w": 0.662,
+                "h": 0.347,
+                "kind": "passage",
+                "label": "Book-sale list with three history titles"
+              },
+              {
+                "x": 0.356,
+                "y": 0.474,
+                "w": 0.289,
+                "h": 0.066,
+                "kind": "passage",
+                "label": "Myers’ General History"
+              },
+              {
+                "x": 0.351,
+                "y": 0.544,
+                "w": 0.457,
+                "h": 0.063,
+                "kind": "passage",
+                "label": "Shinn’s History of American People"
+              },
+              {
+                "x": 0.350,
+                "y": 0.614,
+                "w": 0.530,
+                "h": 0.069,
+                "kind": "passage",
+                "label": "Field’s Grammar School History of United States"
+              }
+            ]
+          }
+        }
+      },
+      "evt_6c1dd7bc9640": {
+        "replace_title_values": [
+          "Eclectic",
+          "Mrs. Snyder’s history"
+        ],
+        "note": "Eclectic is printed as a shorthand book reference in contrast with Mrs. Snyder’s history. The latter current value truncates the printed word history.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/a9ead5caf4_p0012_sim_american_school_board_journal_1892_10_4_.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.370,
+                "y": 0.482,
+                "w": 0.239,
+                "h": 0.405,
+                "kind": "passage",
+                "label": "WANT AN IMPARTIAL HISTORY article"
+              },
+              {
+                "x": 0.372,
+                "y": 0.750,
+                "w": 0.208,
+                "h": 0.078,
+                "kind": "passage",
+                "label": "keep the Eclectic ... Mrs. Snyder’s history"
+              }
+            ]
+          }
+        }
+      },
+      "evt_9899bf6a7ec3": {
+        "replace_title_values": [
+          "Schouler’s and Bancroft’s history of the United States",
+          "Madison’s Journal of the Constitutional Convention"
+        ],
+        "note": "The first printed phrase coordinates Schouler’s and Bancroft’s under one singular history phrase; splitting it into two inferred titles is not literal. ev1 and ev3 duplicate the same correct target image; both are pointed to the verified file because the override schema has no drop-evidence operation.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "pdf_page",
+            "file": "assets/fa61f4da84_p0033_sim_american_school_board_journal_1898_02_16.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.128,
+                "y": 0.104,
+                "w": 0.262,
+                "h": 0.186,
+                "kind": "passage",
+                "label": "Colorado Springs high-school library notice"
+              },
+              {
+                "x": 0.130,
+                "y": 0.199,
+                "w": 0.258,
+                "h": 0.066,
+                "kind": "passage",
+                "label": "Schouler’s and Bancroft’s history ... Madison’s Journal ..."
+              }
+            ]
+          },
+          "ev3": {
+            "role": "pdf_page",
+            "file": "assets/fa61f4da84_p0033_sim_american_school_board_journal_1898_02_16.jpg",
+            "sourceKind": "periodical",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.128,
+                "y": 0.104,
+                "w": 0.262,
+                "h": 0.186,
+                "kind": "passage",
+                "label": "Colorado Springs high-school library notice"
+              },
+              {
+                "x": 0.130,
+                "y": 0.199,
+                "w": 0.258,
+                "h": 0.066,
+                "kind": "passage",
+                "label": "Schouler’s and Bancroft’s history ... Madison’s Journal ..."
+              }
+            ]
+          }
+        }
+      },
+      "evt_859847600b39": {
+        "note": "All three current title values are literal to the retail list. Highlight the newspaper crop; the official course-of-study evidence uses shorter labels and should not replace the newspaper wording.",
+        "replace_evidence": {
+          "ev1": {
+            "role": "image",
+            "file": "assets/8d583b9b23_miami_news_19060804_p5_dade_county_textbooks.png",
+            "sourceKind": "newspaper",
+            "layout": "prose",
+            "regions": [
+              {
+                "x": 0.151,
+                "y": 0.075,
+                "w": 0.386,
+                "h": 0.819,
+                "kind": "passage",
+                "label": "Dade County Text Books retail list"
+              },
+              {
+                "x": 0.154,
+                "y": 0.710,
+                "w": 0.351,
+                "h": 0.126,
+                "kind": "passage",
+                "label": "Morris’ Primary U. S. History; Morris’ Elementary History; Field’s Grammar School History"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "evt_9d0c3281bda2": {
+      "replace_books": [],
+      "note": "Cooper, Estell & Lemon histories is a printed author-family/subject phrase, not a literal book title."
+    },
+    "evt_b235b19859de": {
+      "replace_title_values": [
+        "Anderson's U.S. history"
+      ],
+      "note": "The extractor duplicated the same printed title occurrence; keep one literal title row."
+    },
+    "evt_b7980649b8a5": {
+      "replace_title_values": [
+        "Grimshaw’s History of the U. States",
+        "Willson’s American History"
+      ]
+    },
+    "evt_ee311507798b": {
+      "replace_title_values": [
+        "Eggleston’s Primary History",
+        "Shinn’s History of the American People"
+      ],
+      "note": "Terminal list punctuation is not part of the printed titles."
+    }
+  }
+}

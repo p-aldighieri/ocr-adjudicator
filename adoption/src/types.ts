@@ -1,8 +1,8 @@
 // ---- dataset.json shape (produced by tools/build_adoption_dataset.py — NOT WRITTEN YET) ----
 //
-// One Item = one ADOPTION EVENT BUNDLE: a single board action / statute that adopted one or
-// more books. Everything the reviewer needs to judge that event travels with the item:
-// the evidence (scans, rendered PDF pages, transcripts, stable URLs) and the per-book claims.
+// One Item = one ADOPTION EVENT BUNDLE. `books` is retained as the legacy dataset property name,
+// but each entry is a printed-title extraction to verify—not a canonical or matched book entity.
+// Everything the reviewer needs travels with the item: evidence plus per-extraction source claims.
 
 /** Review backlog an item belongs to. Fixed set — the Overview renders one section per group. */
 export type QueueGroup = 'new_records' | 'conflicts' | 'state_laws'
@@ -24,6 +24,22 @@ export const GROUP_LABEL: Record<QueueGroup, string> = {
  */
 export type EvidenceRole = 'image' | 'pdf_page' | 'text' | 'url'
 
+/** Source genre and page layout are deliberately orthogonal. */
+export type EvidenceSourceKind = 'newspaper' | 'official_report' | 'minutes' | 'statute' | 'periodical' | 'other'
+export type EvidenceLayout = 'prose' | 'table' | 'mixed'
+
+/** A normalized region on the rendered image. All coordinates are in 0..1. */
+export interface EvidenceRegion {
+  x: number
+  y: number
+  w: number
+  h: number
+  kind?: 'passage' | 'row' | 'column' | 'cell'
+  label?: string
+  /** Result keys supported by this region. Empty/omitted means general context. */
+  fieldKeys?: string[]
+}
+
 export interface EvidenceRef {
   id: string
   role: EvidenceRole
@@ -37,6 +53,14 @@ export interface EvidenceRef {
   label: string
   /** citation string shown under the evidence: document / page / date */
   sourceLine: string
+  /** Explicit builder metadata. The UI never guesses these tags from prose. */
+  sourceKind?: EvidenceSourceKind
+  layout?: EvidenceLayout
+  /** Stable build provenance, unrelated to canonical-book matching. */
+  sourceId?: string
+  sourcePath?: string
+  page?: { pdfIndex?: number; printedLabel?: string }
+  regions?: EvidenceRegion[]
 }
 
 /**
@@ -77,13 +101,13 @@ export interface ClaimField {
   hint?: string
 }
 
-/** One adopted book inside the event bundle. */
-export interface BookSection {
+/** One proposed literal-title extraction inside the event bundle. */
+export interface PrintedTitleSection {
   key: string
   /** the title exactly as it appears in the source, used as the section heading */
   title_as_stated: string
   fields: ClaimField[]
-  /** builder note about this book (e.g. "listed twice in the minutes") */
+  /** builder note about this extraction (e.g. "the title continues on the next line") */
   note?: string
 }
 
@@ -101,6 +125,10 @@ export interface Item {
   year: number
   /** 0..1, higher = review sooner */
   priority: number
+  /** Historical statewide-adoption regime at the event date. */
+  stateAdoptionRegimeAtEvent?: 'prelaw' | 'postlaw' | 'ambiguous' | 'not_applicable' | 'unknown'
+  /** Source cutoff retained for auditability, e.g. "1870-07-11". */
+  stateAdoptionCutoff?: string
   /** reviewer instruction shown as a warning banner on the item */
   alert?: string
   /** builder context paragraph shown under the header */
@@ -110,7 +138,8 @@ export interface Item {
   evidence: EvidenceRef[]
   /** claims about the EVENT itself (date, unit level, statute citation …) — optional */
   eventFields?: ClaimField[]
-  books: BookSection[]
+  /** Legacy transport key; entries are printed-title extractions, not canonical books. */
+  books: PrintedTitleSection[]
 }
 
 export interface DatasetMeta {
@@ -124,6 +153,8 @@ export interface DatasetMeta {
   sources: string[]
   /** pretty names for sources; falls back to the raw source name */
   sourceLabels?: Record<string, string>
+  /** Named geographic classification used for the Southern-state filter. */
+  southDefinition?: { id: string; label: string; states: string[] }
 }
 
 export interface Dataset { meta: DatasetMeta; items: Item[] }
@@ -134,7 +165,13 @@ export interface Dataset { meta: DatasetMeta; items: Item[] }
 export const CHOICE_CUSTOM = 'custom'
 export const CHOICE_NOT_STATED = 'not_stated'
 export const CHOICE_CANT_TELL = 'cant_tell'
-export const RESERVED_CHOICES: string[] = [CHOICE_CUSTOM, CHOICE_NOT_STATED, CHOICE_CANT_TELL]
+/** The extractor's literal transcription was verified against the page. */
+export const CHOICE_EXTRACTED_TITLE = 'extracted_title'
+/** The proposed string is not actually a printed book title. */
+export const CHOICE_NOT_TITLE = 'not_title'
+export const RESERVED_CHOICES: string[] = [
+  CHOICE_CUSTOM, CHOICE_NOT_STATED, CHOICE_CANT_TELL, CHOICE_EXTRACTED_TITLE, CHOICE_NOT_TITLE,
+]
 
 /** A source name, one of the reserved choices, or null when undecided. Sources are dynamic. */
 export type Choice = string | null
@@ -147,12 +184,20 @@ export interface FieldResult {
   custom?: string
 }
 
+/** A title occurrence the extractor missed and the reviewer transcribed from the page. */
+export interface AddedTitleResult {
+  id: string
+  value: string
+  evidenceId?: string | null
+}
+
 export type ItemStatus = 'untouched' | 'in_progress' | 'done' | 'insufficient'
 
 export interface ItemResult {
   itemId: string
   /** keyed by resultKey(sectionKey, fieldKey) — see queue.ts */
   fields: Record<string, FieldResult>
+  addedTitles?: AddedTitleResult[]
   /** reviewer flagged the bundle as unjudgeable from the evidence shipped */
   insufficient?: boolean
   notes?: string

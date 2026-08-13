@@ -1,12 +1,17 @@
 {
   "meta": {
     "name": "adoption-sample",
-    "schema": 1,
-    "note": "Hand-written sample bundle: three events, one per queue, exercising every evidence role. Replace wholesale with the output of the real dataset builder.",
+    "schema": 4,
+    "note": "Hand-written literal-title review sample: three events, one per queue, exercising every evidence role.",
     "states": ["AL", "GA", "TX"],
     "years": [1901, 1904, 1908],
     "nItems": 3,
     "sources": ["claude", "codex", "registry", "suggested"],
+    "southDefinition": {
+      "id": "project_south_v1",
+      "label": "Project South v1 (16 states)",
+      "states": ["AL", "AR", "DE", "FL", "GA", "KY", "LA", "MD", "MO", "MS", "NC", "SC", "TN", "TX", "VA", "WV"]
+    },
     "sourceLabels": {
       "claude": "Claude",
       "codex": "Codex",
@@ -24,6 +29,8 @@
       "state": "AL",
       "year": 1901,
       "priority": 0.35,
+      "stateAdoptionRegimeAtEvent": "postlaw",
+      "stateAdoptionCutoff": "1901",
       "note": "First county-level adoption we have for Baldwin. The minute book and the state annual report describe the same meeting but disagree about whether it was a binding adoption.",
       "notesPrompt": "anything odd about this minute entry…",
       "evidence": [
@@ -31,13 +38,21 @@
           "id": "ev_minutes",
           "role": "image",
           "file": "assets/al_baldwin_1901_minutes.svg",
+          "sourceKind": "minutes",
+          "layout": "prose",
           "label": "Minutes p. 214",
-          "sourceLine": "Baldwin County Board of Education, Minute Book 3, p. 214 — meeting of 1901-09-20"
+          "sourceLine": "Baldwin County Board of Education, Minute Book 3, p. 214 — meeting of 1901-09-20",
+          "regions": [
+            { "x": 0.12, "y": 0.35, "w": 0.70, "h": 0.035, "kind": "passage", "label": "Frye's Elements of Geography", "fieldKeys": ["b_geog:title_as_printed"] },
+            { "x": 0.12, "y": 0.385, "w": 0.76, "h": 0.035, "kind": "passage", "label": "Baldwin's Third Reader", "fieldKeys": ["b_reader:title_as_printed"] }
+          ]
         },
         {
           "id": "ev_report",
           "role": "pdf_page",
           "file": "assets/al_report_1902_p088.svg",
+          "sourceKind": "official_report",
+          "layout": "prose",
           "label": "State report p. 88",
           "sourceLine": "Alabama Dept. of Education, Annual Report for 1902, p. 88 (PDF page 96, rendered)"
         },
@@ -45,6 +60,8 @@
           "id": "ev_transcript",
           "role": "text",
           "text": "Bay Minette, September 20th, 1901.\n\nThe Board met in regular session, all members present.\n\nOn motion of Mr. Sessions, duly seconded, it was ordered that the\nfollowing books be, and the same are hereby, adopted for use in the\npublic schools of this county for the term of five years:\n\n    1.  Frye's Elements of Geography ....... Ginn & Co.\n    2.  Baldwin's Third Reader ............. American Book Co.\n\nThe Superintendent was directed to notify the several trustees, and\nto procure the said books at the contract price.",
+          "sourceKind": "minutes",
+          "layout": "prose",
           "label": "Transcript",
           "sourceLine": "Manual transcript of Minute Book 3, p. 214 — transcribed 2026-07-14, unverified against a second reader"
         },
@@ -201,8 +218,7 @@
               "valueType": "text",
               "candidates": [
                 { "source": "claude", "value": "American Book Co." },
-                { "source": "codex", "value": "American Book Co." },
-                { "source": "registry", "value": "American Book Company", "note": "Registry's canonical firm name — do not copy it into the as-stated field." }
+                { "source": "codex", "value": "American Book Co." }
               ],
               "default": "claude",
               "agree": false,
@@ -248,21 +264,30 @@
       "state": "GA",
       "year": 1908,
       "priority": 0.85,
+      "stateAdoptionRegimeAtEvent": "postlaw",
+      "stateAdoptionCutoff": "1903",
       "alert": "The minute book is water-damaged exactly where the title sits. The newspaper notice names a book; the marginal note names a different contract date. Decide from the evidence, and if neither settles it, flag the bundle.",
-      "note": "Extractors disagree on both the book and the date. This is the canonical shape of a 'conflicts' bundle: one book, several irreconcilable readings.",
+      "note": "Extractors disagree on both the literal title and the date. Preserve only what the evidence actually prints.",
       "notesPrompt": "which reading did you take, and why…",
       "evidence": [
         {
           "id": "ev_minute_page",
           "role": "image",
           "file": "assets/ga_warren_1908_minutes.svg",
+          "sourceKind": "minutes",
+          "layout": "prose",
           "label": "Minutes p. 41",
-          "sourceLine": "Warren County Board of Education, Minutes Book B, p. 41 — 1908-04-06 (water damage, lower third)"
+          "sourceLine": "Warren County Board of Education, Minutes Book B, p. 41 — 1908-04-06 (water damage, lower third)",
+          "regions": [
+            { "x": 0.07, "y": 0.21, "w": 0.86, "h": 0.075, "kind": "passage", "label": "Damaged Fourth Reader title line", "fieldKeys": ["b_reader4:title_as_printed"] }
+          ]
         },
         {
           "id": "ev_press",
           "role": "text",
           "text": "THE WARRENTON CLIPPER, April 9, 1908, p. 3.\n\n  SCHOOL BOOKS CHANGED. — At its meeting Monday the county board\n  put out the readers now in use and took on the Holmes Fourth\n  Reader, the change to take effect with the fall term. The\n  adoption is said to run four years. Mr. Sanders represented the\n  publishers.",
+          "sourceKind": "newspaper",
+          "layout": "prose",
           "label": "Newspaper notice",
           "sourceLine": "The Warrenton Clipper, 1908-04-09, p. 3, col. 2 — Chronicling America OCR, lightly corrected"
         },
@@ -363,6 +388,8 @@
       "state": "TX",
       "year": 1904,
       "priority": 0.6,
+      "stateAdoptionRegimeAtEvent": "postlaw",
+      "stateAdoptionCutoff": "1895",
       "note": "Statute-driven adoption: one act, one board action, a whole series of books. Every book below is part of the same event and inherits the same date and term.",
       "notesPrompt": "note any book listed in the act but missing here…",
       "evidence": [
@@ -370,13 +397,22 @@
           "id": "ev_statute",
           "role": "pdf_page",
           "file": "assets/tx_1904_statute_p012.svg",
+          "sourceKind": "statute",
+          "layout": "prose",
           "label": "Session laws p. 12",
-          "sourceLine": "General Laws of Texas, 28th Legislature, ch. 12, p. 12 (PDF page 34, rendered)"
+          "sourceLine": "General Laws of Texas, 28th Legislature, ch. 12, p. 12 (PDF page 34, rendered)",
+          "regions": [
+            { "x": 0.13, "y": 0.355, "w": 0.78, "h": 0.03, "kind": "passage", "label": "Milne's Standard Arithmetic", "fieldKeys": ["b_arith:title_as_printed"] },
+            { "x": 0.13, "y": 0.385, "w": 0.80, "h": 0.03, "kind": "passage", "label": "Reed & Kellogg's Graded Lessons", "fieldKeys": ["b_gram:title_as_printed"] },
+            { "x": 0.13, "y": 0.415, "w": 0.80, "h": 0.03, "kind": "passage", "label": "Barnes's Brief History of the United States", "fieldKeys": ["b_hist:title_as_printed"] }
+          ]
         },
         {
           "id": "ev_statute_text",
           "role": "text",
           "text": "SEC. 4. That the State Text-Book Board shall, on the first Monday\nin July, 1904, adopt a uniform series of text-books for the public\nfree schools of this State, which adoption shall continue in force\nfor a period of five years from the first day of September following.\n\nSEC. 5. The books so adopted for the several branches shall be:\n\n    Arithmetic — Milne's Standard Arithmetic, American Book Co.\n    Grammar   — Reed & Kellogg's Graded Lessons, Maynard, Merrill & Co.\n    History   — Barnes's Brief History of the United States, Am. Book Co.\n\nSEC. 6. No county, city or district board shall adopt any book for\nthe branches herein named during the life of this adoption.",
+          "sourceKind": "statute",
+          "layout": "prose",
           "label": "Statute text",
           "sourceLine": "General Laws of Texas, 28th Leg., ch. 12, secs. 4–6 — clean text from the state's digitised session laws"
         },
