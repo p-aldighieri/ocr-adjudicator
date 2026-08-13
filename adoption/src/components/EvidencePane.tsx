@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch'
-import type { EvidenceRef, EvidenceRole } from '../types'
+import type { EvidenceRef, EvidenceRegion, EvidenceRole } from '../types'
 import { assetURL } from '../dataset'
 
 const ROLE_ICON: Record<EvidenceRole, string> = {
@@ -20,6 +20,8 @@ export function EvidencePane({
   onPick,
   relevantIds,
   wrapText,
+  activeFieldKey,
+  showHighlights,
 }: {
   evidence: EvidenceRef[]
   activeId: string | null
@@ -27,6 +29,8 @@ export function EvidencePane({
   /** evidence cited by the focused claim — those chips get a ring */
   relevantIds: string[]
   wrapText: boolean
+  activeFieldKey: string | null
+  showHighlights: boolean
 }) {
   const active = evidence.find((e) => e.id === activeId) ?? evidence[0]
   const [urls, setUrls] = useState<Record<string, string>>({})
@@ -84,6 +88,8 @@ export function EvidencePane({
               url={active.file ? urls[active.file] : undefined}
               failed={!!(active.file && failed[active.file])}
               onError={() => markFailed(active.file)}
+              activeFieldKey={activeFieldKey}
+              showHighlights={showHighlights}
             />
           : active.role === 'text'
             ? <TextView evidence={active} wrapText={wrapText} />
@@ -94,13 +100,17 @@ export function EvidencePane({
 }
 
 function PictorialView({
-  evidence, url, failed, onError,
+  evidence, url, failed, onError, activeFieldKey, showHighlights,
 }: {
   evidence: EvidenceRef
   url?: string
   failed: boolean
   onError: () => void
+  activeFieldKey: string | null
+  showHighlights: boolean
 }) {
+  const regions = evidence.regions ?? []
+  const labels = [...new Set(regions.map((region) => region.label).filter((value): value is string => !!value))]
   return (
     <div className="flex h-full min-h-0 flex-col">
       <div className="viewer-surface relative min-h-0 flex-1 overflow-hidden bg-black">
@@ -124,13 +134,31 @@ function PictorialView({
                       asset missing: <span className="ml-1 font-mono">{evidence.file}</span>
                     </div>
                   ) : url ? (
-                    <img
-                      src={url}
-                      alt={evidence.label}
-                      onError={onError}
-                      className="block w-full select-none"
-                      draggable={false}
-                    />
+                    <>
+                      <img
+                        src={url}
+                        alt={evidence.label}
+                        onError={onError}
+                        className="block w-full select-none"
+                        draggable={false}
+                      />
+                      {showHighlights && regions.length > 0 && (
+                        <svg
+                          viewBox="0 0 1 1"
+                          preserveAspectRatio="none"
+                          aria-label="Relevant source regions"
+                          className="pointer-events-none absolute inset-0 h-full w-full"
+                        >
+                          {regions.map((region, index) => (
+                            <EvidenceRegionRect
+                              key={`${region.kind ?? 'passage'}-${index}`}
+                              region={region}
+                              activeFieldKey={activeFieldKey}
+                            />
+                          ))}
+                        </svg>
+                      )}
+                    </>
                   ) : (
                     <div className="flex h-40 items-center justify-center text-slate-600">loading…</div>
                   )}
@@ -146,12 +174,47 @@ function PictorialView({
               <div className="absolute left-2 top-2 rounded bg-black/60 px-2 py-0.5 text-[11px] text-slate-200">
                 {evidence.label}
               </div>
+              {showHighlights && labels.length > 0 && (
+                <div className="absolute bottom-2 left-2 max-w-[70%] rounded bg-black/75 px-2 py-1 text-[11px] text-amber-100">
+                  {labels.join(' · ')}
+                </div>
+              )}
             </>
           )}
         </TransformWrapper>
       </div>
       <SourceLine>{evidence.sourceLine}</SourceLine>
     </div>
+  )
+}
+
+function EvidenceRegionRect({
+  region, activeFieldKey,
+}: {
+  region: EvidenceRegion
+  activeFieldKey: string | null
+}) {
+  const supportsActive = !region.fieldKeys?.length || (!!activeFieldKey && region.fieldKeys.includes(activeFieldKey))
+  const style: Record<NonNullable<EvidenceRegion['kind']>, { color: string; fill: number }> = {
+    passage: { color: '#facc15', fill: 0.18 },
+    row: { color: '#facc15', fill: 0.10 },
+    column: { color: '#38bdf8', fill: 0.09 },
+    cell: { color: '#34d399', fill: 0.24 },
+  }
+  const { color, fill } = style[region.kind ?? 'passage']
+  return (
+    <rect
+      x={region.x}
+      y={region.y}
+      width={region.w}
+      height={region.h}
+      fill={color}
+      fillOpacity={supportsActive ? fill : fill / 3}
+      stroke={color}
+      strokeOpacity={supportsActive ? 0.95 : 0.35}
+      strokeWidth={supportsActive ? 0.004 : 0.002}
+      vectorEffect="non-scaling-stroke"
+    />
   )
 }
 

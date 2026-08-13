@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "test": "python3 -m unittest discover tools 'test_*.py'",
     "lint": "eslint .",
     "preview": "vite preview"
   },

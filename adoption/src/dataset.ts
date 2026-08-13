@@ -1,5 +1,5 @@
 import JSZip from 'jszip'
-import type { Dataset } from './types'
+import type { Dataset, EvidenceRef } from './types'
 import { getMeta, setMeta } from './db'
 
 // Dataset can come from two places:
@@ -48,16 +48,74 @@ export async function loadDataset(): Promise<{ data: Dataset; source: Source } |
     if (!dir) return null
     const fh = await dir.getFileHandle('dataset.json')
     const file = await fh.getFile()
-    return { data: JSON.parse(await file.text()) as Dataset, source }
+    return { data: prepareGroundTruthDataset(JSON.parse(await file.text()) as Dataset), source }
   }
   // bundled
   try {
     const res = await fetch(`${BASE}dataset/dataset.json`, { cache: 'no-cache' })
     if (!res.ok) return null
-    return { data: (await res.json()) as Dataset, source: 'bundled' }
+    return { data: prepareGroundTruthDataset((await res.json()) as Dataset), source: 'bundled' }
   } catch {
     return null
   }
+}
+
+/**
+ * Compatibility boundary for older imports. Dataset v3 contained canonical-book matching; the
+ * reviewer now receives literal source claims only. The repair builder removes it permanently,
+ * while this guard prevents an older imported zip from leaking it back into the interface.
+ */
+export function prepareGroundTruthDataset(dataset: Dataset): Dataset {
+  return {
+    ...dataset,
+    items: dataset.items.map((item) => ({
+      ...item,
+      alert: scrubMatchingAlert(item.alert),
+      note: scrubMatchingText(item.note),
+      evidence: item.evidence.map(sanitizeEvidence),
+      books: item.books.map((titleExtraction) => ({
+        ...titleExtraction,
+        fields: titleExtraction.fields.filter((field) => field.key !== 'book_match'),
+      })),
+    })),
+  }
+}
+
+function scrubMatchingAlert(alert?: string): string | undefined {
+  if (!alert) return undefined
+  const cleaned = alert
+    .replace(/at least one title has no confident book match;?\s*/gi, '')
+    .replace(/Read the evidence before choosing:\s*(?=\.|$)/i, '')
+    .replace(/\s+\./g, '.')
+    .replace(/^\s*[;.]+\s*/, '')
+    .trim()
+  return cleaned || undefined
+}
+
+function sanitizeEvidence(evidence: EvidenceRef): EvidenceRef {
+  const sourceSignal = `${evidence.sourcePath ?? ''} ${evidence.sourceLine ?? ''} ${evidence.file ?? ''}`
+  const sourceKind = /(?:american[-_ ]?)?school[-_ ]board[-_ ]journal/i.test(sourceSignal)
+    ? 'periodical'
+    : evidence.sourceKind
+  return {
+    ...evidence,
+    sourceKind,
+    text: scrubMatchingText(evidence.text),
+    sourceLine: scrubMatchingText(evidence.sourceLine) ?? '',
+  }
+}
+
+function scrubMatchingText(value?: string): string | undefined {
+  if (!value) return value
+  const text = value
+    .replace(/(?:internal|project authority|internal authority|authority) bridge(?:\s+is|:)?[^.;]*(?:[.;]|$)/gi, '')
+    .replace(/[^.\n;]*(?:title\/action bridge|(?:exact-)?title bridge|action bridge)[^.\n;]*(?:[.;]|$)/gi, '')
+    .replace(/[^.\n;]*no (?:separate )?edition is assigned[^.\n;]*(?:[.;]|$)/gi, '')
+    .replace(/match(?:ing)?(?: method| confidence)?\s*:[^.;]*(?:[.;]|$)/gi, '')
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim()
+  return text || undefined
 }
 
 /**

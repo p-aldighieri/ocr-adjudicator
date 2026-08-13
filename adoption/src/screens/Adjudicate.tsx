@@ -3,27 +3,35 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useStore } from '../store'
 import { EvidencePane } from '../components/EvidencePane'
 import { ClaimRow, sourceLabel } from '../components/ClaimRow'
+import { PrintedTitleRow } from '../components/PrintedTitleRow'
 import {
   EVENT_SECTION, EVENT_SECTION_TITLE, adjudicableFields, buildQueue, computeStatus,
-  decidedCount, itemFields, itemSources, nextUnresolvedIndex, resultKey, type FlatField,
+  decidedCount, groundTruthAlert, isLegacyTitleField, itemFields, itemSources,
+  nextUnresolvedIndex, printedTitleResultKey, resultKey, type FlatField,
 } from '../queue'
-import { GROUP_LABEL } from '../types'
+import { CHOICE_NOT_TITLE, GROUP_LABEL } from '../types'
 import type { ClaimField, ItemStatus } from '../types'
+import { ItemResearchTags } from '../components/ItemResearchTags'
 
 export function Adjudicate() {
   const { id } = useParams()
   const nav = useNavigate()
   const {
     items, results, sources, sourceLabels, settings, setSettings,
-    setFieldResult, setInsufficient, setNotes,
+    setFieldResult, addTitle, updateAddedTitle, removeAddedTitle, setInsufficient, setNotes,
   } = useStore()
 
   const queue = useMemo(
     () => buildQueue(items, results, settings.queueMode, settings.filter),
     [items, results, settings.queueMode, settings.filter],
   )
+  const allQueue = useMemo(
+    () => buildQueue(items, results, settings.queueMode, 'all'),
+    [items, results, settings.queueMode],
+  )
   const item = useMemo(() => items.find((i) => i.id === id) ?? queue[0], [items, queue, id])
   const qIdx = useMemo(() => queue.findIndex((i) => i.id === item?.id), [queue, item])
+  const allIdx = useMemo(() => allQueue.findIndex((i) => i.id === item?.id), [allQueue, item])
 
   const [activeEvidenceId, setActiveEvidenceId] = useState<string | null>(null)
   const [activeFieldKey, setActiveFieldKey] = useState<string | null>(null)
@@ -32,9 +40,18 @@ export function Adjudicate() {
   // when the bundle changes, focus its first claim + that claim's first piece of evidence
   useEffect(() => {
     if (!item) return
+    const firstTitle = item.books[0]
     const first: FlatField | undefined = itemFields(item)[0]
-    setActiveFieldKey(first?.key ?? null)
-    setActiveEvidenceId(first?.field.evidenceIds[0] ?? item.evidence[0]?.id ?? null)
+    const timer = window.setTimeout(() => {
+      setActiveFieldKey(firstTitle ? printedTitleResultKey(firstTitle.key) : (first?.key ?? null))
+      setActiveEvidenceId(
+        firstTitle?.fields.flatMap((field) => field.evidenceIds).find(Boolean)
+        ?? first?.field.evidenceIds[0]
+        ?? item.evidence[0]?.id
+        ?? null,
+      )
+    }, 0)
+    return () => window.clearTimeout(timer)
   }, [item?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!item) {
@@ -45,7 +62,10 @@ export function Adjudicate() {
   const { decided, total } = decidedCount(item, res)
   const status = computeStatus(item, res)
   const flat = itemFields(item)
-  const relevantIds = flat.find((f) => f.key === activeFieldKey)?.field.evidenceIds ?? []
+  const relevantIds = flat.find((field) => field.key === activeFieldKey)?.field.evidenceIds
+    ?? item.books.find((titleExtraction) => printedTitleResultKey(titleExtraction.key) === activeFieldKey)
+      ?.fields.flatMap((field) => field.evidenceIds).filter((value, index, all) => all.indexOf(value) === index)
+    ?? []
 
   // deliberate: bring this claim's evidence into the pane (label tap)
   const focusField = (key: string, f: ClaimField) => {
@@ -59,16 +79,6 @@ export function Adjudicate() {
     if (idx >= 0 && idx < queue.length) nav(`/item/${queue[idx].id}`)
   }
 
-  const commitDefaultsAndNext = () => {
-    for (const ff of adjudicableFields(item)) {
-      if (!res?.fields?.[ff.key] && ff.field.default) {
-        const v = ff.field.candidates.find((c) => c.source === ff.field.default)?.value ?? null
-        setFieldResult(item.id, ff.key, { choice: ff.field.default, value: v })
-      }
-    }
-    if (qIdx + 1 < queue.length) goto(qIdx + 1)
-  }
-
   const acceptAll = (source: string) => {
     for (const ff of adjudicableFields(item)) {
       const c = ff.field.candidates.find((x) => x.source === source)
@@ -77,8 +87,17 @@ export function Adjudicate() {
   }
 
   const jumpUnresolved = () => {
-    const ni = nextUnresolvedIndex(queue, results, qIdx)
-    if (ni >= 0) goto(ni)
+    const nextIndex = nextUnresolvedIndex(allQueue, results, allIdx)
+    if (nextIndex >= 0) nav(`/item/${allQueue[nextIndex].id}`)
+  }
+
+  const leaveInReviewAndNext = () => {
+    if (qIdx >= 0 && qIdx + 1 < queue.length) goto(qIdx + 1)
+    else jumpUnresolved()
+  }
+
+  const completeAndNext = () => {
+    if (status === 'done') jumpUnresolved()
   }
 
   const presentSources = itemSources(item).sort((a, b) => sources.indexOf(a) - sources.indexOf(b))
@@ -98,8 +117,9 @@ export function Adjudicate() {
               {GROUP_LABEL[item.group]}
             </span>
             <span className="truncate">
-              {item.subtitle} · {item.books.length} book{item.books.length === 1 ? '' : 's'} · {decided}/{total} claims
+              {item.subtitle} · {item.books.length} extracted title{item.books.length === 1 ? '' : 's'} · {decided}/{total} decisions
             </span>
+            <ItemResearchTags item={item} />
           </div>
         </div>
         <button
@@ -110,7 +130,7 @@ export function Adjudicate() {
           ?
         </button>
         <div className="text-right text-[11px] text-slate-400">
-          <div className="font-mono text-sm text-slate-200">{qIdx >= 0 ? qIdx + 1 : '–'}/{queue.length}</div>
+          <div className="font-mono text-sm text-slate-200">{allIdx >= 0 ? allIdx + 1 : '–'}/{allQueue.length}</div>
           <StatusDot status={status} />
         </div>
       </header>
@@ -127,10 +147,10 @@ export function Adjudicate() {
       </div>
 
       {/* reviewer instruction banner */}
-      {item.alert && (
+      {groundTruthAlert(item.alert) && (
         <div className="border-b border-amber-700/40 bg-amber-500/10 px-3 py-2 text-[12px] leading-snug text-amber-200">
           <span className="mr-1">⚠️</span>
-          <span className="whitespace-pre-wrap">{item.alert}</span>
+          <span className="whitespace-pre-wrap">{groundTruthAlert(item.alert)}</span>
         </div>
       )}
 
@@ -145,6 +165,8 @@ export function Adjudicate() {
           onPick={setActiveEvidenceId}
           relevantIds={relevantIds}
           wrapText={settings.wrapText}
+          activeFieldKey={activeFieldKey}
+          showHighlights={settings.showHighlights}
         />
       </div>
 
@@ -166,7 +188,7 @@ export function Adjudicate() {
             onClick={() => setInsufficient(item.id, status !== 'insufficient')}
             active={status === 'insufficient'}
           >
-            ⚑ Evidence insufficient
+            ⚑ Evidence unavailable / wrong
           </QuickBtn>
         </div>
 
@@ -191,10 +213,24 @@ export function Adjudicate() {
           </ClaimSection>
         )}
 
-        {item.books.map((b) => (
-          <ClaimSection key={b.key} title={b.title_as_stated} note={b.note} kind="book">
-            {b.fields.map((f) => {
-              const key = resultKey(b.key, f.key)
+        {item.books.map((titleExtraction, titleIndex) => {
+          const titleKey = printedTitleResultKey(titleExtraction.key)
+          const titleResult = res?.fields?.[titleKey]
+          const rejected = titleResult?.choice === CHOICE_NOT_TITLE
+          const titleEvidence = titleExtraction.fields.flatMap((field) => field.evidenceIds).find(Boolean)
+          return (
+          <ClaimSection key={titleExtraction.key} title={`Extracted title ${titleIndex + 1}`} note={titleExtraction.note} kind="title">
+            <PrintedTitleRow
+              extracted={titleExtraction.title_as_stated}
+              result={titleResult}
+              onChange={(fieldResult) => setFieldResult(item.id, titleKey, fieldResult)}
+              onFocus={() => {
+                setActiveFieldKey(titleKey)
+                if (titleEvidence) setActiveEvidenceId(titleEvidence)
+              }}
+            />
+            {!rejected && titleExtraction.fields.filter((field) => !isLegacyTitleField(field.key)).map((f) => {
+              const key = resultKey(titleExtraction.key, f.key)
               return (
                 <ClaimRow
                   key={key}
@@ -209,8 +245,23 @@ export function Adjudicate() {
                 />
               )
             })}
+            {rejected && (
+              <p className="rounded-lg bg-rose-500/10 px-3 py-2 text-xs text-rose-200">
+                This extraction will be omitted from the corrected title records.
+              </p>
+            )}
           </ClaimSection>
-        ))}
+          )
+        })}
+
+        <AddedTitles
+          titles={res?.addedTitles ?? []}
+          evidence={item.evidence}
+          activeEvidenceId={activeEvidenceId}
+          onAdd={(value, evidenceId) => addTitle(item.id, { id: newTitleId(), value, evidenceId })}
+          onUpdate={(titleId, value) => updateAddedTitle(item.id, titleId, value)}
+          onRemove={(titleId) => removeAddedTitle(item.id, titleId)}
+        />
 
         <NotesBox
           value={res?.notes ?? ''}
@@ -223,13 +274,15 @@ export function Adjudicate() {
       {/* bottom nav */}
       <nav className="flex items-center gap-2 border-t border-slate-800 bg-slate-900/90 px-3 py-2">
         <NavBtn onClick={() => goto(qIdx - 1)} disabled={qIdx <= 0}>← Prev</NavBtn>
+        <NavBtn onClick={leaveInReviewAndNext}>Leave in review &amp; Next</NavBtn>
         <button
-          onClick={commitDefaultsAndNext}
-          className="flex-1 rounded-lg bg-sky-600 py-2.5 text-center font-semibold text-white active:bg-sky-500"
+          onClick={completeAndNext}
+          disabled={status !== 'done'}
+          title={status === 'done' ? 'Go to the next unresolved item' : `Resolve ${total - decided} remaining decision${total - decided === 1 ? '' : 's'} first`}
+          className="flex-1 rounded-lg bg-sky-600 py-2.5 text-center font-semibold text-white disabled:bg-slate-800 disabled:text-slate-500 active:bg-sky-500"
         >
-          Confirm &amp; Next →
+          {status === 'done' ? 'Complete & Next →' : `${total - decided} unresolved`}
         </button>
-        <NavBtn onClick={() => goto(qIdx + 1)} disabled={qIdx < 0 || qIdx + 1 >= queue.length}>Next →</NavBtn>
         <NavBtn onClick={jumpUnresolved}>⚑</NavBtn>
       </nav>
       </div>{/* /right column */}
@@ -240,19 +293,107 @@ export function Adjudicate() {
   )
 }
 
+function AddedTitles({
+  titles,
+  evidence,
+  activeEvidenceId,
+  onAdd,
+  onUpdate,
+  onRemove,
+}: {
+  titles: { id: string; value: string; evidenceId?: string | null }[]
+  evidence: { id: string; label: string }[]
+  activeEvidenceId: string | null
+  onAdd: (value: string, evidenceId: string | null) => void
+  onUpdate: (titleId: string, value: string) => void
+  onRemove: (titleId: string) => void
+}) {
+  const [adding, setAdding] = useState(false)
+  const [draft, setDraft] = useState('')
+
+  const commit = () => {
+    const value = draft.trim()
+    if (!value) return
+    onAdd(value, activeEvidenceId)
+    setDraft('')
+    setAdding(false)
+  }
+
+  return (
+    <div className="mb-3 rounded-xl border border-dashed border-slate-700 bg-slate-900/20 p-3">
+      <div className="mb-2 flex items-center gap-2">
+        <h3 className="flex-1 text-sm font-semibold text-slate-200">Titles missed by the extraction</h3>
+        {!adding && (
+          <button onClick={() => setAdding(true)} className="rounded-lg bg-slate-800 px-2.5 py-1.5 text-xs text-slate-200">
+            + Add title
+          </button>
+        )}
+      </div>
+      {titles.length === 0 && !adding && (
+        <p className="text-xs text-slate-500">Add a title only when its words are actually printed in the evidence.</p>
+      )}
+      <div className="space-y-2">
+        {titles.map((title) => (
+          <div key={title.id} className="rounded-lg border border-slate-800 bg-slate-900/60 p-2">
+            <div className="flex gap-2">
+              <label className="min-w-0 flex-1">
+                <span className="sr-only">Reviewer-added printed title</span>
+                <input
+                  value={title.value}
+                  onChange={(event) => onUpdate(title.id, event.target.value)}
+                  className="w-full bg-transparent px-1 py-1 text-sm text-white outline-none"
+                />
+              </label>
+              <button onClick={() => onRemove(title.id)} className="rounded px-2 text-xs text-rose-300 active:bg-rose-500/10">Remove</button>
+            </div>
+            {title.evidenceId && (
+              <p className="mt-1 text-[10px] text-slate-500">
+                Evidence: {evidence.find((item) => item.id === title.evidenceId)?.label ?? title.evidenceId}
+              </p>
+            )}
+          </div>
+        ))}
+        {adding && (
+          <div className="rounded-lg border border-sky-500/40 bg-sky-500/5 p-2">
+            <label>
+              <span className="sr-only">Title exactly as printed</span>
+              <input
+                autoFocus
+                value={draft}
+                onChange={(event) => setDraft(event.target.value)}
+                onKeyDown={(event) => { if (event.key === 'Enter') commit() }}
+                placeholder="title exactly as printed…"
+                className="w-full bg-transparent px-1 py-1 text-sm text-white outline-none placeholder:text-slate-500"
+              />
+            </label>
+            <div className="mt-2 flex justify-end gap-2">
+              <button onClick={() => { setAdding(false); setDraft('') }} className="rounded px-2 py-1 text-xs text-slate-400">Cancel</button>
+              <button onClick={commit} disabled={!draft.trim()} className="rounded bg-sky-600 px-3 py-1 text-xs text-white disabled:opacity-40">Add printed title</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function newTitleId(): string {
+  return globalThis.crypto?.randomUUID?.() ?? `added_${Date.now()}_${Math.random().toString(36).slice(2)}`
+}
+
 function ClaimSection({
   title, note, kind, children,
 }: {
   title: string
   note?: string
-  kind: 'event' | 'book'
+  kind: 'event' | 'title'
   children: ReactNode
 }) {
   return (
     <div className="mb-3 rounded-xl border border-slate-800 bg-slate-900/40 p-3">
       <div className="mb-2 flex items-baseline gap-2">
         <h3 className="text-sm font-semibold text-slate-200">
-          <span className="mr-1 text-slate-500">{kind === 'book' ? '📖' : '⚖'}</span>
+          <span className="mr-1 text-slate-500">{kind === 'title' ? '“' : '⚖'}</span>
           {title}
         </h3>
       </div>
@@ -275,9 +416,9 @@ function HelpModal({ onClose }: { onClose: () => void }) {
         </div>
         <ul className="space-y-2.5 text-[13px] leading-snug">
           <li>
-            <b className="text-amber-300">One bundle = one adoption event.</b> Every book listed here was
-            adopted by the same board action or statute. If the evidence shows two separate actions,
-            say so in the notes and flag the bundle.
+            <b className="text-amber-300">One bundle = one possible adoption event.</b> The extracted titles
+            may be incomplete or wrong. Establish only what the page prints; later stages decide canonical
+            identity and how the event joins the research data.
           </li>
           <li>
             <b className="text-amber-300">Transcribe as printed.</b> Titles and publishers go in exactly as
@@ -296,8 +437,9 @@ function HelpModal({ onClose }: { onClose: () => void }) {
           </li>
           <li>
             <b className="text-amber-300">Evidence insufficient.</b> Use it when the shipped evidence cannot
-            settle the bundle at all (wrong page, illegible scan, link rot) — and say what is missing in
-            the notes so the builder can re-cut it.
+            settle the bundle at all (wrong page, illegible scan, link rot). It is not the response for a
+            missing or erroneous extraction: overwrite it, mark it “not actually a book title,” or add a
+            missed printed title instead. Say what evidence is missing in the notes so the builder can re-cut it.
           </li>
         </ul>
       </div>
@@ -310,7 +452,7 @@ function StatusDot({ status }: { status: ItemStatus }) {
     untouched: 'text-slate-500', in_progress: 'text-amber-400', done: 'text-emerald-400', insufficient: 'text-rose-400',
   }
   const label: Record<ItemStatus, string> = {
-    untouched: 'new', in_progress: 'partial', done: 'done', insufficient: 'insufficient',
+    untouched: 'new', in_progress: 'in review', done: 'complete', insufficient: 'blocked by evidence',
   }
   return <span className={`text-[10px] ${map[status]}`}>● {label[status]}</span>
 }

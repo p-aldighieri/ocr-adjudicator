@@ -1,5 +1,6 @@
-import type { ClaimField, Item, ItemResult, ItemStatus, QueueGroup } from './types'
-import { QUEUE_GROUPS } from './types'
+import type { ClaimField, FieldResult, Item, ItemResult, ItemStatus, QueueGroup } from './types'
+import { CHOICE_CUSTOM, CHOICE_NOT_TITLE, QUEUE_GROUPS } from './types'
+import { effectivePriority } from './classifications'
 
 export type QueueMode = 'group' | 'state' | 'priority'
 export type QueueFilter = 'all' | 'unresolved'
@@ -7,13 +8,26 @@ export type QueueFilter = 'all' | 'unresolved'
 /** Section key used for claims about the event itself (Item.eventFields). */
 export const EVENT_SECTION = '_event'
 export const EVENT_SECTION_TITLE = 'This adoption event'
+/** Synthetic result field used to adjudicate PrintedTitleSection.title_as_stated itself. */
+export const PRINTED_TITLE_FIELD = 'title_as_printed'
+/** Legacy fields that conflate literal extraction with downstream canonical matching. */
+export const LEGACY_BOOK_MATCH_FIELD = 'book_match'
+export const LEGACY_PRINTED_TITLE_FIELD = 'title'
+
+export function isLegacyTitleField(fieldKey: string): boolean {
+  return fieldKey === LEGACY_BOOK_MATCH_FIELD || fieldKey === LEGACY_PRINTED_TITLE_FIELD
+}
 
 /**
  * Result keys are namespaced by section: the same field key (title, publisher, subject…)
- * repeats in every book of a bundle, so a flat `field.key` would collide.
+ * repeats in every title extraction of a bundle, so a flat `field.key` would collide.
  */
 export function resultKey(sectionKey: string, fieldKey: string): string {
   return `${sectionKey}:${fieldKey}`
+}
+
+export function printedTitleResultKey(sectionKey: string): string {
+  return resultKey(sectionKey, PRINTED_TITLE_FIELD)
 }
 
 export interface FlatField {
@@ -24,7 +38,7 @@ export interface FlatField {
   key: string
 }
 
-/** Every claim in the bundle, event claims first, then book by book. */
+/** Every claim in the bundle, event claims first, then printed-title extraction by extraction. */
 export function itemFields(item: Item): FlatField[] {
   const out: FlatField[] = []
   for (const f of item.eventFields ?? []) {
@@ -32,6 +46,7 @@ export function itemFields(item: Item): FlatField[] {
   }
   for (const b of item.books) {
     for (const f of b.fields) {
+      if (isLegacyTitleField(f.key)) continue
       out.push({ sectionKey: b.key, sectionTitle: b.title_as_stated, field: f, key: resultKey(b.key, f.key) })
     }
   }
@@ -50,18 +65,49 @@ export function itemSources(item: Item): string[] {
   return [...seen]
 }
 
+function isDecided(result?: FieldResult): boolean {
+  if (!result?.choice) return false
+  if (result.choice === CHOICE_CUSTOM) return !!result.value?.trim()
+  return true
+}
+
 export function decidedCount(item: Item, r?: ItemResult): { decided: number; total: number } {
-  // Count ALL claims, not just the ones with candidates: the extraction pipeline misses values
-  // that are plainly in the source, so every claim accepts manual input and needs an explicit
-  // decision (a value, "not stated", or "can't tell") before the bundle counts as done.
-  const fields = itemFields(item)
-  if (!r) return { decided: 0, total: fields.length }
   let decided = 0
-  for (const f of fields) {
-    const fr = r.fields?.[f.key]
-    if (fr && fr.choice) decided++
+  let total = 0
+
+  for (const field of item.eventFields ?? []) {
+    total++
+    if (isDecided(r?.fields?.[resultKey(EVENT_SECTION, field.key)])) decided++
   }
-  return { decided, total: fields.length }
+
+  for (const titleExtraction of item.books) {
+    const titleResult = r?.fields?.[printedTitleResultKey(titleExtraction.key)]
+    total++
+    if (isDecided(titleResult)) decided++
+
+    // Rejecting a false-positive title also rejects its dependent title-level claims.
+    if (titleResult?.choice === CHOICE_NOT_TITLE) continue
+    for (const field of titleExtraction.fields) {
+      if (isLegacyTitleField(field.key)) continue
+      total++
+      if (isDecided(r?.fields?.[resultKey(titleExtraction.key, field.key)])) decided++
+    }
+  }
+
+  const added = r?.addedTitles?.filter((title) => title.value.trim()).length ?? 0
+  return { decided: decided + added, total: total + added }
+}
+
+/** Remove alerts created solely by the downstream canonical-matching pass. */
+export function groundTruthAlert(alert?: string): string | null {
+  if (!alert) return null
+  const out = alert
+    .replace(/at least one title has no confident book match;?\s*/gi, '')
+    .replace(/Read the evidence before choosing:\s*(?=\.|$)/i, '')
+    .replace(/\s+\./g, '.')
+    .replace(/^\s*[;.]+\s*/, '')
+    .trim()
+  return out || null
 }
 
 export function computeStatus(item: Item, r?: ItemResult): ItemStatus {
@@ -98,13 +144,13 @@ export function buildQueue(
     list = list.filter((it) => !isResolved(computeStatus(it, results[it.id])))
   }
   if (mode === 'priority') {
-    list.sort((a, b) => b.priority - a.priority || byGroup(a, b) || a.year - b.year)
+    list.sort((a, b) => effectivePriority(b) - effectivePriority(a) || byGroup(a, b) || a.year - b.year)
   } else if (mode === 'state') {
     // geographic: one state end to end, chronologically
     list.sort((a, b) => a.state.localeCompare(b.state) || a.year - b.year || byGroup(a, b))
   } else {
     // by backlog: clear new records, then conflicts, then state laws
-    list.sort((a, b) => byGroup(a, b) || b.priority - a.priority || a.state.localeCompare(b.state) || a.year - b.year)
+    list.sort((a, b) => byGroup(a, b) || effectivePriority(b) - effectivePriority(a) || a.state.localeCompare(b.state) || a.year - b.year)
   }
   return list
 }

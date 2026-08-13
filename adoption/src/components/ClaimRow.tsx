@@ -1,4 +1,5 @@
-import { useEffect, useState, type ReactNode } from 'react'
+/* eslint-disable react-refresh/only-export-components */
+import { type ReactNode } from 'react'
 import type { ClaimField, FieldResult } from '../types'
 import { CHOICE_CANT_TELL, CHOICE_CUSTOM, CHOICE_NOT_STATED } from '../types'
 
@@ -47,11 +48,7 @@ export function ClaimRow({
 }) {
   const committed = !!result
   const selChoice = result?.choice ?? (suggested ? field.default : null)
-  const selCustom = result?.choice === CHOICE_CUSTOM ? (result.custom ?? '') : ''
-  const [customText, setCustomText] = useState(selCustom)
-  useEffect(() => {
-    setCustomText(result?.choice === CHOICE_CUSTOM ? (result.custom ?? '') : '')
-  }, [result, field.key])
+  const customText = result?.choice === CHOICE_CUSTOM ? (result.custom ?? '') : ''
 
   const options = field.options ?? []
 
@@ -118,7 +115,6 @@ export function ClaimRow({
             onFocus={onPick}
             onChange={(e) => {
               const t = e.target.value
-              setCustomText(t)
               choose(CHOICE_CUSTOM, t.trim() === '' ? null : t.trim(), t)
             }}
             className={`bg-transparent px-2 py-2 text-sm text-white outline-none placeholder:text-slate-500 ${
@@ -157,7 +153,7 @@ export function ClaimRow({
                     ? 'bg-sky-600 text-white'
                     : 'bg-slate-800 text-slate-300 active:bg-slate-700'
                 }`}
-                onClick={() => { setCustomText(o); choose(CHOICE_CUSTOM, o, o) }}
+                onClick={() => choose(CHOICE_CUSTOM, o, o)}
               >
                 {o}
               </button>
