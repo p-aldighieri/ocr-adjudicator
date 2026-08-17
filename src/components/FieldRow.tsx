@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import type { Field, FieldResult } from '../types'
 
 const SRC_LABEL: Record<string, string> = {
-  claude: 'Claude', codex: 'Codex', current: 'Current', landgrant: 'Land-grant', quincy: 'Quincy',
+  claude: 'Claude', codex: 'Codex', fable: 'Fable', current: 'Current', landgrant: 'Land-grant', quincy: 'Quincy',
 }
 const SRC_DOT: Record<string, string> = {
-  claude: 'bg-emerald-400', codex: 'bg-amber-400', current: 'bg-sky-400',
+  claude: 'bg-emerald-400', codex: 'bg-amber-400', fable: 'bg-violet-400', current: 'bg-sky-400',
 }
 
 export function FieldRow({

@@ -9,8 +9,13 @@ export function Settings({ embedded = false }: { embedded?: boolean }) {
   const nav = useNavigate()
   const { dataset, items, results, settings, setSettings, source, reload, importResults } = useStore()
   const fileRef = useRef<HTMLInputElement>(null)
+  const freshFileRef = useRef<HTMLInputElement>(null)
   const resultsRef = useRef<HTMLInputElement>(null)
   const [busy, setBusy] = useState<string | null>(null)
+  const reviewCells = items.reduce(
+    (total, item) => total + item.sections.reduce((n, section) => n + section.fields.length, 0),
+    0,
+  )
 
   const importResultsFile = async (file: File) => {
     setBusy('Restoring adjudications…')
@@ -22,12 +27,16 @@ export function Settings({ embedded = false }: { embedded?: boolean }) {
     }
   }
 
-  const importZip = async (file: File) => {
-    setBusy('Importing dataset…')
+  const importZip = async (file: File, clearOldAnswers = false) => {
+    setBusy(clearOldAnswers ? 'Importing new dataset before clearing old answers…' : 'Importing dataset…')
     try {
       await importDatasetZip(file, (d, t) => setBusy(`Importing ${d}/${t}…`))
+      if (clearOldAnswers) {
+        setBusy('Dataset imported. Clearing old answers…')
+        await db.results.clear()
+      }
       await reload()
-      setBusy(null)
+      setBusy(clearOldAnswers ? 'New review is ready. Old dataset and answers were cleared.' : 'Dataset imported.')
       if (embedded) nav('/overview')
     } catch (e) {
       setBusy(`Import failed: ${String(e)}`)
@@ -83,14 +92,29 @@ export function Settings({ embedded = false }: { embedded?: boolean }) {
         )}
 
         <Section title="Dataset">
+          <div className="mb-3 rounded-lg border border-sky-900/70 bg-sky-950/30 p-3 text-xs text-slate-300">
+            <p className="font-semibold text-sky-200">Starting Aadhav's new review</p>
+            <ol className="mt-1 list-decimal space-y-1 pl-4 text-slate-400">
+              <li>If the old work matters, export its JSON backup first.</li>
+              <li>Click <b className="text-slate-200">Start fresh &amp; import new .zip</b>.</li>
+              <li>Select the new ZIP. The app replaces the old dataset and clears its saved answers after the import succeeds.</li>
+            </ol>
+          </div>
           <p className="mb-2 text-xs text-slate-500">
             Source: <span className="text-slate-300">{source ?? 'none'}</span>
-            {dataset && <> · {dataset.meta.name} · {items.length} items</>}
+            {dataset && <> · {dataset.meta.name} · {items.length} universities · {reviewCells} cells</>}
           </p>
           <input ref={fileRef} type="file" accept=".zip" className="hidden"
-            onChange={(e) => { const f = e.target.files?.[0]; if (f) void importZip(f) }} />
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) void importZip(f); e.target.value = '' }} />
+          <input ref={freshFileRef} type="file" accept=".zip" className="hidden"
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) void importZip(f, true); e.target.value = '' }} />
           <div className="flex flex-wrap gap-2">
-            <Btn onClick={() => fileRef.current?.click()}>Import dataset .zip</Btn>
+            <Btn onClick={() => {
+              if (confirm('Start a clean review? After the new ZIP imports successfully, the current dataset and ALL saved adjudications will be replaced. Export JSON first if you need a backup.')) {
+                freshFileRef.current?.click()
+              }
+            }}>Start fresh &amp; import new .zip</Btn>
+            <Btn onClick={() => fileRef.current?.click()}>Replace dataset, keep answers</Btn>
             {source === 'opfs' && (
               <Btn danger onClick={async () => { await clearOpfsDataset(); await reload() }}>Remove imported dataset</Btn>
             )}
