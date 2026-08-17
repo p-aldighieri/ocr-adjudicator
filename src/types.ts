@@ -57,7 +57,7 @@ export interface DatasetMeta {
 export interface Dataset { meta: DatasetMeta; items: Item[] }
 
 // ---- adjudication results (stored in IndexedDB) ----
-export type Choice = 'claude' | 'codex' | 'current' | 'custom' | 'cant_read' | null
+export type Choice = 'claude' | 'codex' | 'fable' | 'current' | 'custom' | 'cant_read' | null
 
 export interface FieldResult {
   choice: Choice
