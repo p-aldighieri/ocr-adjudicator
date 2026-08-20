@@ -1,12 +1,10 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useStore } from '../store'
-import { computeStatus, overallProgress, progressByGroup } from '../queue'
+import { computeStatus, overallProgress, progressByGroup, smallStatesFirst, stateItemCounts } from '../queue'
 import type { Item, ItemStatus, QueueGroup } from '../types'
 import { GROUP_LABEL, QUEUE_GROUPS } from '../types'
-import {
-  effectivePriority, matchesResearchFocus, type ResearchFocus,
-} from '../classifications'
+import { effectivePriority, matchesResearchFocus } from '../classifications'
 import { ItemResearchTags } from '../components/ItemResearchTags'
 
 const DOT: Record<ItemStatus, string> = {
@@ -30,13 +28,13 @@ const GROUP_BLURB: Record<QueueGroup, string> = {
 }
 
 const DATASET_URL =
-  'https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v4/adoption-dataset.zip'
+  'https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v5/adoption-dataset.zip'
 
 export function Overview() {
   const nav = useNavigate()
-  const { items, results, setSettings, dataset } = useStore()
+  const { items, results, settings, setSettings, dataset } = useStore()
   const [q, setQ] = useState('')
-  const [focus, setFocus] = useState<ResearchFocus>('all')
+  const focus = settings.focus
   // The hand-written demo ships as meta.name "adoption-sample"; real builds
   // are "adoptions-YYYYMMDD". Show onboarding until a real dataset is loaded.
   const isSample = (dataset?.meta.name ?? 'adoption-sample') === 'adoption-sample'
@@ -57,15 +55,20 @@ export function Overview() {
       const bucket = m[it.group]
       if (bucket) bucket.push(it) // tolerate a group the UI does not know about
     }
-    for (const g of QUEUE_GROUPS) {
-      m[g].sort((a, b) => effectivePriority(b) - effectivePriority(a) || a.state.localeCompare(b.state) || a.year - b.year)
-    }
+    // mirror the review queue: small states first, so the list order IS the review order
+    const bySmallState = smallStatesFirst(stateItemCounts(items))
+    for (const g of QUEUE_GROUPS) m[g].sort(bySmallState)
     return m
-  }, [filtered])
+  }, [filtered, items])
 
   const prog = overallProgress(items, results)
   const visibleProg = overallProgress(filtered, results)
   const gprog = progressByGroup(filtered, results)
+  // Continue navigates into the focus-scoped queue, so its count must match that queue
+  const focusProg = useMemo(
+    () => overallProgress(items.filter((i) => matchesResearchFocus(i, focus)), results),
+    [items, focus, results],
+  )
 
   return (
     <div className="flex h-full flex-col">
@@ -81,10 +84,10 @@ export function Overview() {
           </button>
           <button
             onClick={() => { setSettings({ filter: 'unresolved' }); nav('/item/_first') }}
-            disabled={prog.inProgress + prog.untouched === 0}
+            disabled={focusProg.inProgress + focusProg.untouched === 0}
             className="rounded bg-sky-600 px-3 py-1 text-sm font-medium text-white disabled:opacity-40"
           >
-            Continue ({prog.inProgress + prog.untouched}) →
+            Continue ({focusProg.inProgress + focusProg.untouched}) →
           </button>
         </div>
         <div className="mt-1 flex items-center gap-3 text-[11px] text-slate-400">
@@ -102,11 +105,12 @@ export function Overview() {
         />
         <div className="no-scrollbar mt-2 flex items-center gap-1.5 overflow-x-auto text-[11px]">
           <span className="shrink-0 text-slate-500">Focus</span>
-          <FocusChip active={focus === 'all'} onClick={() => setFocus('all')}>All</FocusChip>
-          <FocusChip active={focus === 'newspapers'} onClick={() => setFocus('newspapers')}>Newspapers</FocusChip>
-          <FocusChip active={focus === 'tables'} onClick={() => setFocus('tables')}>Tables</FocusChip>
-          <FocusChip active={focus === 'ever_adoption_states'} onClick={() => setFocus('ever_adoption_states')}>Ever-adoption states</FocusChip>
-          <FocusChip active={focus === 'southern_states'} onClick={() => setFocus('southern_states')}>Project South</FocusChip>
+          <FocusChip active={focus === 'all'} onClick={() => setSettings({ focus: 'all' })}>All</FocusChip>
+          <FocusChip active={focus === 'newspapers'} onClick={() => setSettings({ focus: 'newspapers' })}>Newspapers</FocusChip>
+          <FocusChip active={focus === 'tables'} onClick={() => setSettings({ focus: 'tables' })}>Tables</FocusChip>
+          <FocusChip active={focus === 'printed'} onClick={() => setSettings({ focus: 'printed' })}>Printed lists &amp; reports</FocusChip>
+          <FocusChip active={focus === 'ever_adoption_states'} onClick={() => setSettings({ focus: 'ever_adoption_states' })}>Ever-adoption states</FocusChip>
+          <FocusChip active={focus === 'southern_states'} onClick={() => setSettings({ focus: 'southern_states' })}>Project South</FocusChip>
           <span className="ml-auto shrink-0 font-mono text-slate-500">visible {visibleProg.total}/{prog.total}</span>
         </div>
       </header>
@@ -118,7 +122,7 @@ export function Overview() {
             <ol className="mt-2 list-decimal space-y-1 pl-5 text-xs leading-snug text-slate-300">
               <li>
                 <a href={DATASET_URL} className="font-medium text-sky-300 underline">
-                  Download the real dataset (~204&nbsp;MB zip)
+                  Download the real dataset (~207&nbsp;MB zip)
                 </a>{' '}
                 — on this device, wherever your downloads go.
               </li>

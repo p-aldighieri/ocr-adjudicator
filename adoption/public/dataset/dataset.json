@@ -2,15 +2,45 @@
   "meta": {
     "name": "adoption-sample",
     "schema": 4,
-    "note": "Hand-written literal-title review sample: three events, one per queue, exercising every evidence role.",
-    "states": ["AL", "GA", "TX"],
-    "years": [1901, 1904, 1908],
+    "note": "Hand-written literal-title review sample: three events, one per queue, exercising every evidence role, the event-level date with per-title override, and read-only verb/author metadata.",
+    "states": [
+      "AL",
+      "GA",
+      "TX"
+    ],
+    "years": [
+      1901,
+      1904,
+      1908
+    ],
     "nItems": 3,
-    "sources": ["claude", "codex", "registry", "suggested"],
+    "sources": [
+      "claude",
+      "codex",
+      "registry",
+      "suggested"
+    ],
     "southDefinition": {
       "id": "project_south_v1",
       "label": "Project South v1 (16 states)",
-      "states": ["AL", "AR", "DE", "FL", "GA", "KY", "LA", "MD", "MO", "MS", "NC", "SC", "TN", "TX", "VA", "WV"]
+      "states": [
+        "AL",
+        "AR",
+        "DE",
+        "FL",
+        "GA",
+        "KY",
+        "LA",
+        "MD",
+        "MO",
+        "MS",
+        "NC",
+        "SC",
+        "TN",
+        "TX",
+        "VA",
+        "WV"
+      ]
     },
     "sourceLabels": {
       "claude": "Claude",
@@ -43,8 +73,28 @@
           "label": "Minutes p. 214",
           "sourceLine": "Baldwin County Board of Education, Minute Book 3, p. 214 — meeting of 1901-09-20",
           "regions": [
-            { "x": 0.12, "y": 0.35, "w": 0.70, "h": 0.035, "kind": "passage", "label": "Frye's Elements of Geography", "fieldKeys": ["b_geog:title_as_printed"] },
-            { "x": 0.12, "y": 0.385, "w": 0.76, "h": 0.035, "kind": "passage", "label": "Baldwin's Third Reader", "fieldKeys": ["b_reader:title_as_printed"] }
+            {
+              "x": 0.12,
+              "y": 0.35,
+              "w": 0.7,
+              "h": 0.035,
+              "kind": "passage",
+              "label": "Frye's Elements of Geography",
+              "fieldKeys": [
+                "b_geog:title_as_printed"
+              ]
+            },
+            {
+              "x": 0.12,
+              "y": 0.385,
+              "w": 0.76,
+              "h": 0.035,
+              "kind": "passage",
+              "label": "Baldwin's Third Reader",
+              "fieldKeys": [
+                "b_reader:title_as_printed"
+              ]
+            }
           ]
         },
         {
@@ -76,16 +126,25 @@
       ],
       "eventFields": [
         {
-          "key": "adoption_date",
+          "key": "date",
           "label": "Adoption date",
           "valueType": "text",
           "candidates": [
-            { "source": "claude", "value": "1901-09-20" },
-            { "source": "codex", "value": "1901-09-20" }
+            {
+              "source": "claude",
+              "value": "1901-09-20"
+            },
+            {
+              "source": "codex",
+              "value": "1901-09-20"
+            }
           ],
           "default": "claude",
           "agree": true,
-          "evidenceIds": ["ev_minutes", "ev_transcript"],
+          "evidenceIds": [
+            "ev_minutes",
+            "ev_transcript"
+          ],
           "flags": [],
           "hint": "The date of the board action, not the date the books took effect."
         },
@@ -93,30 +152,65 @@
           "key": "unit_level",
           "label": "Unit level",
           "valueType": "choice",
-          "options": ["state", "county", "city", "district", "school"],
+          "options": [
+            "state",
+            "county",
+            "city",
+            "district",
+            "school"
+          ],
           "candidates": [
-            { "source": "claude", "value": "county" },
-            { "source": "codex", "value": "county" },
-            { "source": "registry", "value": "county", "note": "Baldwin ran a single county board from 1899; no independent city system until 1907." }
+            {
+              "source": "claude",
+              "value": "county"
+            },
+            {
+              "source": "codex",
+              "value": "county"
+            },
+            {
+              "source": "registry",
+              "value": "county",
+              "note": "Baldwin ran a single county board from 1899; no independent city system until 1907."
+            }
           ],
           "default": "claude",
           "agree": true,
-          "evidenceIds": ["ev_minutes"],
+          "evidenceIds": [
+            "ev_minutes"
+          ],
           "flags": []
         },
         {
           "key": "formal_adoption",
           "label": "Formal adoption?",
           "valueType": "choice",
-          "options": ["yes", "no", "unclear"],
+          "options": [
+            "yes",
+            "no",
+            "unclear"
+          ],
           "candidates": [
-            { "source": "claude", "value": "yes", "note": "\"are hereby adopted\" — operative language, plus a term of years." },
-            { "source": "codex", "value": "unclear", "note": "The state report calls it a \"selection\" and notes no contract was filed." }
+            {
+              "source": "claude",
+              "value": "yes",
+              "note": "\"are hereby adopted\" — operative language, plus a term of years."
+            },
+            {
+              "source": "codex",
+              "value": "unclear",
+              "note": "The state report calls it a \"selection\" and notes no contract was filed."
+            }
           ],
           "default": "claude",
           "agree": false,
-          "evidenceIds": ["ev_transcript", "ev_report"],
-          "flags": ["conflict"],
+          "evidenceIds": [
+            "ev_transcript",
+            "ev_report"
+          ],
+          "flags": [
+            "conflict"
+          ],
           "hint": "Decide from the board's own words, not the state's summary of them."
         },
         {
@@ -124,12 +218,20 @@
           "label": "Term (years)",
           "valueType": "text",
           "candidates": [
-            { "source": "claude", "value": "5" },
-            { "source": "codex", "value": "5" }
+            {
+              "source": "claude",
+              "value": "5"
+            },
+            {
+              "source": "codex",
+              "value": "5"
+            }
           ],
           "default": "claude",
           "agree": true,
-          "evidenceIds": ["ev_transcript"],
+          "evidenceIds": [
+            "ev_transcript"
+          ],
           "flags": []
         }
       ],
@@ -143,12 +245,21 @@
               "label": "Title as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Frye's Elements of Geography" },
-                { "source": "codex", "value": "Frye's Elements of Geography" }
+                {
+                  "source": "claude",
+                  "value": "Frye's Elements of Geography"
+                },
+                {
+                  "source": "codex",
+                  "value": "Frye's Elements of Geography"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_minutes", "ev_transcript"],
+              "evidenceIds": [
+                "ev_minutes",
+                "ev_transcript"
+              ],
               "flags": []
             },
             {
@@ -156,12 +267,22 @@
               "label": "Publisher as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Ginn & Co." },
-                { "source": "codex", "value": "Ginn and Company", "note": "Taken from the state report, which spells the firm out." }
+                {
+                  "source": "claude",
+                  "value": "Ginn & Co."
+                },
+                {
+                  "source": "codex",
+                  "value": "Ginn and Company",
+                  "note": "Taken from the state report, which spells the firm out."
+                }
               ],
               "default": "claude",
               "agree": false,
-              "evidenceIds": ["ev_minutes", "ev_report"],
+              "evidenceIds": [
+                "ev_minutes",
+                "ev_report"
+              ],
               "flags": [],
               "hint": "Transcribe the spelling used in the primary source (the minutes), not the normalised one."
             },
@@ -169,14 +290,32 @@
               "key": "subject",
               "label": "Subject",
               "valueType": "choice",
-              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "options": [
+                "reading",
+                "geography",
+                "arithmetic",
+                "grammar",
+                "history",
+                "spelling",
+                "physiology",
+                "civics",
+                "other"
+              ],
               "candidates": [
-                { "source": "claude", "value": "geography" },
-                { "source": "codex", "value": "geography" }
+                {
+                  "source": "claude",
+                  "value": "geography"
+                },
+                {
+                  "source": "codex",
+                  "value": "geography"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_minutes"],
+              "evidenceIds": [
+                "ev_minutes"
+              ],
               "flags": []
             },
             {
@@ -184,13 +323,50 @@
               "label": "Grade span",
               "valueType": "text",
               "candidates": [
-                { "source": "suggested", "value": "grades 5-8", "note": "Inferred from the series, not stated in the minutes." }
+                {
+                  "source": "suggested",
+                  "value": "grades 5-8",
+                  "note": "Inferred from the series, not stated in the minutes."
+                }
               ],
               "default": null,
               "agree": false,
-              "evidenceIds": ["ev_minutes"],
-              "flags": ["inferred"],
+              "evidenceIds": [
+                "ev_minutes"
+              ],
+              "flags": [
+                "inferred"
+              ],
               "hint": "If the source does not say, mark Not stated — do not accept the inferred value."
+            },
+            {
+              "key": "evidence_verb",
+              "label": "Evidence verb",
+              "valueType": "choice",
+              "options": [
+                "adopted",
+                "readopted",
+                "recommended",
+                "used",
+                "listed",
+                "considered",
+                "rejected",
+                "conditional"
+              ],
+              "candidates": [
+                {
+                  "source": "registry",
+                  "value": "adopted",
+                  "note": "from source record type: county_minutes"
+                }
+              ],
+              "default": "registry",
+              "agree": false,
+              "evidenceIds": [
+                "ev_transcript"
+              ],
+              "flags": [],
+              "hint": "What the source actually shows: a vote to adopt, a recommendation, or only that the book was in use."
             }
           ]
         },
@@ -204,12 +380,21 @@
               "label": "Title as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Baldwin's Third Reader" },
-                { "source": "codex", "value": "Baldwin's Third Reader" }
+                {
+                  "source": "claude",
+                  "value": "Baldwin's Third Reader"
+                },
+                {
+                  "source": "codex",
+                  "value": "Baldwin's Third Reader"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_minutes", "ev_transcript"],
+              "evidenceIds": [
+                "ev_minutes",
+                "ev_transcript"
+              ],
               "flags": []
             },
             {
@@ -217,26 +402,53 @@
               "label": "Publisher as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "American Book Co." },
-                { "source": "codex", "value": "American Book Co." }
+                {
+                  "source": "claude",
+                  "value": "American Book Co."
+                },
+                {
+                  "source": "codex",
+                  "value": "American Book Co."
+                }
               ],
               "default": "claude",
               "agree": false,
-              "evidenceIds": ["ev_minutes", "ev_report"],
+              "evidenceIds": [
+                "ev_minutes",
+                "ev_report"
+              ],
               "flags": []
             },
             {
               "key": "subject",
               "label": "Subject",
               "valueType": "choice",
-              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "options": [
+                "reading",
+                "geography",
+                "arithmetic",
+                "grammar",
+                "history",
+                "spelling",
+                "physiology",
+                "civics",
+                "other"
+              ],
               "candidates": [
-                { "source": "claude", "value": "reading" },
-                { "source": "codex", "value": "reading" }
+                {
+                  "source": "claude",
+                  "value": "reading"
+                },
+                {
+                  "source": "codex",
+                  "value": "reading"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_transcript"],
+              "evidenceIds": [
+                "ev_transcript"
+              ],
               "flags": []
             },
             {
@@ -244,11 +456,16 @@
               "label": "Grade span",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "third reader" }
+                {
+                  "source": "claude",
+                  "value": "third reader"
+                }
               ],
               "default": "claude",
               "agree": false,
-              "evidenceIds": ["ev_transcript"],
+              "evidenceIds": [
+                "ev_transcript"
+              ],
               "flags": []
             }
           ]
@@ -279,7 +496,17 @@
           "label": "Minutes p. 41",
           "sourceLine": "Warren County Board of Education, Minutes Book B, p. 41 — 1908-04-06 (water damage, lower third)",
           "regions": [
-            { "x": 0.07, "y": 0.21, "w": 0.86, "h": 0.075, "kind": "passage", "label": "Damaged Fourth Reader title line", "fieldKeys": ["b_reader4:title_as_printed"] }
+            {
+              "x": 0.07,
+              "y": 0.21,
+              "w": 0.86,
+              "h": 0.075,
+              "kind": "passage",
+              "label": "Damaged Fourth Reader title line",
+              "fieldKeys": [
+                "b_reader4:title_as_printed"
+              ]
+            }
           ]
         },
         {
@@ -302,17 +529,30 @@
       ],
       "eventFields": [
         {
-          "key": "adoption_date",
+          "key": "date",
           "label": "Adoption date",
           "valueType": "text",
           "candidates": [
-            { "source": "claude", "value": "1908-04-06", "note": "Date of the board meeting itself." },
-            { "source": "codex", "value": "1908-04-16", "note": "Date on the marginal note about the filed contract." }
+            {
+              "source": "claude",
+              "value": "1908-04-06",
+              "note": "Date of the board meeting itself."
+            },
+            {
+              "source": "codex",
+              "value": "1908-04-16",
+              "note": "Date on the marginal note about the filed contract."
+            }
           ],
           "default": "claude",
           "agree": false,
-          "evidenceIds": ["ev_minute_page", "ev_press"],
-          "flags": ["conflict"],
+          "evidenceIds": [
+            "ev_minute_page",
+            "ev_press"
+          ],
+          "flags": [
+            "conflict"
+          ],
           "hint": "We date the board action, not the contract filing."
         },
         {
@@ -320,13 +560,26 @@
           "label": "Term (years)",
           "valueType": "text",
           "candidates": [
-            { "source": "claude", "value": "4" },
-            { "source": "codex", "value": "4" },
-            { "source": "suggested", "value": "5", "note": "State default term under the 1897 act — only a fallback." }
+            {
+              "source": "claude",
+              "value": "4"
+            },
+            {
+              "source": "codex",
+              "value": "4"
+            },
+            {
+              "source": "suggested",
+              "value": "5",
+              "note": "State default term under the 1897 act — only a fallback."
+            }
           ],
           "default": "claude",
           "agree": false,
-          "evidenceIds": ["ev_minute_page", "ev_press"],
+          "evidenceIds": [
+            "ev_minute_page",
+            "ev_press"
+          ],
           "flags": []
         }
       ],
@@ -341,13 +594,28 @@
               "label": "Title as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Holmes Fourth Reader", "note": "From the newspaper notice; the minutes are illegible at this word." },
-                { "source": "codex", "value": "Swinton's Fourth Reader", "note": "Guessed from the county's 1904 list — no direct support here." }
+                {
+                  "source": "claude",
+                  "value": "Holmes Fourth Reader",
+                  "note": "From the newspaper notice; the minutes are illegible at this word."
+                },
+                {
+                  "source": "codex",
+                  "value": "Swinton's Fourth Reader",
+                  "note": "Guessed from the county's 1904 list — no direct support here."
+                }
               ],
               "default": null,
               "agree": false,
-              "evidenceIds": ["ev_minute_page", "ev_press", "ev_ca_link"],
-              "flags": ["conflict", "ocr_low"],
+              "evidenceIds": [
+                "ev_minute_page",
+                "ev_press",
+                "ev_ca_link"
+              ],
+              "flags": [
+                "conflict",
+                "ocr_low"
+              ],
               "hint": "The minutes are the primary source. If they cannot be read, say so rather than promoting the newspaper's version silently."
             },
             {
@@ -357,25 +625,51 @@
               "candidates": [],
               "default": null,
               "agree": false,
-              "evidenceIds": ["ev_minute_page"],
-              "flags": ["unreliable"],
+              "evidenceIds": [
+                "ev_minute_page"
+              ],
+              "flags": [
+                "unreliable"
+              ],
               "hint": "No candidate was extracted. Read it off the scan or mark Not stated."
             },
             {
               "key": "subject",
               "label": "Subject",
               "valueType": "choice",
-              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "options": [
+                "reading",
+                "geography",
+                "arithmetic",
+                "grammar",
+                "history",
+                "spelling",
+                "physiology",
+                "civics",
+                "other"
+              ],
               "candidates": [
-                { "source": "claude", "value": "reading" },
-                { "source": "codex", "value": "reading" }
+                {
+                  "source": "claude",
+                  "value": "reading"
+                },
+                {
+                  "source": "codex",
+                  "value": "reading"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_minute_page"],
+              "evidenceIds": [
+                "ev_minute_page"
+              ],
               "flags": []
             }
-          ]
+          ],
+          "verb": {
+            "value": "adopted",
+            "source": "claude"
+          }
         }
       ]
     },
@@ -402,9 +696,39 @@
           "label": "Session laws p. 12",
           "sourceLine": "General Laws of Texas, 28th Legislature, ch. 12, p. 12 (PDF page 34, rendered)",
           "regions": [
-            { "x": 0.13, "y": 0.355, "w": 0.78, "h": 0.03, "kind": "passage", "label": "Milne's Standard Arithmetic", "fieldKeys": ["b_arith:title_as_printed"] },
-            { "x": 0.13, "y": 0.385, "w": 0.80, "h": 0.03, "kind": "passage", "label": "Reed & Kellogg's Graded Lessons", "fieldKeys": ["b_gram:title_as_printed"] },
-            { "x": 0.13, "y": 0.415, "w": 0.80, "h": 0.03, "kind": "passage", "label": "Barnes's Brief History of the United States", "fieldKeys": ["b_hist:title_as_printed"] }
+            {
+              "x": 0.13,
+              "y": 0.355,
+              "w": 0.78,
+              "h": 0.03,
+              "kind": "passage",
+              "label": "Milne's Standard Arithmetic",
+              "fieldKeys": [
+                "b_arith:title_as_printed"
+              ]
+            },
+            {
+              "x": 0.13,
+              "y": 0.385,
+              "w": 0.8,
+              "h": 0.03,
+              "kind": "passage",
+              "label": "Reed & Kellogg's Graded Lessons",
+              "fieldKeys": [
+                "b_gram:title_as_printed"
+              ]
+            },
+            {
+              "x": 0.13,
+              "y": 0.415,
+              "w": 0.8,
+              "h": 0.03,
+              "kind": "passage",
+              "label": "Barnes's Brief History of the United States",
+              "fieldKeys": [
+                "b_hist:title_as_printed"
+              ]
+            }
           ]
         },
         {
@@ -427,17 +751,31 @@
       ],
       "eventFields": [
         {
-          "key": "adoption_date",
+          "key": "date",
           "label": "Adoption date",
           "valueType": "text",
           "candidates": [
-            { "source": "claude", "value": "1904-07-04", "note": "First Monday in July 1904, as the act directs." },
-            { "source": "codex", "value": "1904-07-04" },
-            { "source": "registry", "value": "1904-09-01", "note": "Registry stores the effective date, not the adoption date." }
+            {
+              "source": "claude",
+              "value": "1904-07-04",
+              "note": "First Monday in July 1904, as the act directs."
+            },
+            {
+              "source": "codex",
+              "value": "1904-07-04"
+            },
+            {
+              "source": "registry",
+              "value": "1904-09-01",
+              "note": "Registry stores the effective date, not the adoption date."
+            }
           ],
           "default": "claude",
           "agree": false,
-          "evidenceIds": ["ev_statute", "ev_statute_text"],
+          "evidenceIds": [
+            "ev_statute",
+            "ev_statute_text"
+          ],
           "flags": [],
           "hint": "Adoption date, not the date the books took effect."
         },
@@ -445,14 +783,28 @@
           "key": "unit_level",
           "label": "Unit level",
           "valueType": "choice",
-          "options": ["state", "county", "city", "district", "school"],
+          "options": [
+            "state",
+            "county",
+            "city",
+            "district",
+            "school"
+          ],
           "candidates": [
-            { "source": "claude", "value": "state" },
-            { "source": "codex", "value": "state" }
+            {
+              "source": "claude",
+              "value": "state"
+            },
+            {
+              "source": "codex",
+              "value": "state"
+            }
           ],
           "default": "claude",
           "agree": true,
-          "evidenceIds": ["ev_statute_text"],
+          "evidenceIds": [
+            "ev_statute_text"
+          ],
           "flags": []
         },
         {
@@ -460,12 +812,21 @@
           "label": "Statute citation",
           "valueType": "text",
           "candidates": [
-            { "source": "claude", "value": "Gen. Laws Tex. 28th Leg., ch. 12, secs. 4-6 (1903)" },
-            { "source": "codex", "value": "Tex. Gen. Laws ch. 12 (1903)" }
+            {
+              "source": "claude",
+              "value": "Gen. Laws Tex. 28th Leg., ch. 12, secs. 4-6 (1903)"
+            },
+            {
+              "source": "codex",
+              "value": "Tex. Gen. Laws ch. 12 (1903)"
+            }
           ],
           "default": "claude",
           "agree": false,
-          "evidenceIds": ["ev_statute", "ev_session_url"],
+          "evidenceIds": [
+            "ev_statute",
+            "ev_session_url"
+          ],
           "flags": []
         },
         {
@@ -473,25 +834,43 @@
           "label": "Term (years)",
           "valueType": "text",
           "candidates": [
-            { "source": "claude", "value": "5" },
-            { "source": "codex", "value": "5" }
+            {
+              "source": "claude",
+              "value": "5"
+            },
+            {
+              "source": "codex",
+              "value": "5"
+            }
           ],
           "default": "claude",
           "agree": true,
-          "evidenceIds": ["ev_statute_text"],
+          "evidenceIds": [
+            "ev_statute_text"
+          ],
           "flags": []
         },
         {
           "key": "preempts_local",
           "label": "Pre-empts local adoption?",
           "valueType": "choice",
-          "options": ["yes", "no", "unclear"],
+          "options": [
+            "yes",
+            "no",
+            "unclear"
+          ],
           "candidates": [
-            { "source": "claude", "value": "yes", "note": "Sec. 6 bars county, city and district boards for the named branches." }
+            {
+              "source": "claude",
+              "value": "yes",
+              "note": "Sec. 6 bars county, city and district boards for the named branches."
+            }
           ],
           "default": "claude",
           "agree": false,
-          "evidenceIds": ["ev_statute_text"],
+          "evidenceIds": [
+            "ev_statute_text"
+          ],
           "flags": []
         }
       ],
@@ -505,12 +884,20 @@
               "label": "Title as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Milne's Standard Arithmetic" },
-                { "source": "codex", "value": "Milne's Standard Arithmetic" }
+                {
+                  "source": "claude",
+                  "value": "Milne's Standard Arithmetic"
+                },
+                {
+                  "source": "codex",
+                  "value": "Milne's Standard Arithmetic"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_statute_text"],
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
               "flags": []
             },
             {
@@ -518,26 +905,52 @@
               "label": "Publisher as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "American Book Co." },
-                { "source": "codex", "value": "American Book Co." }
+                {
+                  "source": "claude",
+                  "value": "American Book Co."
+                },
+                {
+                  "source": "codex",
+                  "value": "American Book Co."
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_statute_text"],
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
               "flags": []
             },
             {
               "key": "subject",
               "label": "Subject",
               "valueType": "choice",
-              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "options": [
+                "reading",
+                "geography",
+                "arithmetic",
+                "grammar",
+                "history",
+                "spelling",
+                "physiology",
+                "civics",
+                "other"
+              ],
               "candidates": [
-                { "source": "claude", "value": "arithmetic" },
-                { "source": "codex", "value": "arithmetic" }
+                {
+                  "source": "claude",
+                  "value": "arithmetic"
+                },
+                {
+                  "source": "codex",
+                  "value": "arithmetic"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_statute_text"],
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
               "flags": []
             }
           ]
@@ -552,12 +965,22 @@
               "label": "Title as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Reed & Kellogg's Graded Lessons" },
-                { "source": "registry", "value": "Graded Lessons in English", "note": "Registry title — the act does not print the words \"in English\"." }
+                {
+                  "source": "claude",
+                  "value": "Reed & Kellogg's Graded Lessons"
+                },
+                {
+                  "source": "registry",
+                  "value": "Graded Lessons in English",
+                  "note": "Registry title — the act does not print the words \"in English\"."
+                }
               ],
               "default": "claude",
               "agree": false,
-              "evidenceIds": ["ev_statute_text", "ev_statute"],
+              "evidenceIds": [
+                "ev_statute_text",
+                "ev_statute"
+              ],
               "flags": []
             },
             {
@@ -565,26 +988,54 @@
               "label": "Publisher as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Maynard, Merrill & Co." },
-                { "source": "codex", "value": "Maynard Merrill & Co" }
+                {
+                  "source": "claude",
+                  "value": "Maynard, Merrill & Co."
+                },
+                {
+                  "source": "codex",
+                  "value": "Maynard Merrill & Co"
+                }
               ],
               "default": "claude",
               "agree": false,
-              "evidenceIds": ["ev_statute_text"],
-              "flags": ["weak"]
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
+              "flags": [
+                "weak"
+              ]
             },
             {
               "key": "subject",
               "label": "Subject",
               "valueType": "choice",
-              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "options": [
+                "reading",
+                "geography",
+                "arithmetic",
+                "grammar",
+                "history",
+                "spelling",
+                "physiology",
+                "civics",
+                "other"
+              ],
               "candidates": [
-                { "source": "claude", "value": "grammar" },
-                { "source": "codex", "value": "grammar" }
+                {
+                  "source": "claude",
+                  "value": "grammar"
+                },
+                {
+                  "source": "codex",
+                  "value": "grammar"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_statute_text"],
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
               "flags": []
             }
           ]
@@ -598,12 +1049,20 @@
               "label": "Title as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Barnes's Brief History of the United States" },
-                { "source": "codex", "value": "Barnes's Brief History of the United States" }
+                {
+                  "source": "claude",
+                  "value": "Barnes's Brief History of the United States"
+                },
+                {
+                  "source": "codex",
+                  "value": "Barnes's Brief History of the United States"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_statute_text"],
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
               "flags": []
             },
             {
@@ -611,26 +1070,53 @@
               "label": "Publisher as stated",
               "valueType": "text",
               "candidates": [
-                { "source": "claude", "value": "Am. Book Co." },
-                { "source": "codex", "value": "American Book Co.", "note": "Expanded the abbreviation — the act prints \"Am. Book Co.\"" }
+                {
+                  "source": "claude",
+                  "value": "Am. Book Co."
+                },
+                {
+                  "source": "codex",
+                  "value": "American Book Co.",
+                  "note": "Expanded the abbreviation — the act prints \"Am. Book Co.\""
+                }
               ],
               "default": "claude",
               "agree": false,
-              "evidenceIds": ["ev_statute_text"],
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
               "flags": []
             },
             {
               "key": "subject",
               "label": "Subject",
               "valueType": "choice",
-              "options": ["reading", "geography", "arithmetic", "grammar", "history", "spelling", "physiology", "civics", "other"],
+              "options": [
+                "reading",
+                "geography",
+                "arithmetic",
+                "grammar",
+                "history",
+                "spelling",
+                "physiology",
+                "civics",
+                "other"
+              ],
               "candidates": [
-                { "source": "claude", "value": "history" },
-                { "source": "codex", "value": "history" }
+                {
+                  "source": "claude",
+                  "value": "history"
+                },
+                {
+                  "source": "codex",
+                  "value": "history"
+                }
               ],
               "default": "claude",
               "agree": true,
-              "evidenceIds": ["ev_statute_text"],
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
               "flags": []
             },
             {
@@ -640,11 +1126,18 @@
               "candidates": [],
               "default": null,
               "agree": false,
-              "evidenceIds": ["ev_statute_text"],
+              "evidenceIds": [
+                "ev_statute_text"
+              ],
               "flags": [],
               "hint": "The act names no edition. Expect Not stated."
             }
-          ]
+          ],
+          "verb": {
+            "value": "adopted",
+            "source": "claude"
+          },
+          "author_as_stated": "Barnes"
         }
       ]
     }

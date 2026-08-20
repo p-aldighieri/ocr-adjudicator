@@ -4,11 +4,13 @@ import { CHOICE_CUSTOM, CHOICE_EXTRACTED_TITLE, CHOICE_NOT_TITLE } from '../type
 export function PrintedTitleRow({
   extracted,
   result,
+  optional,
   onChange,
   onFocus,
 }: {
   extracted: string
   result?: FieldResult
+  optional?: boolean
   onChange: (result: FieldResult) => void
   onFocus: () => void
 }) {
@@ -26,7 +28,7 @@ export function PrintedTitleRow({
         <button type="button" onClick={onFocus} className="underline-offset-2 hover:underline">
           Title as printed
         </button>
-        {!result && <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">needs review</span>}
+        {!result && !optional && <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">needs review</span>}
       </div>
       <p className="mb-2 text-[11px] leading-snug text-slate-500">
         Check only the words visible on the page. Canonical-book identification happens later.

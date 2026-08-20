@@ -1,6 +1,6 @@
-import type { ClaimField, FieldResult, Item, ItemResult, ItemStatus, QueueGroup } from './types'
+import type { ClaimField, FieldResult, Item, ItemResult, ItemStatus, PrintedTitleSection, QueueGroup } from './types'
 import { CHOICE_CUSTOM, CHOICE_NOT_TITLE, QUEUE_GROUPS } from './types'
-import { effectivePriority } from './classifications'
+import { effectivePriority, matchesResearchFocus, type ResearchFocus } from './classifications'
 
 export type QueueMode = 'group' | 'state' | 'priority'
 export type QueueFilter = 'all' | 'unresolved'
@@ -16,6 +16,23 @@ export const LEGACY_PRINTED_TITLE_FIELD = 'title'
 
 export function isLegacyTitleField(fieldKey: string): boolean {
   return fieldKey === LEGACY_BOOK_MATCH_FIELD || fieldKey === LEGACY_PRINTED_TITLE_FIELD
+}
+
+/**
+ * Fields carried as read-only context, never adjudicated (per Vitaliia's 2026-08 review:
+ * the verb matters downstream but confirming it per book added nothing). Excluded from
+ * review rendering, progress counts, and claim export like the legacy fields above.
+ */
+export function isMetadataField(fieldKey: string): boolean {
+  return fieldKey === 'evidence_verb'
+}
+
+/** Extractor's evidence verb for a title section: v5 metadata first, v4 claim candidates as fallback. */
+export function sectionVerb(section: PrintedTitleSection): { value: string; source: string } | null {
+  if (section.verb?.value) return section.verb
+  const field = section.fields.find((f) => f.key === 'evidence_verb')
+  const candidate = field?.candidates[0]
+  return candidate ? { value: candidate.value, source: candidate.source } : null
 }
 
 /**
@@ -46,7 +63,7 @@ export function itemFields(item: Item): FlatField[] {
   }
   for (const b of item.books) {
     for (const f of b.fields) {
-      if (isLegacyTitleField(f.key)) continue
+      if (isLegacyTitleField(f.key) || isMetadataField(f.key)) continue
       out.push({ sectionKey: b.key, sectionTitle: b.title_as_stated, field: f, key: resultKey(b.key, f.key) })
     }
   }
@@ -81,6 +98,7 @@ export function decidedCount(item: Item, r?: ItemResult): { decided: number; tot
   }
 
   for (const titleExtraction of item.books) {
+    if (titleExtraction.optional) continue // decidable, never required
     const titleResult = r?.fields?.[printedTitleResultKey(titleExtraction.key)]
     total++
     if (isDecided(titleResult)) decided++
@@ -88,7 +106,7 @@ export function decidedCount(item: Item, r?: ItemResult): { decided: number; tot
     // Rejecting a false-positive title also rejects its dependent title-level claims.
     if (titleResult?.choice === CHOICE_NOT_TITLE) continue
     for (const field of titleExtraction.fields) {
-      if (isLegacyTitleField(field.key)) continue
+      if (isLegacyTitleField(field.key) || isMetadataField(field.key)) continue
       total++
       if (isDecided(r?.fields?.[resultKey(titleExtraction.key, field.key)])) decided++
     }
@@ -133,13 +151,33 @@ function byGroup(a: Item, b: Item): number {
   return (GROUP_ORDER[a.group] ?? 99) - (GROUP_ORDER[b.group] ?? 99)
 }
 
+/** Items per state across the whole dataset — drives the small-states-first default order. */
+export function stateItemCounts(items: Item[]): Map<string, number> {
+  const counts = new Map<string, number>()
+  for (const it of items) counts.set(it.state, (counts.get(it.state) ?? 0) + 1)
+  return counts
+}
+
+/**
+ * Default within-group order: states with the fewest bundles first, so one heavily
+ * sampled state (Maryland) sinks to the end of the queue instead of eating the session.
+ */
+export function smallStatesFirst(counts: Map<string, number>) {
+  return (a: Item, b: Item): number =>
+    (counts.get(a.state) ?? 0) - (counts.get(b.state) ?? 0)
+    || a.state.localeCompare(b.state)
+    || a.year - b.year
+}
+
 export function buildQueue(
   items: Item[],
   results: Record<string, ItemResult>,
   mode: QueueMode,
   filter: QueueFilter,
+  focus: ResearchFocus = 'all',
 ): Item[] {
-  let list = [...items]
+  const counts = stateItemCounts(items)
+  let list = items.filter((it) => matchesResearchFocus(it, focus))
   if (filter === 'unresolved') {
     list = list.filter((it) => !isResolved(computeStatus(it, results[it.id])))
   }
@@ -149,8 +187,9 @@ export function buildQueue(
     // geographic: one state end to end, chronologically
     list.sort((a, b) => a.state.localeCompare(b.state) || a.year - b.year || byGroup(a, b))
   } else {
-    // by backlog: clear new records, then conflicts, then state laws
-    list.sort((a, b) => byGroup(a, b) || effectivePriority(b) - effectivePriority(a) || a.state.localeCompare(b.state) || a.year - b.year)
+    // by backlog: clear new records, then conflicts, then state laws; small states first within each
+    const bySmallState = smallStatesFirst(counts)
+    list.sort((a, b) => byGroup(a, b) || bySmallState(a, b))
   }
   return list
 }

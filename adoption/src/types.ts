@@ -109,6 +109,15 @@ export interface PrintedTitleSection {
   fields: ClaimField[]
   /** builder note about this extraction (e.g. "the title continues on the next line") */
   note?: string
+  /** author exactly as the source prints it — read-only context, not adjudicated */
+  author_as_stated?: string
+  /** extractor's evidence verb (adopted/used/…) — read-only context, not adjudicated */
+  verb?: { value: string; source: string }
+  /**
+   * Optional section (e.g. a state-history title recovered by re-extraction): decidable
+   * but never required — it does not count toward completion or block Complete & Next.
+   */
+  optional?: boolean
 }
 
 export interface Item {
@@ -191,6 +200,29 @@ export interface AddedTitleResult {
   evidenceId?: string | null
 }
 
+/**
+ * Rare per-title date differing from the event-level date the reviewer confirmed.
+ * Optional extra work — never required, never counted toward completion.
+ */
+export interface DateOverrideResult {
+  sectionKey: string
+  value: string
+}
+
+/**
+ * Reviewer correction of the extractor's evidence verb for one title. Like date
+ * overrides: optional, never required, never counted toward completion.
+ */
+export interface VerbOverrideResult {
+  sectionKey: string
+  value: string
+}
+
+/** Evidence-verb vocabulary — mirrors the pipeline's schema.py EVIDENCE_VERBS. */
+export const VERB_OPTIONS = [
+  'adopted', 'readopted', 'recommended', 'used', 'listed', 'considered', 'rejected', 'conditional',
+] as const
+
 export type ItemStatus = 'untouched' | 'in_progress' | 'done' | 'insufficient'
 
 export interface ItemResult {
@@ -198,6 +230,8 @@ export interface ItemResult {
   /** keyed by resultKey(sectionKey, fieldKey) — see queue.ts */
   fields: Record<string, FieldResult>
   addedTitles?: AddedTitleResult[]
+  dateOverrides?: DateOverrideResult[]
+  verbOverrides?: VerbOverrideResult[]
   /** reviewer flagged the bundle as unjudgeable from the evidence shipped */
   insufficient?: boolean
   notes?: string

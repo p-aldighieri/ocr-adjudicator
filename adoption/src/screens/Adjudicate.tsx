@@ -6,28 +6,33 @@ import { ClaimRow, sourceLabel } from '../components/ClaimRow'
 import { PrintedTitleRow } from '../components/PrintedTitleRow'
 import {
   EVENT_SECTION, EVENT_SECTION_TITLE, adjudicableFields, buildQueue, computeStatus,
-  decidedCount, groundTruthAlert, isLegacyTitleField, itemFields, itemSources,
-  nextUnresolvedIndex, printedTitleResultKey, resultKey, type FlatField,
+  decidedCount, groundTruthAlert, isLegacyTitleField, isMetadataField, itemFields, itemSources,
+  nextUnresolvedIndex, printedTitleResultKey, resultKey, sectionVerb, type FlatField,
 } from '../queue'
-import { CHOICE_NOT_TITLE, GROUP_LABEL } from '../types'
+import { FOCUS_LABEL, type ResearchFocus } from '../classifications'
+import { CHOICE_NOT_TITLE, GROUP_LABEL, VERB_OPTIONS } from '../types'
 import type { ClaimField, ItemStatus } from '../types'
 import { ItemResearchTags } from '../components/ItemResearchTags'
+
+/** Foci offered on the review screen itself; an Overview-only focus still shows as a fifth chip. */
+const REVIEW_FOCI: ResearchFocus[] = ['all', 'newspapers', 'tables', 'printed']
 
 export function Adjudicate() {
   const { id } = useParams()
   const nav = useNavigate()
   const {
     items, results, sources, sourceLabels, settings, setSettings,
-    setFieldResult, addTitle, updateAddedTitle, removeAddedTitle, setInsufficient, setNotes,
+    setFieldResult, addTitle, updateAddedTitle, removeAddedTitle,
+    setDateOverride, setVerbOverride, setInsufficient, setNotes,
   } = useStore()
 
   const queue = useMemo(
-    () => buildQueue(items, results, settings.queueMode, settings.filter),
-    [items, results, settings.queueMode, settings.filter],
+    () => buildQueue(items, results, settings.queueMode, settings.filter, settings.focus),
+    [items, results, settings.queueMode, settings.filter, settings.focus],
   )
   const allQueue = useMemo(
-    () => buildQueue(items, results, settings.queueMode, 'all'),
-    [items, results, settings.queueMode],
+    () => buildQueue(items, results, settings.queueMode, 'all', settings.focus),
+    [items, results, settings.queueMode, settings.focus],
   )
   const item = useMemo(() => items.find((i) => i.id === id) ?? queue[0], [items, queue, id])
   const qIdx = useMemo(() => queue.findIndex((i) => i.id === item?.id), [queue, item])
@@ -42,10 +47,16 @@ export function Adjudicate() {
     if (!item) return
     const firstTitle = item.books[0]
     const first: FlatField | undefined = itemFields(item)[0]
+    // v5 book sections carry no fields; their evidence link is the region anchor
+    const firstTitleEvidence = firstTitle
+      ? item.evidence.find((e) =>
+          (e.regions ?? []).some((r) => r.fieldKeys?.includes(printedTitleResultKey(firstTitle.key))))?.id
+        ?? firstTitle.fields.flatMap((field) => field.evidenceIds).find(Boolean)
+      : undefined
     const timer = window.setTimeout(() => {
       setActiveFieldKey(firstTitle ? printedTitleResultKey(firstTitle.key) : (first?.key ?? null))
       setActiveEvidenceId(
-        firstTitle?.fields.flatMap((field) => field.evidenceIds).find(Boolean)
+        firstTitleEvidence
         ?? first?.field.evidenceIds[0]
         ?? item.evidence[0]?.id
         ?? null,
@@ -55,16 +66,44 @@ export function Adjudicate() {
   }, [item?.id]) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!item) {
-    return <div className="p-6 text-center text-slate-400">Nothing in the queue. Check Settings → filter.</div>
+    return (
+      <div className="p-6 text-center text-slate-400">
+        Nothing in this queue.
+        {settings.focus !== 'all' && (
+          <button
+            onClick={() => setSettings({ focus: 'all' })}
+            className="ml-2 rounded bg-slate-800 px-2 py-1 text-xs text-sky-300 active:bg-slate-700"
+          >
+            Clear “{FOCUS_LABEL[settings.focus]}” focus
+          </button>
+        )}
+      </div>
+    )
   }
 
   const res = results[item.id]
   const { decided, total } = decidedCount(item, res)
   const status = computeStatus(item, res)
+  const hasEventDate = item.eventFields?.some((f) => f.key === 'date') ?? false
+  const shownFoci = REVIEW_FOCI.includes(settings.focus) ? REVIEW_FOCI : [...REVIEW_FOCI, settings.focus]
+
+  // v5 book sections carry no ClaimFields, so a title's evidence comes from the
+  // region anchors (fieldKeys) the builder attached; claim evidenceIds remain the fallback
+  const evidenceForTitle = (sectionKey: string): string[] => {
+    const key = printedTitleResultKey(sectionKey)
+    const viaRegions = item.evidence
+      .filter((e) => (e.regions ?? []).some((r) => r.fieldKeys?.includes(key)))
+      .map((e) => e.id)
+    if (viaRegions.length > 0) return viaRegions
+    return item.books.find((b) => b.key === sectionKey)
+      ?.fields.flatMap((f) => f.evidenceIds).filter(Boolean) ?? []
+  }
   const flat = itemFields(item)
+  const activeTitleSection = item.books.find(
+    (titleExtraction) => printedTitleResultKey(titleExtraction.key) === activeFieldKey,
+  )
   const relevantIds = flat.find((field) => field.key === activeFieldKey)?.field.evidenceIds
-    ?? item.books.find((titleExtraction) => printedTitleResultKey(titleExtraction.key) === activeFieldKey)
-      ?.fields.flatMap((field) => field.evidenceIds).filter((value, index, all) => all.indexOf(value) === index)
+    ?? (activeTitleSection ? evidenceForTitle(activeTitleSection.key) : undefined)
     ?? []
 
   // deliberate: bring this claim's evidence into the pane (label tap)
@@ -135,16 +174,36 @@ export function Adjudicate() {
         </div>
       </header>
 
-      {/* queue sort + backlog selector */}
-      <div className="flex items-center gap-1.5 border-b border-slate-800 bg-slate-900/50 px-3 py-1 text-[11px]">
+      {/* queue sort + backlog selector + research focus */}
+      <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-800 bg-slate-900/50 px-3 py-1 text-[11px]">
         <span className="text-slate-500">Queue</span>
         <SortChip active={settings.queueMode === 'group'} onClick={() => setSettings({ queueMode: 'group' })}>By backlog</SortChip>
         <SortChip active={settings.queueMode === 'state'} onClick={() => setSettings({ queueMode: 'state' })}>By state</SortChip>
         <SortChip active={settings.queueMode === 'priority'} onClick={() => setSettings({ queueMode: 'priority' })}>Priority</SortChip>
-        <span className="ml-auto text-slate-600">|</span>
+        <span className="text-slate-600">|</span>
         <SortChip active={settings.filter === 'all'} onClick={() => setSettings({ filter: 'all' })}>All</SortChip>
         <SortChip active={settings.filter === 'unresolved'} onClick={() => setSettings({ filter: 'unresolved' })}>Backlog</SortChip>
+        <span className="text-slate-600">|</span>
+        <span className="text-slate-500">Focus</span>
+        {shownFoci.map((focus) => (
+          <SortChip key={focus} active={settings.focus === focus} onClick={() => setSettings({ focus })}>
+            {FOCUS_LABEL[focus]}
+          </SortChip>
+        ))}
       </div>
+
+      {/* current bundle falls outside the active focus (e.g. opened from search) */}
+      {settings.focus !== 'all' && allIdx < 0 && (
+        <div className="flex items-center gap-2 border-b border-slate-800 bg-slate-800/40 px-3 py-1.5 text-[11px] text-slate-400">
+          This bundle is outside the “{FOCUS_LABEL[settings.focus]}” focus — next/prev will jump back into it.
+          <button
+            onClick={() => setSettings({ focus: 'all' })}
+            className="rounded bg-slate-700 px-2 py-0.5 text-sky-200 active:bg-slate-600"
+          >
+            Show all
+          </button>
+        </div>
+      )}
 
       {/* reviewer instruction banner */}
       {groundTruthAlert(item.alert) && (
@@ -213,23 +272,49 @@ export function Adjudicate() {
           </ClaimSection>
         )}
 
-        {item.books.map((titleExtraction, titleIndex) => {
+        {[...item.books].sort((a, b) => Number(!!a.optional) - Number(!!b.optional)).map((titleExtraction, titleIndex) => {
           const titleKey = printedTitleResultKey(titleExtraction.key)
           const titleResult = res?.fields?.[titleKey]
           const rejected = titleResult?.choice === CHOICE_NOT_TITLE
-          const titleEvidence = titleExtraction.fields.flatMap((field) => field.evidenceIds).find(Boolean)
+          const verb = sectionVerb(titleExtraction)
+          const author = titleExtraction.author_as_stated
+          const hasOwnDateField = titleExtraction.fields.some((field) => field.key === 'date')
+          const titleEvidenceIds = evidenceForTitle(titleExtraction.key)
           return (
-          <ClaimSection key={titleExtraction.key} title={`Extracted title ${titleIndex + 1}`} note={titleExtraction.note} kind="title">
+          <ClaimSection
+            key={titleExtraction.key}
+            title={titleExtraction.optional ? `Optional title ${titleIndex + 1}` : `Extracted title ${titleIndex + 1}`}
+            badge={titleExtraction.optional ? 'optional — does not block completion' : undefined}
+            note={titleExtraction.note}
+            kind="title"
+          >
             <PrintedTitleRow
               extracted={titleExtraction.title_as_stated}
               result={titleResult}
+              optional={titleExtraction.optional}
               onChange={(fieldResult) => setFieldResult(item.id, titleKey, fieldResult)}
               onFocus={() => {
                 setActiveFieldKey(titleKey)
-                if (titleEvidence) setActiveEvidenceId(titleEvidence)
+                if (titleEvidenceIds[0]) setActiveEvidenceId(titleEvidenceIds[0])
               }}
             />
-            {!rejected && titleExtraction.fields.filter((field) => !isLegacyTitleField(field.key)).map((f) => {
+            {(author || verb) && (
+              <div className="flex flex-wrap items-center gap-x-1 text-[11px] leading-snug text-slate-500">
+                {author && <span>Author as printed: <span className="text-slate-300">{author}</span></span>}
+                {author && verb && <span className="text-slate-700">·</span>}
+                {verb && (
+                  <VerbChip
+                    key={`${item.id}:${titleExtraction.key}`}
+                    extracted={verb}
+                    sourceName={sourceLabel(verb.source, sourceLabels)}
+                    override={res?.verbOverrides?.find((o) => o.sectionKey === titleExtraction.key)?.value ?? null}
+                    editable={!rejected}
+                    onChange={(value) => setVerbOverride(item.id, titleExtraction.key, value)}
+                  />
+                )}
+              </div>
+            )}
+            {!rejected && titleExtraction.fields.filter((field) => !isLegacyTitleField(field.key) && !isMetadataField(field.key)).map((f) => {
               const key = resultKey(titleExtraction.key, f.key)
               return (
                 <ClaimRow
@@ -245,6 +330,13 @@ export function Adjudicate() {
                 />
               )
             })}
+            {!rejected && hasEventDate && !hasOwnDateField && (
+              <DateOverrideRow
+                key={`${item.id}:${titleExtraction.key}`}
+                value={res?.dateOverrides?.find((o) => o.sectionKey === titleExtraction.key)?.value ?? null}
+                onChange={(value) => setDateOverride(item.id, titleExtraction.key, value)}
+              />
+            )}
             {rejected && (
               <p className="rounded-lg bg-rose-500/10 px-3 py-2 text-xs text-rose-200">
                 This extraction will be omitted from the corrected title records.
@@ -273,7 +365,8 @@ export function Adjudicate() {
 
       {/* bottom nav */}
       <nav className="flex items-center gap-2 border-t border-slate-800 bg-slate-900/90 px-3 py-2">
-        <NavBtn onClick={() => goto(qIdx - 1)} disabled={qIdx <= 0}>← Prev</NavBtn>
+        {/* from an out-of-focus item (qIdx -1), Prev re-enters the focused queue at its start */}
+        <NavBtn onClick={() => goto(qIdx > 0 ? qIdx - 1 : 0)} disabled={qIdx === 0 || queue.length === 0}>← Prev</NavBtn>
         <NavBtn onClick={leaveInReviewAndNext}>Leave in review &amp; Next</NavBtn>
         <button
           onClick={completeAndNext}
@@ -381,21 +474,139 @@ function newTitleId(): string {
   return globalThis.crypto?.randomUUID?.() ?? `added_${Date.now()}_${Math.random().toString(36).slice(2)}`
 }
 
+/**
+ * The extractor's verb, crystallized — no confirmation needed — but click-to-correct
+ * via the controlled vocabulary when the source plainly shows something else.
+ */
+function VerbChip({
+  extracted, sourceName, override, editable, onChange,
+}: {
+  extracted: { value: string; source: string }
+  sourceName: string
+  override: string | null
+  editable: boolean
+  onChange: (v: string | null) => void
+}) {
+  const [editing, setEditing] = useState(false)
+  const effective = override ?? extracted.value
+  if (editing) {
+    return (
+      <label className="inline-flex items-center gap-1">
+        <span>source verb:</span>
+        <span className="sr-only">Corrected evidence verb</span>
+        <select
+          autoFocus
+          value={effective}
+          onChange={(event) => {
+            const value = event.target.value
+            onChange(value === extracted.value ? null : value)
+            setEditing(false)
+          }}
+          onBlur={() => setEditing(false)}
+          className="rounded border border-slate-700 bg-slate-800 px-1 py-0.5 text-[11px] text-slate-200 outline-none"
+        >
+          {VERB_OPTIONS.map((option) => (
+            <option key={option} value={option}>
+              {option === extracted.value ? `${option} (extractor)` : option}
+            </option>
+          ))}
+        </select>
+      </label>
+    )
+  }
+  return (
+    <span className="inline-flex items-center gap-1">
+      <span>
+        source verb: <span className={override ? 'text-sky-300' : 'text-slate-300'}>{effective}</span>{' '}
+        <span className="text-slate-600">
+          {override ? `(edited — extractor said ${extracted.value})` : `(${sourceName}, no confirmation needed)`}
+        </span>
+      </span>
+      {editable && (
+        <button
+          type="button"
+          onClick={() => setEditing(true)}
+          title="Correct the verb"
+          className="rounded px-1 text-slate-500 hover:text-slate-300 active:bg-slate-800"
+        >
+          ✎
+        </button>
+      )}
+      {override && editable && (
+        <button
+          type="button"
+          onClick={() => onChange(null)}
+          title="Back to the extractor's verb"
+          className="rounded px-1 text-[10px] text-slate-500 underline-offset-2 hover:underline"
+        >
+          reset
+        </button>
+      )}
+    </span>
+  )
+}
+
+/**
+ * Escape hatch under each title when the bundle uses one event-level date: almost every
+ * batch shares one date, so this stays collapsed unless a specific title really differs.
+ */
+function DateOverrideRow({ value, onChange }: { value: string | null; onChange: (v: string | null) => void }) {
+  const [draft, setDraft] = useState<string | null>(null)
+  const active = draft !== null || value !== null
+  if (!active) {
+    return (
+      <button
+        type="button"
+        onClick={() => setDraft('')}
+        className="text-[11px] text-slate-500 underline-offset-2 hover:underline"
+      >
+        Date differs for this title…
+      </button>
+    )
+  }
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-[11px] text-slate-500">Date for this title</span>
+      <label className="flex items-center rounded-lg border border-slate-700 bg-slate-800/60">
+        <span className="sr-only">Date for this title, exactly as printed</span>
+        <input
+          value={draft ?? value ?? ''}
+          placeholder="as printed…"
+          onChange={(event) => {
+            setDraft(event.target.value)
+            onChange(event.target.value.trim() ? event.target.value : null)
+          }}
+          className="w-36 bg-transparent px-2 py-1 text-xs text-white outline-none placeholder:text-slate-500"
+        />
+      </label>
+      <button
+        type="button"
+        onClick={() => { setDraft(null); onChange(null) }}
+        className="rounded px-2 py-1 text-[11px] text-rose-300 active:bg-rose-500/10"
+      >
+        Same as event date
+      </button>
+    </div>
+  )
+}
+
 function ClaimSection({
-  title, note, kind, children,
+  title, badge, note, kind, children,
 }: {
   title: string
+  badge?: string
   note?: string
   kind: 'event' | 'title'
   children: ReactNode
 }) {
   return (
-    <div className="mb-3 rounded-xl border border-slate-800 bg-slate-900/40 p-3">
-      <div className="mb-2 flex items-baseline gap-2">
+    <div className={`mb-3 rounded-xl border bg-slate-900/40 p-3 ${badge ? 'border-dashed border-slate-700' : 'border-slate-800'}`}>
+      <div className="mb-2 flex flex-wrap items-baseline gap-2">
         <h3 className="text-sm font-semibold text-slate-200">
           <span className="mr-1 text-slate-500">{kind === 'title' ? '“' : '⚖'}</span>
           {title}
         </h3>
+        {badge && <span className="rounded bg-slate-700/40 px-1.5 py-0.5 text-[10px] text-slate-400">{badge}</span>}
       </div>
       {note && <p className="mb-2 text-[11px] leading-snug text-slate-500">{note}</p>}
       <div className="space-y-3">{children}</div>
@@ -429,6 +640,15 @@ function HelpModal({ onClose }: { onClose: () => void }) {
             <b className="text-amber-300">Not stated vs Can’t tell.</b> <b>Not stated</b> = the source is
             legible and simply does not say. <b>Can’t tell</b> = it is there but illegible, cut off, or
             genuinely ambiguous. They mean different things downstream — do not use one for the other.
+          </li>
+          <li>
+            <b className="text-amber-300">One date for the whole batch.</b> The event’s <i>Adoption date</i>{' '}
+            claim covers every title in the bundle — confirm it once. Only if a specific book prints a
+            different date, use <i>Date differs for this title</i> under that book.
+          </li>
+          <li>
+            <b className="text-amber-300">“source verb” is context, not a question.</b> The grey verb/author
+            line under a title (adopted, used, …) comes from the extractor and needs no confirmation.
           </li>
           <li>
             <b className="text-amber-300">Follow the evidence chips.</b> Tapping a claim’s label jumps the

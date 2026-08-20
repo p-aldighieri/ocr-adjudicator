@@ -3,18 +3,24 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import type { AddedTitleResult, Dataset, Item, ItemResult, FieldResult } from './types'
 import { loadDataset } from './dataset'
 import { db, getAllResults, getMeta, saveResult, setMeta } from './db'
-import { computeStatus, isLegacyTitleField, type QueueFilter, type QueueMode } from './queue'
+import { computeStatus, isLegacyTitleField, isMetadataField, type QueueFilter, type QueueMode } from './queue'
+import type { ResearchFocus } from './classifications'
 
 export interface Settings {
   queueMode: QueueMode
   filter: QueueFilter
+  /**
+   * Research focus (newspapers / tables / printed …). Persisted and applied to the review
+   * queue itself, so Prev / Next / Complete & Next stay inside the focused set.
+   */
+  focus: ResearchFocus
   /** soft-wrap long lines in text evidence (off = preserve the source's line breaks) */
   wrapText: boolean
   /** draw normalized passage/table regions supplied by the dataset builder */
   showHighlights: boolean
 }
 
-const DEFAULT_SETTINGS: Settings = { queueMode: 'group', filter: 'all', wrapText: true, showHighlights: true }
+const DEFAULT_SETTINGS: Settings = { queueMode: 'group', filter: 'all', focus: 'all', wrapText: true, showHighlights: true }
 
 interface Store {
   loading: boolean
@@ -32,6 +38,10 @@ interface Store {
   addTitle: (itemId: string, title: AddedTitleResult) => void
   updateAddedTitle: (itemId: string, titleId: string, value: string) => void
   removeAddedTitle: (itemId: string, titleId: string) => void
+  /** value null removes the override — the title falls back to the event-level date */
+  setDateOverride: (itemId: string, sectionKey: string, value: string | null) => void
+  /** value null removes the override — the verb falls back to the extractor's value */
+  setVerbOverride: (itemId: string, sectionKey: string, value: string | null) => void
   setInsufficient: (itemId: string, v: boolean) => void
   setNotes: (itemId: string, notes: string) => void
   importResults: (json: unknown) => Promise<number>
@@ -110,6 +120,20 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     mutate(itemId, (r) => { r.addedTitles = (r.addedTitles ?? []).filter((title) => title.id !== titleId) })
   }, [mutate])
 
+  const setDateOverride = useCallback((itemId: string, sectionKey: string, value: string | null) => {
+    mutate(itemId, (r) => {
+      const rest = (r.dateOverrides ?? []).filter((o) => o.sectionKey !== sectionKey)
+      r.dateOverrides = value === null ? rest : [...rest, { sectionKey, value }]
+    })
+  }, [mutate])
+
+  const setVerbOverride = useCallback((itemId: string, sectionKey: string, value: string | null) => {
+    mutate(itemId, (r) => {
+      const rest = (r.verbOverrides ?? []).filter((o) => o.sectionKey !== sectionKey)
+      r.verbOverrides = value === null ? rest : [...rest, { sectionKey, value }]
+    })
+  }, [mutate])
+
   const setInsufficient = useCallback((itemId: string, v: boolean) => {
     mutate(itemId, (r) => { r.insufficient = v })
   }, [mutate])
@@ -128,7 +152,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         ...r,
         fields: Object.fromEntries(Object.entries(r.fields ?? {}).filter(([key]) => {
           const fieldKey = key.slice(key.lastIndexOf(':') + 1)
-          return !isLegacyTitleField(fieldKey)
+          return !isLegacyTitleField(fieldKey) && !isMetadataField(fieldKey)
         })),
       }))
     if (rows.length) {
@@ -153,6 +177,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     addTitle,
     updateAddedTitle,
     removeAddedTitle,
+    setDateOverride,
+    setVerbOverride,
     setInsufficient,
     setNotes,
     importResults,

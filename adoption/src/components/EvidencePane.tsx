@@ -179,6 +179,11 @@ function PictorialView({
                   {labels.join(' · ')}
                 </div>
               )}
+              {showHighlights && regions.length === 0 && (
+                <div className="absolute bottom-2 left-2 rounded bg-black/50 px-2 py-0.5 text-[10px] text-slate-400">
+                  no highlights for this page
+                </div>
+              )}
             </>
           )}
         </TransformWrapper>

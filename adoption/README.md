@@ -11,10 +11,14 @@ PWA (offline after first load). No backend, no tracking. It lives in `adoption/`
 npm project** from the app at the repo root — nothing here imports from `../src`.
 
 **Live app:** <https://p-aldighieri.github.io/ocr-adjudicator/adoption/> (boots with the 3-item
-sample). **Current real dataset** (424 source-grounded review items from the 2026-08-07 adoption master, 204 MB):
-[`adoption-dataset.zip`](https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v4/adoption-dataset.zip)
-— download it on any device, then **⚙ Settings → Import dataset .zip**. Everything stays in the
-browser's local storage; works on Mac/Windows/Linux browsers, Android Chrome, and iOS 16.4+ Safari.
+sample). **Current real dataset** (v5, 2026-08-19: 386 review items, 207 MB — 38 non-K12/hand-extracted
+items retired to a ledger, one shared date per bundle, verbs as read-only metadata, 718 verified
+highlight regions, 93 corrected pages, printed authors):
+[`adoption-dataset.zip`](https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v5/adoption-dataset.zip)
+— download it on any device, then **⚙ Settings → Import dataset .zip**. Existing adjudications
+survive the upgrade (results merge by item id; a migration file carries decided per-book dates to
+the event level — see `tools/migrate_results_v5.py`). Everything stays in the browser's local
+storage; works on Mac/Windows/Linux browsers, Android Chrome, and iOS 16.4+ Safari.
 
 ---
 
@@ -28,24 +32,13 @@ npm run dev          # http://localhost:5173  (uses adoption/public/dataset/ as 
 
 Other scripts: `npm run build` (`tsc -b && vite build`), `npm run lint`, `npm run preview`.
 
-To rebuild the literal-title review manifest from the newer Aug. 7 selection while reusing only
-source/page-compatible assets from the older visual release:
+The current artifact is **dataset v5** (schema 7), produced by `tools/build_v5_dataset.py` as a
+deterministic reshape of the v4 ground-truth artifact — item ids and section keys are content
+hashes and survive, so reviewer results re-import untouched. The exact rebuild command, the
+input-file layout, and the validation step live in `dataset-build/BUILD.md`. (The older
+`repair_ground_truth_dataset.py` path produced the v4 input and remains for provenance.)
 
-```bash
-mkdir -p /tmp/adoption-ground-truth
-python3 tools/repair_ground_truth_dataset.py \
-  --input dataset-build/dataset.json \
-  --old-zip dataset.zip \
-  --asset-root dataset-build \
-  --overrides tools/ground_truth_overrides.json \
-  --output /tmp/adoption-ground-truth/dataset.json \
-  --report /tmp/adoption-ground-truth/repair-report.json
-python3 tools/validate_ground_truth_dataset.py \
-  /tmp/adoption-ground-truth/dataset.json \
-  --asset-root dataset-build
-```
-
-The normal validator fails on missing assets, disabled placeholders, invalid regions, synthetic
+The validator fails on missing assets, disabled placeholders, invalid regions, synthetic
 title notation, and downstream matching leakage. It reports missing title-region anchors as warnings;
 use `--strict-anchors` only when preparing an artifact in which every title has been spatially audited.
 
@@ -60,6 +53,12 @@ about the extension.
 One **item = one possible adoption-event bundle**. It carries shared evidence plus extracted title
 occurrences. Each occurrence can be accepted exactly, overwritten with the literal page text, or
 rejected as “not actually a book title”; reviewers can also add a title the extraction missed.
+
+Since v5 (2026-08): the bundle's **date is ONE event-level claim** (per-title “Date differs for
+this title” override for the rare exception); the extractor's **evidence verb is read-only
+metadata** with a click-to-correct dropdown, never a required decision; **printed author names**
+show under titles where the source credits one; and **optional title sections** (re-extraction
+finds, state histories) never count toward completion or block “Complete & Next”.
 
 Three backlogs (`group`), shown as three sections in the Overview:
 
@@ -158,8 +157,11 @@ tapping a *value* only highlights the claim and leaves the pane where it is.
 |---|---|---|
 | `key` | string | unique within the item; namespaces this book's result keys |
 | `title_as_stated` | string | extractor's proposed literal transcription; it is immutable input, not assumed truth |
-| `fields` | ClaimField[] | the claims for this book |
+| `fields` | ClaimField[] | the claims for this book (empty since v5 — verb/date moved out) |
 | `note` | string? | builder note about this book |
+| `author_as_stated` | string? | author exactly as the source prints it — read-only context |
+| `verb` | `{value, source}`? | extractor's evidence verb (adopted/used/…) — read-only, click-to-correct |
+| `optional` | boolean? | decidable but never required; excluded from progress counts |
 
 Publisher, subject, grade span and so on are **claims**, not headers — they are adjudicated, so they
 live in `fields`.
@@ -196,7 +198,7 @@ Each extracted title has a synthetic `title_as_printed` result with three outcom
 overwrite it, or reject it as a false title. Reviewer-added literal titles live in `addedTitles[]` and
 retain the active evidence id when they were created.
 
-Per item, one `ItemResult`: `{ itemId, fields, addedTitles?, insufficient?, notes?, status, updatedAt }`, written to
+Per item, one `ItemResult`: `{ itemId, fields, addedTitles?, dateOverrides?, verbOverrides?, insufficient?, notes?, status, updatedAt }`, written to
 IndexedDB through a single `mutate()` path in `src/store.tsx` on every keystroke/tap. `insufficient` is
 the item-level flag (**⚑ Evidence unavailable / wrong**) for bundles the shipped evidence cannot
 settle. It is not used for bad extraction: those rows are corrected/rejected directly.
@@ -223,9 +225,11 @@ That file round-trips: **Import adjudications (JSON)** merges it back by `itemId
 new device, new phone). It also accepts a bare `{ "<itemId>": {...} }` map.
 
 **Export CSV** starts with one row per extracted or reviewer-added literal title, followed by the
-other source claims. `record_origin`, `extracted_value`, and `evidence_id` preserve how a title entered
-review. Legacy `book_match` decisions and stale dependent claims under a rejected false-title row are
-removed from both CSV and JSON export.
+other source claims. `record_origin` (`extracted` / `reviewer_added` / `reextraction_optional`),
+`extracted_value`, and `evidence_id` preserve how a title entered review; `extracted_verb` and
+`extracted_author` carry the read-only metadata; `date_override` / `verb_override` rows carry
+per-title corrections. Legacy `book_match` decisions, retired `evidence_verb` decisions, and stale
+dependent claims under a rejected false-title row are removed from both CSV and JSON export.
 
 ---
 
@@ -259,7 +263,10 @@ adoption/
     components/ClaimRow.tsx      one claim: candidate pills, options, custom, not-stated, can't-tell
     components/PrintedTitleRow.tsx literal-title accept/overwrite/reject control
   tools/
-    repair_ground_truth_dataset.py re-links exact old visual assets + applies reviewed overrides
+    build_v5_dataset.py            THE dataset transform (v4 -> v5); see dataset-build/BUILD.md
+    migrate_results_v5.py          carries a reviewer's v4 export onto v5 (dates -> event level)
+    region_tool.py                 highlight-box tooling (ink-projection rows, contact sheets)
+    repair_ground_truth_dataset.py produced the v4 input (kept for provenance)
     validate_ground_truth_dataset.py release gates and structured validation report
     ground_truth_overrides.json versioned source-grounded corrections and highlight boxes
 ```
@@ -297,15 +304,15 @@ adoption/
 
 ## TODO
 
-- **Upstream builder consolidation** — the committed repair/validator makes the Aug. 7 artifact
-  reproducible, but the upstream row-selection/rendering code still needs to become a single
-  committed `build_adoption_dataset.py`. It must emit source ids, printed/PDF page identities,
-  explicit genre/layout metadata, regions, and a build report; it must refuse page-1 fallbacks.
-- **Larger table sample** — the current 424-item v3 manifest exposes only 3 records from Virginia
-  Table No. 12, while the verified table contains 112 title cells. The next selection pass must sample
-  more table records; a filter alone cannot create that review set.
+- **Upstream builder consolidation** — v5 is a committed, deterministic transform, but the original
+  row-selection/rendering code (`Code/adoptions_integration/build_app_dataset.py`) still needs its
+  known fixes folded in before a wave-2 selection: seeded tie-breaking (the alphabetical event-key
+  tiebreak is how Maryland got 42% of v4), genre/layout emission at build time (v5 carries a full
+  vision audit), correct PDF-index page math (v5 corrected 93 wrong pages), and region emission.
+- **Wave-2 selection** — the v5 drop ledger freed ~215 slots; draw the next batch only with the
+  fixed sampler.
 - **Shells** — the parent has native Windows/macOS wrappers in `tools/`; nothing equivalent exists
   here yet.
 - **Keyboard shortcuts** for desktop review (accept-source, next unresolved, flag).
-- **Ingest back into the pipeline** — a script that folds the exported CSV/JSON into the canonical
-  adoption tables and records who decided what, when.
+- **Ingest back into the pipeline** — `apply_app_decisions.py` stamps review status onto the master;
+  value-level application of corrected titles/dates stays explicit and audited.

@@ -25,8 +25,21 @@ export type ResearchFocus =
   | 'all'
   | 'newspapers'
   | 'tables'
+  | 'printed'
   | 'ever_adoption_states'
   | 'southern_states'
+
+export const FOCUS_LABEL: Record<ResearchFocus, string> = {
+  all: 'All',
+  newspapers: 'Newspapers',
+  tables: 'Tables',
+  printed: 'Printed lists & reports',
+  ever_adoption_states: 'Ever-adoption states',
+  southern_states: 'Project South',
+}
+
+/** Printed official matter that is neither a newspaper page nor a proper table. */
+const PRINTED_KINDS: EvidenceSourceKind[] = ['official_report', 'minutes', 'statute', 'periodical']
 
 /** Static membership only; every UI label using this function says "ever". */
 export function isEverAdoptionState(item: Item): boolean {
@@ -57,6 +70,10 @@ export function hasLayout(item: Item, layout: EvidenceLayout): boolean {
 export function matchesResearchFocus(item: Item, focus: ResearchFocus): boolean {
   if (focus === 'newspapers') return hasSourceKind(item, 'newspaper')
   if (focus === 'tables') return hasLayout(item, 'table') || hasLayout(item, 'mixed')
+  if (focus === 'printed') {
+    return PRINTED_KINDS.some((kind) => hasSourceKind(item, kind))
+      && !hasLayout(item, 'table') && !hasLayout(item, 'mixed')
+  }
   if (focus === 'ever_adoption_states') return isEverAdoptionState(item)
   if (focus === 'southern_states') return isSouthernState(item)
   return true
