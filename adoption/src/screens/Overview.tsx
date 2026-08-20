@@ -27,8 +27,14 @@ const GROUP_BLURB: Record<QueueGroup, string> = {
   state_laws: 'Statute-level adoptions: one law, often many books.',
 }
 
+/** Always the newest published dataset — mirror-latest, no per-version links to maintain. */
 const DATASET_URL =
-  'https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v5/adoption-dataset.zip'
+  'https://github.com/p-aldighieri/ocr-adjudicator/releases/latest/download/adoption-dataset.zip'
+/** Reviewer adjudications migrated onto the newest dataset (attached to the same release). */
+const MIGRATED_RESULTS_URL =
+  'https://github.com/p-aldighieri/ocr-adjudicator/releases/latest/download/v5-migrated-adjudications.json'
+/** Bump alongside the builder's meta.schema — drives the in-app "update available" banner. */
+const LATEST_SCHEMA = 7
 
 export function Overview() {
   const nav = useNavigate()
@@ -116,6 +122,30 @@ export function Overview() {
       </header>
 
       <div className="flex-1 overflow-auto px-3 py-3">
+        {!isSample && (dataset?.meta.schema ?? LATEST_SCHEMA) < LATEST_SCHEMA && (
+          <section className="mb-5 rounded-xl border border-amber-500/40 bg-amber-500/5 px-4 py-3">
+            <h2 className="text-sm font-semibold text-amber-200">A newer dataset is available</h2>
+            <ol className="mt-2 list-decimal space-y-1 pl-5 text-xs leading-snug text-slate-300">
+              <li>
+                Safety first: <span className="font-medium">⚙ Settings → Export JSON</span> (a backup of
+                everything you have decided — nothing on this device is deleted by the steps below).
+              </li>
+              <li>
+                <a href={DATASET_URL} className="font-medium text-sky-300 underline">Download the latest dataset zip</a>,
+                then <span className="font-medium">⚙ Settings → Import dataset .zip</span>. Your saved decisions stay
+                and re-attach automatically.
+              </li>
+              <li>
+                <a href={MIGRATED_RESULTS_URL} className="font-medium text-sky-300 underline">Download the migrated
+                adjudications file</a>, then <span className="font-medium">⚙ Settings → Import adjudications (JSON)</span> —
+                it carries your already-decided dates onto the new single event-level date, so completed items stay completed.
+              </li>
+              <li>
+                If the app itself looks unchanged, close every tab of it and reopen — it updates itself on the next launch.
+              </li>
+            </ol>
+          </section>
+        )}
         {isSample && (
           <section className="mb-5 rounded-xl border border-sky-500/40 bg-sky-500/5 px-4 py-3">
             <h2 className="text-sm font-semibold text-sky-200">Start here — you're viewing the 3-item demo</h2>

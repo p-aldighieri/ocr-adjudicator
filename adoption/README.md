@@ -14,7 +14,7 @@ npm project** from the app at the repo root — nothing here imports from `../sr
 sample). **Current real dataset** (v5, 2026-08-19: 386 review items, 207 MB — 38 non-K12/hand-extracted
 items retired to a ledger, one shared date per bundle, verbs as read-only metadata, 718 verified
 highlight regions, 93 corrected pages, printed authors):
-[`adoption-dataset.zip`](https://github.com/p-aldighieri/ocr-adjudicator/releases/download/adoption-dataset-v5/adoption-dataset.zip)
+[`adoption-dataset.zip`](https://github.com/p-aldighieri/ocr-adjudicator/releases/latest/download/adoption-dataset.zip)
 — download it on any device, then **⚙ Settings → Import dataset .zip**. Existing adjudications
 survive the upgrade (results merge by item id; a migration file carries decided per-book dates to
 the event level — see `tools/migrate_results_v5.py`). Everything stays in the browser's local
